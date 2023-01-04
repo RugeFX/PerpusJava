@@ -5,13 +5,18 @@
  */
 package controllers;
 
+import dao.BukuDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Buku;
+import com.google.gson.*;
 
 /**
  *
@@ -31,18 +36,27 @@ public class BukuController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet BukuController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet BukuController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        // Set response type and writer
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        
+        // Put request http method and page param into variable
+        String reqMethod = request.getMethod();
+        String page = request.getParameter("page");
+        
+        Gson gson = new Gson();
+        BukuDAO bd = new BukuDAO();
+        
+        switch(reqMethod){
+            case "GET":
+                List<Buku> bukuList = new ArrayList<>(); 
+                bukuList = bd.getAllBuku();
+                String bukuJSON = gson.toJson(bukuList);
+                out.println(bukuJSON);
+                break;
+            case "POST":
+                out.println("POST Method");
+                break;
         }
     }
 
