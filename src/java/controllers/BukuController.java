@@ -84,6 +84,9 @@ public class BukuController extends HttpServlet {
                 JsonElement JSONObj = jParser.parse(JSONString);
                 JsonObject buku = JSONObj.getAsJsonObject();
                 
+                //TODO: Process the data with DAO
+                buku.get("the name of json property");
+                
                 // Make a new PostResource and send it as a response
                 PostResource pr = new PostResource("OK", buku);
                 String data = gson.toJson(pr);
