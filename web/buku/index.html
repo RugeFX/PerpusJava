@@ -1,12 +1,65 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TODO supply a title</title>
+    <title>Test page buku</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      input {
+        padding: 1rem;
+      }
+    </style>
   </head>
   <body>
-    <div id="buku"></div>
+    <main>
+      <h1>All Buku Data</h1>
+      <div id="buku"></div>
+      <br />
+      <h1>Test Insert Data</h1>
+      <form
+        id="testinsert"
+        style="display: flex; flex-direction: column; gap: 1rem; width: 25vw"
+      >
+        <input
+          type="text"
+          name="kodebuku"
+          id="kodebuku"
+          placeholder="kodebuku"
+        />
+        <input type="text" name="judul" id="judul" placeholder="judul" />
+        <input
+          type="text"
+          name="pengarang"
+          id="pengarang"
+          placeholder="pengarang"
+        />
+        <input
+          type="text"
+          name="tahunterbit"
+          id="tahunterbit"
+          placeholder="tahunterbit"
+        />
+        <input
+          type="text"
+          name="idkategori"
+          id="idkategori"
+          placeholder="idkategori"
+        />
+        <input
+          type="text"
+          name="idpenerbit"
+          id="idpenerbit"
+          placeholder="idpenerbit"
+        />
+        <input
+          type="number"
+          name="stokbuku"
+          id="stokbuku"
+          placeholder="stokbuku"
+        />
+        <input type="submit" value="Submit" />
+      </form>
+    </main>
     <script src="script.js"></script>
   </body>
 </html>
