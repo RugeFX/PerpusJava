@@ -15,6 +15,7 @@ public class Buku {
     private String tahunterbit;
     private String idkategori;
     private String idpenerbit;
+    private String genre;
     private int stokbuku;
 
     public String getKodebuku() {
@@ -63,6 +64,14 @@ public class Buku {
 
     public void setIdpenerbit(String idpenerbit) {
         this.idpenerbit = idpenerbit;
+    }
+    
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public int getStokbuku() {
