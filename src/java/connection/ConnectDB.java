@@ -18,7 +18,7 @@ public class ConnectDB {
     public static Connection getConnection(){
         if(conn == null){
             MysqlDataSource data = new MysqlDataSource();
-            data.setDatabaseName("perpus_pbo");
+            data.setDatabaseName("perpus");
             data.setUser("root");
             data.setPassword("");
             try{

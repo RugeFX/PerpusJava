@@ -15,6 +15,33 @@ public class Buku {
     private String tahunterbit;
     private String idkategori;
     private String idpenerbit;
+    private String idgenre;
+    private String urlebook;
+    private String urlgambar;
+
+    public String getIdgenre() {
+        return idgenre;
+    }
+
+    public void setIdgenre(String idgenre) {
+        this.idgenre = idgenre;
+    }
+
+    public String getUrlebook() {
+        return urlebook;
+    }
+
+    public void setUrlebook(String urlebook) {
+        this.urlebook = urlebook;
+    }
+
+    public String getUrlgambar() {
+        return urlgambar;
+    }
+
+    public void setUrlgambar(String urlgambar) {
+        this.urlgambar = urlgambar;
+    }
     private int stokbuku;
 
     public String getKodebuku() {
