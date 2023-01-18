@@ -29,7 +29,7 @@ public class BukuDAO {
         Buku buku = new Buku();
         try{
             Statement stmt = koneksi.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Buku WHERE kodebuku = " + id);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Buku WHERE kodebuku = '" + id + "'");
             while (rs.next()) {
                 buku.setKodebuku(rs.getString("kodebuku"));
                 buku.setJudulbuku(rs.getString("judulbuku"));
@@ -37,7 +37,7 @@ public class BukuDAO {
                 buku.setTahunterbit(rs.getString("tahunterbit"));
                 buku.setIdkategori(rs.getString("idkategori"));
                 buku.setIdpenerbit(rs.getString("idpenerbit"));
-                buku.setIdgenre(rs.getString("genre"));
+                buku.setIdgenre(rs.getString("idgenre"));
                 buku.setStokbuku(rs.getInt("stokbuku"));
             }
         }catch(SQLException ex){
@@ -63,7 +63,6 @@ public class BukuDAO {
                 buku.setIdgenre(rs.getString("idgenre"));
                 buku.setUrlebook(rs.getString("urlebook"));
                 buku.setUrlgambar(rs.getString("urlgambar"));
-                buku.setIdgenre(rs.getString("genre"));
                 buku.setStokbuku(rs.getInt("stokbuku"));
                 bukuList.add(buku);
             }
@@ -148,7 +147,7 @@ public class BukuDAO {
     }
     
     public void insertBuku(Buku buku) throws SQLException {
-        PreparedStatement pstmt = koneksi.prepareStatement("INSERT INTO Buku (kodebuku, judulbuku, pengarang, tahunterbit, idkategori, idpenerbit, genre, stokbuku) VALUES (? ,?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement pstmt = koneksi.prepareStatement("INSERT INTO Buku (kodebuku, judulbuku, pengarang, tahunterbit, idkategori, idpenerbit, idgenre, stokbuku) VALUES (? ,?, ?, ?, ?, ?, ?, ?)");
         pstmt.setString(1, buku.getKodebuku());
         pstmt.setString(2, buku.getJudulbuku());
         pstmt.setString(3, buku.getPengarang());

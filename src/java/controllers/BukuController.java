@@ -69,7 +69,7 @@ public class BukuController extends HttpServlet {
                 if(page.equals("show")){
                     buku = bd.getBukuById(request.getParameter("idbuku"));
                     String bukuJSON = gson.toJson(buku);
-                    System.out.println("BukuJSON : " + bukuJSON);
+                    System.out.println("BukuJSON SHOW : " + bukuJSON);
                     out.println(bukuJSON);
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
