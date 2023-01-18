@@ -17,8 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Buku;
 import com.google.gson.*;
-import java.io.BufferedReader;
+import java.sql.SQLException;
+import java.util.stream.Collectors;
 import models.PostResource;
+import sun.net.www.http.HttpClient;
 
 /**
  *
@@ -36,6 +38,7 @@ public class BukuController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Set response type and writer
@@ -45,10 +48,9 @@ public class BukuController extends HttpServlet {
         // Put request http method and page params into variable
         String reqMethod = request.getMethod();
         String page = request.getParameter("page");
+        System.out.println("Page : " + page);
         
         // Object initiation
-        StringBuilder sb = new StringBuilder();
-        BufferedReader reader = request.getReader();
         Gson gson = new Gson();
         BukuDAO bd = new BukuDAO();   
      
@@ -56,41 +58,47 @@ public class BukuController extends HttpServlet {
             case "GET":
                 // Make a new List based on the Buku model
                 List<Buku> bukuList = new ArrayList<>(); 
-                // Insert all of the buku data from the DAO with the getAllBuku method
-                bukuList = bd.getAllBuku();
+                Buku buku = new Buku();
+                // Insert the buku data from the DAO
+                if(page == null){
+                    bukuList = bd.getAllBuku();
+                    String bukuJSON = gson.toJson(bukuList);
+                    System.out.println("BukuJSON : " + bukuJSON);
+                    out.println(bukuJSON);
+                }
+                if(page.equals("show")){
+                    buku = bd.getBukuById(request.getParameter("idbuku"));
+                    String bukuJSON = gson.toJson(buku);
+                    System.out.println("BukuJSON : " + bukuJSON);
+                    out.println(bukuJSON);
+                }
                 // Converts the bukuList into a JSON String and then send it to the response
-                String bukuJSON = gson.toJson(bukuList);
-                System.out.println("BukuJSON : " + bukuJSON);
-                out.println(bukuJSON);   
+                
                 break;
                 
             case "POST":
                 // Reads all of the form body from the request
-                try {
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        sb.append(line).append('\n');
-                    }
-                }
-                finally {
-                    reader.close();
-                }
-                
-                // Convert it into a complete string
-                String JSONString = sb.toString();
+                String resBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+                System.out.println("resBody : " + resBody);
                 
                 // Parse the JSONString into a JSON Object named buku
-                JsonParser jParser = new JsonParser();
-                JsonElement JSONObj = jParser.parse(JSONString);
-                JsonObject buku = JSONObj.getAsJsonObject();
-                
-                //TODO: Process the data with DAO
-                buku.get("the name of json property");
-                
-                // Make a new PostResource and send it as a response
-                PostResource pr = new PostResource("OK", buku);
-                String data = gson.toJson(pr);
-                out.println(data);
+                String data = null;
+                try{
+                    Buku jsonBuku = gson.fromJson(resBody, Buku.class);
+                    // Transfers the data via DAO
+                    try{
+                        bd.insertBuku(jsonBuku);
+                    }catch(SQLException ex){
+                        System.out.println(ex);
+                    }
+                    
+                    PostResource pr = new PostResource("OK", jsonBuku);
+                    data = gson.toJson(pr);
+                }catch(JsonIOException | JsonSyntaxException jex){
+                    System.out.println("Masuk error : " + jex);
+                    
+                }        
+                out.println(data);                   
                 break;
         }
     }

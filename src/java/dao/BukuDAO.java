@@ -25,6 +25,27 @@ public class BukuDAO {
             koneksi = connection.ConnectDB.getConnection();
     }
     
+    public Buku getBukuById(String id){
+        Buku buku = new Buku();
+        try{
+            Statement stmt = koneksi.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Buku WHERE kodebuku = " + id);
+            while (rs.next()) {
+                buku.setKodebuku(rs.getString("kodebuku"));
+                buku.setJudulbuku(rs.getString("judulbuku"));
+                buku.setPengarang(rs.getString("pengarang"));
+                buku.setTahunterbit(rs.getString("tahunterbit"));
+                buku.setIdkategori(rs.getString("idkategori"));
+                buku.setIdpenerbit(rs.getString("idpenerbit"));
+                buku.setIdgenre(rs.getString("genre"));
+                buku.setStokbuku(rs.getInt("stokbuku"));
+            }
+        }catch(SQLException ex){
+            System.out.println("Error on BukuDAO : " + ex);
+        }
+        return buku;
+    }
+    
     public List<Buku> getAllBuku() {
         ArrayList<Buku> bukuList = new ArrayList<>();
         String query = "SELECT * FROM buku";
@@ -42,6 +63,7 @@ public class BukuDAO {
                 buku.setIdgenre(rs.getString("idgenre"));
                 buku.setUrlebook(rs.getString("urlebook"));
                 buku.setUrlgambar(rs.getString("urlgambar"));
+                buku.setIdgenre(rs.getString("genre"));
                 buku.setStokbuku(rs.getInt("stokbuku"));
                 bukuList.add(buku);
             }
@@ -123,6 +145,19 @@ public class BukuDAO {
         } catch (SQLException ex) {
            System.out.println("Ada kesalahan : "+ex);
         }
+    }
+    
+    public void insertBuku(Buku buku) throws SQLException {
+        PreparedStatement pstmt = koneksi.prepareStatement("INSERT INTO Buku (kodebuku, judulbuku, pengarang, tahunterbit, idkategori, idpenerbit, genre, stokbuku) VALUES (? ,?, ?, ?, ?, ?, ?, ?)");
+        pstmt.setString(1, buku.getKodebuku());
+        pstmt.setString(2, buku.getJudulbuku());
+        pstmt.setString(3, buku.getPengarang());
+        pstmt.setString(4, buku.getTahunterbit());
+        pstmt.setString(5, buku.getIdkategori());
+        pstmt.setString(6, buku.getIdpenerbit());
+        pstmt.setString(7, buku.getIdgenre());
+        pstmt.setInt(8, buku.getStokbuku());
+        pstmt.executeUpdate();
     }
     
 //    public List<Buku> getBukuTerlaris(){

@@ -91,7 +91,7 @@ public class Buku {
     public void setIdpenerbit(String idpenerbit) {
         this.idpenerbit = idpenerbit;
     }
-
+    
     public int getStokbuku() {
         return stokbuku;
     }
