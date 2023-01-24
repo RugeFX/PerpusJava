@@ -51,16 +51,28 @@ public class PetugasDAO {
         return petugasList;
     }
     
-    public void simpanPetugas(Petugas petugas, String mode) throws SQLException {
-        String sql = null;
-        if (mode.equalsIgnoreCase("insert")) {
-            sql = "INSERT INTO petugas (password, namapetugas, "
+    public void insertPetugas(Petugas petugas) throws SQLException {
+        String sql = "INSERT INTO petugas (password, namapetugas, "
                     + "alamat, kota, notelpon, tanggallahir, "
                     + "idpetugas) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
-        }else if(mode.equalsIgnoreCase("update")){
-            sql = "UPDATE petugas SET password=?, namapetugas=?, alamat=?, kota=?,"
-                    + "notelpon=?, tanggallahir=? where idpetugas=?";
+        try{
+            preStmt = koneksi.prepareStatement(sql);
+            preStmt.setString(1, petugas.getPassword());
+            preStmt.setString(2, petugas.getNamapetugas());
+            preStmt.setString(3, petugas.getAlamat());
+            preStmt.setString(4, petugas.getKota());
+            preStmt.setString(5, petugas.getNotelpon());
+            preStmt.setString(6, petugas.getTanggallahir());
+            preStmt.setString(7, petugas.getIdpetugas());
+            preStmt.executeUpdate();
+        }catch(SQLException ex){
+            System.out.println("Ada Error : " + ex);
         }
+    }
+    
+    public void updatePetugas(Petugas petugas) throws SQLException{
+        String sql = "UPDATE petugas SET password=?, namapetugas=?, alamat=?, kota=?,"
+                    + "notelpon=?, tanggallahir=? where idpetugas=?";
         try{
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, petugas.getPassword());

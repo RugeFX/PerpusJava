@@ -55,16 +55,28 @@ public class PinjamanDAO {
         return pinjamanList;
     }
     
-    public void simpanPinjaman(Pinjaman pnjm, String mode) throws SQLException {
-        String sql = null;
-        if (mode.equalsIgnoreCase("insert")) {
-            sql = "INSERT INTO pinjman (idanggota, kodebuku, "
+    public void insertPinjaman(Pinjaman pnjm) throws SQLException {
+        String sql = "INSERT INTO pinjman (idanggota, kodebuku, "
                     + "tanggalpinjam, tanggalkembali, denda, idstatus, "
                     + "idpinjaman) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
-        }else if(mode.equalsIgnoreCase("update")){
-            sql = "UPDATE petugas SET idanggota=?, kodebuku=?, tanggalpinjam=?, tanggalkembali=?,"
-                    + "denda=?, idstatus=? where idpinjaman=?";
+        try{
+            preStmt = koneksi.prepareStatement(sql);
+            preStmt.setString(1, pnjm.getIdanggota());
+            preStmt.setString(2, pnjm.getKodebuku());
+            preStmt.setString(3, pnjm.getTanggalpinjam());
+            preStmt.setString(4, pnjm.getTanggalkembali());
+            preStmt.setString(5, pnjm.getDenda());
+            preStmt.setString(6, pnjm.getIdstatus());
+            preStmt.setString(7, pnjm.getIdpinjaman());
+            preStmt.executeUpdate();
+        }catch(SQLException ex){
+            System.out.println("Ada Error : " + ex);
         }
+    }
+    
+    public void updatePinjaman(Pinjaman pnjm) throws SQLException{
+        String sql = "UPDATE petugas SET idanggota=?, kodebuku=?, tanggalpinjam=?, tanggalkembali=?,"
+                    + "denda=?, idstatus=? where idpinjaman=?";
         try{
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, pnjm.getIdanggota());

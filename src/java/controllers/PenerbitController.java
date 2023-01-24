@@ -5,29 +5,30 @@
  */
 package controllers;
 
-import dao.BukuDAO;
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+import dao.PenerbitDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Buku;
-import com.google.gson.*;
-import java.sql.SQLException;
-import java.util.stream.Collectors;
+import models.Penerbit;
 import models.PostResource;
-import sun.net.www.http.HttpClient;
 
 /**
  *
- * @author lenovo
+ * @author Lenovo
  */
-@WebServlet(name = "BukuController", urlPatterns = {"/BukuController"})
-public class BukuController extends HttpServlet {
+@WebServlet(name = "PenerbitController", urlPatterns = {"/PenerbitController"})
+public class PenerbitController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,7 +39,6 @@ public class BukuController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Set response type and writer
@@ -52,25 +52,25 @@ public class BukuController extends HttpServlet {
         
         // Object initiation
         Gson gson = new Gson();
-        BukuDAO bd = new BukuDAO();   
+        PenerbitDAO pd = new PenerbitDAO();   
      
         switch(reqMethod){
             case "GET":
                 // Make a new List based on the Buku model
-                List<Buku> bukuList = new ArrayList<>(); 
-                Buku buku = new Buku();
+                List<Penerbit> penerbitList = new ArrayList<>(); 
+                Penerbit penerbit = new Penerbit();
                 // Insert the buku data from the DAO
                 if(page == null){
-                    bukuList = bd.getAllBuku();
-                    String bukuJSON = gson.toJson(bukuList);
-                    System.out.println("BukuJSON : " + bukuJSON);
-                    out.println(bukuJSON);
+                    penerbitList = pd.getAllPenerbit();
+                    String penerbitJSON = gson.toJson(penerbitList);
+                    System.out.println("PenerbitJSON : " + penerbitJSON);
+                    out.println(penerbitJSON);
                 }
                 if(page.equals("show")){
-                    buku = bd.getBukuById(request.getParameter("idbuku"));
-                    String bukuJSON = gson.toJson(buku);
-                    System.out.println("BukuJSON : " + bukuJSON);
-                    out.println(bukuJSON);
+                    penerbit = pd.getDtPenerbit(request.getParameter("idpenerbit"));
+                    String penerbitJSON = gson.toJson(penerbit);
+                    System.out.println("PenerbitJSON : " + penerbitJSON);
+                    out.println(penerbitJSON);
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
                 
@@ -81,25 +81,25 @@ public class BukuController extends HttpServlet {
                 String resBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
                 System.out.println("resBody : " + resBody);
                 
-                // Parse the JSONString into a JSON Object named buku
+                // Parse the JSONString into a JSON Object named Petugas
                 String data = null;
                 try{
-                    Buku jsonBuku = gson.fromJson(resBody, Buku.class);
+                    Penerbit jsonPenerbit = gson.fromJson(resBody, Penerbit.class);
                     // Transfers the data via DAO
                     if (page.equals("insert")) {
-                        try{
-                            bd.insertBuku(jsonBuku);
+                         try{
+                            pd.insertPenerbit(jsonPenerbit);
                         }catch(SQLException ex){
-                        System.out.println(ex);
+                            System.out.println(ex);
                         }
                     }else{
-                        try{
-                            bd.updateBuku(jsonBuku);
+                       try{
+                            pd.updatePenerbit(jsonPenerbit);
                         }catch(SQLException ex){
-                        System.out.println(ex);
+                            System.out.println(ex);
                         }
                     }
-                    PostResource pr = new PostResource("OK", jsonBuku);
+                    PostResource pr = new PostResource("OK", jsonPenerbit);
                     data = gson.toJson(pr);
                 }catch(JsonIOException | JsonSyntaxException jex){
                     System.out.println("Masuk error : " + jex);

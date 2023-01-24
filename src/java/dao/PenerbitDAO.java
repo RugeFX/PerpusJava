@@ -28,7 +28,7 @@ public class PenerbitDAO {
             koneksi = connection.ConnectDB.getConnection();
     }
     
-    public List<Penerbit> getAllAnggota() {
+    public List<Penerbit> getAllPenerbit() {
         ArrayList<Penerbit> penerbitList = new ArrayList<>();
         String query = "SELECT * FROM penerbit";
         try{
@@ -46,13 +46,20 @@ public class PenerbitDAO {
         return penerbitList;
     }
     
-    public void simpanPenerbit(Penerbit penerbit, String mode) throws SQLException {
-        String sql = null;
-        if (mode.equalsIgnoreCase("insert")) {
-            sql = "INSERT INTO penerbit (namapenerbit, idpenerbit VALUES (?, ?)";
-        }else if(mode.equalsIgnoreCase("update")){
-            sql = "UPDATE penerbit SET namapenerbit=? where idpenerbit=?";
+    public void insertPenerbit(Penerbit penerbit) throws SQLException {
+        String sql = "INSERT INTO penerbit (namapenerbit, idpenerbit VALUES (?, ?)";
+        try{
+            preStmt = koneksi.prepareStatement(sql);
+            preStmt.setString(1, penerbit.getNamapenerbit());
+            preStmt.setString(2, penerbit.getIdpenerbit());
+            preStmt.executeUpdate();
+        }catch(SQLException ex){
+            System.out.println("Ada Error : " + ex);
         }
+    }
+    
+    public void updatePenerbit(Penerbit penerbit) throws SQLException{
+        String sql = "UPDATE penerbit SET namapenerbit=? where idpenerbit=?";
         try{
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, penerbit.getNamapenerbit());

@@ -5,6 +5,8 @@
  */
 package dao;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +28,46 @@ public class AnggotaDAO {
     private SimpleDateFormat sdf = new SimpleDateFormat ("dd-MM-yyyy");
     public AnggotaDAO(){ //konstruktor 
             koneksi = connection.ConnectDB.getConnection();
+    }
+    
+    public String getMd5String(String input){
+         try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] hash = md.digest(input.getBytes());
+            BigInteger no = new BigInteger(1, hash);
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        } catch (Exception ex) {
+            System.out.println("Gagal");
+            return null;
+//            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public Boolean getLogin(String nik, String Password){
+        Anggota ang = new Anggota();
+        String sqlSearch = "SELECT * FROM anggota WHERE nik=?";
+        try{
+            String pw;
+            preStmt = koneksi.prepareStatement (sqlSearch);
+            preStmt.setString(1, nik);
+            rs = preStmt.executeQuery();
+            if(rs.next()) {
+            ang.setNik(rs.getString("nik"));
+            ang.setPassword(rs.getString("password"));
+            String pwMd5 = getMd5String(Password);
+                if (!pwMd5.equals(ang.getPassword())) {
+                    return false;
+                }
+        }
+    }
+        catch (SQLException se){
+            System.out.println("Ada Kesalahan : " + se);
+        }
+        return true;
     }
     
     public List<Anggota> getAllAnggota() {
@@ -51,16 +93,28 @@ public class AnggotaDAO {
         return anggotaList;
     }
     
-    public void simpanAnggota(Anggota ang, String mode) throws SQLException {
-        String sql = null;
-        if (mode.equalsIgnoreCase("insert")) {
-            sql = "INSERT INTO anggota (password, namaanggota, "
+    public void insertAnggota(Anggota ang) throws SQLException {
+        String sql = "INSERT INTO anggota (password, namaanggota, "
                     + "alamat, kota, notelpon, tanggallahir, "
                     + "nik) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
-        }else if(mode.equalsIgnoreCase("update")){
-            sql = "UPDATE anggota SET password=?, namanaggota=?, alamat=?, kota=?,"
-                    + "notelpon=?, tanggallahir=? where nik=?";
+        try{
+            preStmt = koneksi.prepareStatement(sql);
+            preStmt.setString(1, ang.getPassword());
+            preStmt.setString(2, ang.getNamaanggota());
+            preStmt.setString(3, ang.getAlamat());
+            preStmt.setString(4, ang.getKota());
+            preStmt.setString(5, ang.getNotelpon());
+            preStmt.setString(6, ang.getTanggallahir());
+            preStmt.setString(7, ang.getNik());
+            preStmt.executeUpdate();
+        }catch(SQLException ex){
+            System.out.println("Ada Error : " + ex);
         }
+    }
+    
+    public void updateAnggota(Anggota ang) throws SQLException{
+        String sql = "UPDATE anggota SET password=?, namanaggota=?, alamat=?, kota=?,"
+                    + "notelpon=?, tanggallahir=? where nik=?";
         try{
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, ang.getPassword());
