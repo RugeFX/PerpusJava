@@ -54,7 +54,7 @@ public class AnggotaDAO {
     public void simpanAnggota(Anggota ang, String mode) throws SQLException {
         String sql = null;
         if (mode.equalsIgnoreCase("insert")) {
-            sql = "INSERT INTO anggota (password, namanaggota, "
+            sql = "INSERT INTO anggota (password, namaanggota, "
                     + "alamat, kota, notelpon, tanggallahir, "
                     + "nik) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
         }else if(mode.equalsIgnoreCase("update")){

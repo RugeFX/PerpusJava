@@ -17,7 +17,7 @@ public class Petugas {
     private String alamat;
     private String kota;
     private String notelpon;
-    private Date tanggallahir;
+    private String tanggallahir;
 
     public String getIdpetugas() {
         return idpetugas;
@@ -67,11 +67,11 @@ public class Petugas {
         this.notelpon = notelpon;
     }
 
-    public Date getTanggallahir() {
+    public String getTanggallahir() {
         return tanggallahir;
     }
 
-    public void setTanggallahir(Date tanggallahir) {
+    public void setTanggallahir(String tanggallahir) {
         this.tanggallahir = tanggallahir;
     }
     
