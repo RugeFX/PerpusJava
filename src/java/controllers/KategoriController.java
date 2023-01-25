@@ -8,7 +8,7 @@ package controllers;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import dao.KategoriDAO;
+import dao.KategoriDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -52,7 +52,7 @@ public class KategoriController extends HttpServlet {
         
         // Object initiation
         Gson gson = new Gson();
-        KategoriDAO kd = new KategoriDAO();   
+        KategoriDao kd = new KategoriDao();   
      
         switch(reqMethod){
             case "GET":

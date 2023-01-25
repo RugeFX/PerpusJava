@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import models.Buku;
 import com.google.gson.*;
 import dao.GenreDAO;
-import dao.KategoriDAO;
+import dao.KategoriDao;
 import dao.PenerbitDAO;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
@@ -60,7 +60,7 @@ public class BukuController extends HttpServlet {
         // Object initiation
         Gson gson = new Gson();
         BukuDAO bd = new BukuDAO(); 
-        KategoriDAO kd = new KategoriDAO();
+        KategoriDao kd = new KategoriDao();
         PenerbitDAO pd = new PenerbitDAO();
         GenreDAO gd = new GenreDAO();
         
