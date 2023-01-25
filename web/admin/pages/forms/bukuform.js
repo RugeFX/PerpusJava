@@ -1,8 +1,12 @@
 const formInsert = document.getElementById("bukuform");
+const 
 
 const pageURL = new URL(window.location.href);
 // console.log(pageURL);
 let pageType = "insert";
+
+getSelectOptions().then((data) => {
+})
 
 if (pageURL.pathname === "/PerpusJava/admin/pages/forms/editbuku.html") {
   if (!pageURL.searchParams.get("kode")) {
