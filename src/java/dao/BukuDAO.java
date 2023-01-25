@@ -37,8 +37,10 @@ public class BukuDAO {
                 buku.setTahunterbit(rs.getString("tahunterbit"));
                 buku.setIdkategori(rs.getString("idkategori"));
                 buku.setIdpenerbit(rs.getString("idpenerbit"));
-                buku.setIdgenre(rs.getString("genre"));
+                buku.setIdgenre(rs.getString("idgenre"));
                 buku.setStokbuku(rs.getInt("stokbuku"));
+                buku.setUrlebook(rs.getString("urlebook"));
+                buku.setUrlgambar(rs.getString("urlgambar"));
             }
         }catch(SQLException ex){
             System.out.println("Error on BukuDAO : " + ex);
@@ -63,7 +65,7 @@ public class BukuDAO {
                 buku.setIdgenre(rs.getString("idgenre"));
                 buku.setUrlebook(rs.getString("urlebook"));
                 buku.setUrlgambar(rs.getString("urlgambar"));
-                buku.setIdgenre(rs.getString("genre"));
+//                buku.setIdgenre(rs.getString("genre"));
                 buku.setStokbuku(rs.getInt("stokbuku"));
                 bukuList.add(buku);
             }
