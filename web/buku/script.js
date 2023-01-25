@@ -72,14 +72,20 @@ async function getAllBukus() {
 }
 
 async function insertBuku(body) {
-  const res = await fetch("/PerpusJava/BukuController", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  const res = await fetch(
+    "/PerpusJava/BukuController?" +
+      new URLSearchParams({
+        page: "insert",
+      }),
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
   const postBuku = await res.json();
   return postBuku;
 }

@@ -5,8 +5,8 @@ showAllBukus();
 document.addEventListener("click", (e) => {
   if (e.target.id == "editBtn") {
     const kodeBuku = e.target.dataset.kode;
-
-    console.log(kodeBuku);
+    window.location.href =
+      "/PerpusJava/admin/pages/forms/editbuku.html?kode=" + kodeBuku;
   }
   if (e.target.id == "deleteBtn") {
     const kodeBuku = e.target.dataset.kode;
@@ -22,12 +22,25 @@ document.addEventListener("click", (e) => {
       confirmButtonText: "Hapus",
     }).then((result) => {
       if (result.isConfirmed) {
-        showAllBukus();
-        Swal.fire(
-          "Dihapus!",
-          `Buku dengan kode ${kodeBuku} telah dihapus`,
-          "success"
-        );
+        fetch(
+          "/PerpusJava/BukuController?" +
+            new URLSearchParams({
+              page: "delete",
+              kode: kodeBuku,
+            }),
+          { method: "POST" }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.status === "OK") {
+              showAllBukus();
+              Swal.fire(
+                "Dihapus!",
+                `Buku dengan kode ${kodeBuku} telah dihapus`,
+                "success"
+              );
+            }
+          });
       }
     });
     console.log(kodeBuku);
@@ -40,13 +53,15 @@ function showAllBukus() {
     bukus.forEach((buku) => {
       const childEl = document.createElement("tr");
 
-      Object.keys(buku).forEach((val) => {
-        if (val == "urlgambar") {
+      Object.keys(buku).forEach((key) => {
+        if (key == "urlgambar") {
+          return;
+        } else if (key == "urlebook") {
           return;
         }
         const childTd = document.createElement("td");
         // console.log(val);
-        childTd.innerText = buku[val];
+        childTd.innerText = buku[key];
         childEl.appendChild(childTd);
       });
       //   console.log("========================");
@@ -55,20 +70,10 @@ function showAllBukus() {
       const actionEl = document.createElement("td");
 
       // Define edit button element
-      const editBtn = document.createElement("button");
-      editBtn.classList = "btn btn-warning btn-sm";
-      editBtn.innerText = "Edit";
-      editBtn.setAttribute("type", "button");
-      editBtn.setAttribute("id", "editBtn");
-      editBtn.setAttribute("data-kode", buku.kodebuku);
+      const editBtn = makeEditBtn(buku.kodebuku);
 
-      // Define edit button element
-      const removeBtn = document.createElement("button");
-      removeBtn.classList = "btn btn-danger btn-sm";
-      removeBtn.innerText = "Hapus";
-      removeBtn.setAttribute("type", "button");
-      removeBtn.setAttribute("id", "deleteBtn");
-      removeBtn.setAttribute("data-kode", buku.kodebuku);
+      // Define delete button element
+      const removeBtn = makeDeleteBtn(buku.kodebuku);
 
       // Code element for inner container of action element
       const codeEl = document.createElement("code");
@@ -82,6 +87,26 @@ function showAllBukus() {
       bukuEl.append(childEl);
     });
   });
+}
+
+function makeEditBtn(kode) {
+  const button = document.createElement("button");
+  button.classList = "btn btn-warning btn-sm";
+  button.innerText = "Edit";
+  button.setAttribute("type", "button");
+  button.setAttribute("id", "editBtn");
+  button.setAttribute("data-kode", kode);
+  return button;
+}
+
+function makeDeleteBtn(kode) {
+  const button = document.createElement("button");
+  button.classList = "btn btn-danger btn-sm";
+  button.innerText = "Hapus";
+  button.setAttribute("type", "button");
+  button.setAttribute("id", "deleteBtn");
+  button.setAttribute("data-kode", kode);
+  return button;
 }
 
 // Fetches Functions

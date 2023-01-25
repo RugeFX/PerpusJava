@@ -39,6 +39,8 @@ public class BukuDAO {
                 buku.setIdpenerbit(rs.getString("idpenerbit"));
                 buku.setIdgenre(rs.getString("idgenre"));
                 buku.setStokbuku(rs.getInt("stokbuku"));
+                buku.setUrlgambar(rs.getString("urlgambar"));
+                buku.setUrlebook(rs.getString("urlebook"));
             }
         }catch(SQLException ex){
             System.out.println("Error on BukuDAO : " + ex);
@@ -76,59 +78,52 @@ public class BukuDAO {
         String sql = "INSERT INTO buku (judulbuku, pengarang, "
                     + "tahunterbit, idkategori, idpenerbit, idgenre, "
                     + "urlebook, urlgambar, stokbuku, kodebuku) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try{
-            preStmt = koneksi.prepareStatement(sql);
-            preStmt.setString(1, buku.getJudulbuku());
-            preStmt.setString(2, buku.getPengarang());
-            preStmt.setString(3, buku.getTahunterbit());
-            preStmt.setString(4, buku.getIdkategori());
-            preStmt.setString(5, buku.getIdpenerbit());
-            preStmt.setString(6, buku.getIdgenre());
-            if (buku.getUrlebook().equals("")) {
-                preStmt.setString(7, null);
-            }else{
-                preStmt.setString(7, buku.getUrlebook());
-            }
-            if (buku.getUrlgambar().equals("")) {
-                preStmt.setString(8, null);
-            }else{
-                preStmt.setString(8, buku.getUrlgambar());
-            }
-            preStmt.setInt(9, buku.getStokbuku());
-            preStmt.setString(10, buku.getKodebuku());
-            preStmt.executeUpdate();
-        }catch(SQLException ex){
-            System.out.println("Ada Error : " + ex);
+
+        preStmt = koneksi.prepareStatement(sql);
+        preStmt.setString(1, buku.getJudulbuku());
+        preStmt.setString(2, buku.getPengarang());
+        preStmt.setString(3, buku.getTahunterbit());
+        preStmt.setString(4, buku.getIdkategori());
+        preStmt.setString(5, buku.getIdpenerbit());
+        preStmt.setString(6, buku.getIdgenre());
+        if (buku.getUrlebook().equals("") || buku.getUrlebook().equals(null)) {
+            preStmt.setString(7, null);
+        }else{
+            preStmt.setString(7, buku.getUrlebook());
         }
+        if (buku.getUrlgambar().equals("")) {
+            preStmt.setString(8, null);
+        }else{
+            preStmt.setString(8, buku.getUrlgambar());
+        }
+        preStmt.setInt(9, buku.getStokbuku());
+        preStmt.setString(10, buku.getKodebuku());
+        preStmt.executeUpdate();
     }
     
     public void updateBuku(Buku buku) throws SQLException{
         String sql = "UPDATE buku SET judulbuku=?, pengarang=?, tahunterbit=?, idkategori=?,"
                     + "idpenerbit=?, idgenre=?, urlebook=?, urlgambar=?, stokbuku=? where kodebuku=?";
-        try{
-            preStmt = koneksi.prepareStatement(sql);
-            preStmt.setString(1, buku.getJudulbuku());
-            preStmt.setString(2, buku.getPengarang());
-            preStmt.setString(3, buku.getTahunterbit());
-            preStmt.setString(4, buku.getIdkategori());
-            preStmt.setString(5, buku.getIdpenerbit());
-            preStmt.setString(6, buku.getIdgenre());
-            if (buku.getUrlebook().equals("")) {
-                preStmt.setString(7, null);
-            }else{
-                preStmt.setString(7, buku.getUrlebook());
-            }
-            if (buku.getUrlgambar().equals("")) {
-                preStmt.setString(8, null);
-            }else{
-                preStmt.setString(8, buku.getUrlgambar());
-            }
-            preStmt.setInt(9, buku.getStokbuku());
-            preStmt.setString(10, buku.getKodebuku());
-            preStmt.executeUpdate();
-        }catch(SQLException ex){
-            System.out.println("Ada Error : " + ex);
+        preStmt = koneksi.prepareStatement(sql);
+        preStmt.setString(1, buku.getJudulbuku());
+        preStmt.setString(2, buku.getPengarang());
+        preStmt.setString(3, buku.getTahunterbit());
+        preStmt.setString(4, buku.getIdkategori());
+        preStmt.setString(5, buku.getIdpenerbit());
+        preStmt.setString(6, buku.getIdgenre());
+        if (buku.getUrlebook().equals("")) {
+            preStmt.setString(7, null);
+        }else{
+            preStmt.setString(7, buku.getUrlebook());
         }
+        if (buku.getUrlgambar().equals("")) {
+            preStmt.setString(8, null);
+        }else{
+            preStmt.setString(8, buku.getUrlgambar());
+        }
+        preStmt.setInt(9, buku.getStokbuku());
+        preStmt.setString(10, buku.getKodebuku());
+        preStmt.executeUpdate();
     }
     
     public Buku getDtBuku(String kodeBuku){
@@ -157,29 +152,11 @@ public class BukuDAO {
         return buku;
     }
     
-    public void hapus(String kodebuku) {
+    public void hapus(String kodebuku) throws SQLException {
         String sql = "delete from buku where kodebuku = ?";  
-        try {
-            preStmt = koneksi.prepareStatement(sql);
-            preStmt.setString(1, kodebuku);
-            preStmt.executeUpdate();
-            
-        } catch (SQLException ex) {
-           System.out.println("Ada kesalahan : "+ex);
-        }
-    }
-    
-    public void insertBuku(Buku buku) throws SQLException {
-        PreparedStatement pstmt = koneksi.prepareStatement("INSERT INTO Buku (kodebuku, judulbuku, pengarang, tahunterbit, idkategori, idpenerbit, idgenre, stokbuku) VALUES (? ,?, ?, ?, ?, ?, ?, ?)");
-        pstmt.setString(1, buku.getKodebuku());
-        pstmt.setString(2, buku.getJudulbuku());
-        pstmt.setString(3, buku.getPengarang());
-        pstmt.setString(4, buku.getTahunterbit());
-        pstmt.setString(5, buku.getIdkategori());
-        pstmt.setString(6, buku.getIdpenerbit());
-        pstmt.setString(7, buku.getIdgenre());
-        pstmt.setInt(8, buku.getStokbuku());
-        pstmt.executeUpdate();
+        preStmt = koneksi.prepareStatement(sql);
+        preStmt.setString(1, kodebuku);
+        preStmt.executeUpdate();
     }
     
 //    public List<Buku> getBukuTerlaris(){
