@@ -11,19 +11,46 @@ import java.util.Date;
  * @author lenovo
  */
 public class Pinjaman {
-    private int idpinjaman;
+    private String idpinjaman;
     private String idanggota;
+    private String namaaanggota;
     private String kodebuku;
-    private Date tanggalpinjam;
-    private Date tanggalkembali;
-    private double denda;
-    private int idstatus;
+    private String judulbuku;
+    private String tanggalpinjam;
+    private String tanggalkembali;
+    private String denda;
+    private String idstatus;
+    private String keterangan;
 
-    public int getIdpinjaman() {
+    public String getNamaaanggota() {
+        return namaaanggota;
+    }
+
+    public void setNamaaanggota(String namaaanggota) {
+        this.namaaanggota = namaaanggota;
+    }
+
+    public String getJudulbuku() {
+        return judulbuku;
+    }
+
+    public void setJudulbuku(String judulbuku) {
+        this.judulbuku = judulbuku;
+    }
+
+    public String getKeterangan() {
+        return keterangan;
+    }
+
+    public void setKeterangan(String keterangan) {
+        this.keterangan = keterangan;
+    }
+
+    public String getIdpinjaman() {
         return idpinjaman;
     }
 
-    public void setIdpinjaman(int idpinjaman) {
+    public void setIdpinjaman(String idpinjaman) {
         this.idpinjaman = idpinjaman;
     }
 
@@ -43,35 +70,35 @@ public class Pinjaman {
         this.kodebuku = kodebuku;
     }
 
-    public Date getTanggalpinjam() {
+    public String getTanggalpinjam() {
         return tanggalpinjam;
     }
 
-    public void setTanggalpinjam(Date tanggalpinjam) {
+    public void setTanggalpinjam(String tanggalpinjam) {
         this.tanggalpinjam = tanggalpinjam;
     }
 
-    public Date getTanggalkembali() {
+    public String getTanggalkembali() {
         return tanggalkembali;
     }
 
-    public void setTanggalkembali(Date tanggalkembali) {
+    public void setTanggalkembali(String tanggalkembali) {
         this.tanggalkembali = tanggalkembali;
     }
 
-    public double getDenda() {
+    public String getDenda() {
         return denda;
     }
 
-    public void setDenda(double denda) {
+    public void setDenda(String denda) {
         this.denda = denda;
     }
 
-    public int getIdstatus() {
+    public String getIdstatus() {
         return idstatus;
     }
 
-    public void setIdstatus(int idstatus) {
+    public void setIdstatus(String idstatus) {
         this.idstatus = idstatus;
     }
     

@@ -45,13 +45,20 @@ public class KategoriDao {
         return kategoriList;
     }
     
-    public void simpanKategori(Kategori kategori, String mode) throws SQLException {
-        String sql = null;
-        if (mode.equalsIgnoreCase("insert")) {
-            sql = "INSERT INTO kategori (namakategori, idkategori VALUES (?, ?)";
-        }else if(mode.equalsIgnoreCase("update")){
-            sql = "UPDATE kategori SET namakategori=? where idkategori=?";
+    public void insertKategori(Kategori kategori) throws SQLException {
+        String sql = "INSERT INTO kategori (namakategori, idkategori) VALUES (?, ?)";
+        try{
+            preStmt = koneksi.prepareStatement(sql);
+            preStmt.setString(1, kategori.getNamakategori());
+            preStmt.setString(2, kategori.getIdkategori());
+            preStmt.executeUpdate();
+        }catch(SQLException ex){
+            System.out.println("Ada Error : " + ex);
         }
+    }
+    
+    public void updateKategori(Kategori kategori) throws SQLException{
+        String sql = "UPDATE kategori SET namakategori=? where idkategori=?";
         try{
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, kategori.getNamakategori());

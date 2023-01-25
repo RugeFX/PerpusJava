@@ -72,16 +72,39 @@ public class BukuDAO {
         return bukuList;
     }
     
-    public void simpanBuku(Buku buku, String mode) throws SQLException {
-        String sql = null;
-        if (mode.equalsIgnoreCase("insert")) {
-            sql = "INSERT INTO buku (judulbuku, pengarang, "
+    public void insertBuku(Buku buku) throws SQLException {
+        String sql = "INSERT INTO buku (judulbuku, pengarang, "
                     + "tahunterbit, idkategori, idpenerbit, idgenre, "
                     + "urlebook, urlgambar, stokbuku, kodebuku) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        }else if(mode.equalsIgnoreCase("update")){
-            sql = "UPDATE buku SET judulbuku=?, pengarang=?, tahunterbit=?, idkategori=?,"
-                    + "idpenerbit=?, idgenre=?, urlebook=?, urlgambar=?, stokbuku=? where kodebuku=?";
+        try{
+            preStmt = koneksi.prepareStatement(sql);
+            preStmt.setString(1, buku.getJudulbuku());
+            preStmt.setString(2, buku.getPengarang());
+            preStmt.setString(3, buku.getTahunterbit());
+            preStmt.setString(4, buku.getIdkategori());
+            preStmt.setString(5, buku.getIdpenerbit());
+            preStmt.setString(6, buku.getIdgenre());
+            if (buku.getUrlebook().equals("")) {
+                preStmt.setString(7, null);
+            }else{
+                preStmt.setString(7, buku.getUrlebook());
+            }
+            if (buku.getUrlgambar().equals("")) {
+                preStmt.setString(8, null);
+            }else{
+                preStmt.setString(8, buku.getUrlgambar());
+            }
+            preStmt.setInt(9, buku.getStokbuku());
+            preStmt.setString(10, buku.getKodebuku());
+            preStmt.executeUpdate();
+        }catch(SQLException ex){
+            System.out.println("Ada Error : " + ex);
         }
+    }
+    
+    public void updateBuku(Buku buku) throws SQLException{
+        String sql = "UPDATE buku SET judulbuku=?, pengarang=?, tahunterbit=?, idkategori=?,"
+                    + "idpenerbit=?, idgenre=?, urlebook=?, urlgambar=?, stokbuku=? where kodebuku=?";
         try{
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, buku.getJudulbuku());

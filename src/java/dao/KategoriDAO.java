@@ -12,84 +12,83 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import models.Penerbit;
+import models.Kategori;
 
 /**
  *
  * @author Lenovo
  */
-public class PenerbitDAO {
+public class KategoriDAO {
     private final Connection koneksi;
     private PreparedStatement preStmt;
     private ResultSet rs;
     
-    private SimpleDateFormat sdf = new SimpleDateFormat ("dd-MM-yyyy");
-    public PenerbitDAO(){ //konstruktor 
+    public KategoriDAO(){ //konstruktor 
             koneksi = connection.ConnectDB.getConnection();
     }
     
-    public List<Penerbit> getAllPenerbit() {
-        ArrayList<Penerbit> penerbitList = new ArrayList<>();
-        String query = "SELECT * FROM penerbit";
+    public List<Kategori> getAllKategori() {
+        ArrayList<Kategori> kategoriList = new ArrayList<>();
+        String query = "SELECT * FROM kategori";
         try{
             preStmt = koneksi.prepareStatement(query);
             rs = preStmt.executeQuery();
             while (rs.next()) {
-                Penerbit penerbit = new Penerbit();
-                penerbit.setIdpenerbit(rs.getString("idpenerbit"));
-                penerbit.setNamapenerbit(rs.getString("namapenerbit"));            
-                penerbitList.add(penerbit);
+                Kategori kategori = new Kategori();
+                kategori.setIdkategori(rs.getString("idkategori"));
+                kategori.setNamakategori(rs.getString("namakategori"));          
+                kategoriList.add(kategori);
             }
         }catch(SQLException ex){
             System.out.println("Error on anggotaDao : " + ex);
         }
-        return penerbitList;
+        return kategoriList;
     }
     
-    public void insertPenerbit(Penerbit penerbit) throws SQLException {
-        String sql = "INSERT INTO penerbit (namapenerbit, idpenerbit VALUES (?, ?)";
+    public void insertKategori(Kategori kategori) throws SQLException {
+        String sql = "INSERT INTO kategori (namakategori, idkategori) VALUES (?, ?)";
         try{
             preStmt = koneksi.prepareStatement(sql);
-            preStmt.setString(1, penerbit.getNamapenerbit());
-            preStmt.setString(2, penerbit.getIdpenerbit());
+            preStmt.setString(1, kategori.getNamakategori());
+            preStmt.setString(2, kategori.getIdkategori());
             preStmt.executeUpdate();
         }catch(SQLException ex){
             System.out.println("Ada Error : " + ex);
         }
     }
     
-    public void updatePenerbit(Penerbit penerbit) throws SQLException{
-        String sql = "UPDATE penerbit SET namapenerbit=? where idpenerbit=?";
+    public void updateKategori(Kategori kategori) throws SQLException{
+        String sql = "UPDATE kategori SET namakategori=? where idkategori=?";
         try{
             preStmt = koneksi.prepareStatement(sql);
-            preStmt.setString(1, penerbit.getNamapenerbit());
-            preStmt.setString(2, penerbit.getIdpenerbit());
+            preStmt.setString(1, kategori.getNamakategori());
+            preStmt.setString(2, kategori.getIdkategori());
             preStmt.executeUpdate();
         }catch(SQLException ex){
             System.out.println("Ada Error : " + ex);
         }
     }
     
-    public Penerbit getDtPenerbit(String id){
-        String search = "SELECT * from penerbit where idpenerbit = ?";
-        Penerbit penerbit = new Penerbit();
+    public Kategori getDtKategori(String id){
+        String search = "SELECT * from kategori where idkategori = ?";
+        Kategori kategori = new Kategori();
         try {
             preStmt = koneksi.prepareStatement(search);
             preStmt.setString(1, id);
             rs = preStmt.executeQuery();
             if (rs.next()) {
-               penerbit.setIdpenerbit(rs.getString("idpenerbit"));
-               penerbit.setNamapenerbit(rs.getString("namapenerbit"));  
+                kategori.setIdkategori(rs.getString("idkategori"));
+                kategori.setNamakategori(rs.getString("namakategori")); 
             }
             
         } catch (SQLException ex) {
             System.out.println("Ada kesalahan : "+ex);
         }
-        return penerbit;
+        return kategori;
     }
     
     public void hapus(String id) {
-        String sql = "delete from penerbit where idpenerbit = ?";  
+        String sql = "delete from kategori where idkategori = ?";  
         try {
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, id);
