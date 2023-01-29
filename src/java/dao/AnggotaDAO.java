@@ -47,7 +47,7 @@ public class AnggotaDAO {
         }
     }
     
-    public Boolean getLogin(String nik, String Password){
+    public Anggota getLogin(String nik, String Password){
         Anggota ang = new Anggota();
         String sqlSearch = "SELECT * FROM anggota WHERE nik=?";
         try{
@@ -56,18 +56,24 @@ public class AnggotaDAO {
             preStmt.setString(1, nik);
             rs = preStmt.executeQuery();
             if(rs.next()) {
-            ang.setNik(rs.getString("nik"));
-            ang.setPassword(rs.getString("password"));
-            String pwMd5 = getMd5String(Password);
+                ang.setNik(rs.getString("nik"));
+                ang.setPassword(rs.getString("password"));
+                ang.setNamaanggota(rs.getString("namaanggota"));
+                ang.setAlamat(rs.getString("alamat"));
+                ang.setKota(rs.getString("kota"));
+                ang.setNotelpon(rs.getString("notelpon"));
+                ang.setTanggallahir(rs.getString("tanggallahir"));
+                String pwMd5 = getMd5String(Password);
                 if (!pwMd5.equals(ang.getPassword())) {
-                    return false;
+                    return null;
                 }
         }
     }
         catch (SQLException se){
             System.out.println("Ada Kesalahan : " + se);
+            return null;
         }
-        return true;
+        return ang;
     }
     
     public List<Anggota> getAllAnggota() {

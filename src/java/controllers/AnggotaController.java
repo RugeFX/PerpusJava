@@ -81,7 +81,7 @@ public class AnggotaController extends HttpServlet {
                 // Reads all of the form body from the request
                 String resBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
                 System.out.println("resBody : " + resBody);
-                
+
                 // Parse the JSONString into a JSON Object named Anggota
                 String data = null;
                 try{
@@ -93,10 +93,30 @@ public class AnggotaController extends HttpServlet {
                         }catch(SQLException ex){
                             System.out.println(ex);
                         }
-                    }else{
+                    }else if(page.equals("update")){
                        try{
                             ad.updateAnggota(jsonAnggota);
                         }catch(SQLException ex){
+                            System.out.println(ex);
+                        }
+                    }
+                    else if(page.equals("login")){
+                        try {
+                            String nik = request.getParameter("nik");
+                            String password = request.getParameter("password");
+                            ang = ad.getLogin(nik, password);
+                            if (ang != null) {
+                                PostResource pr = new PostResource("OK", ang);
+                                data = gson.toJson(pr);
+                                out.println(data);
+                                return;
+                            }else{
+                                PostResource pr = new PostResource("NO", null);
+                                data = gson.toJson(pr);
+                                out.println(data);
+                                return;
+                            }
+                        } catch (Exception ex) {
                             System.out.println(ex);
                         }
                     }
@@ -104,7 +124,6 @@ public class AnggotaController extends HttpServlet {
                     data = gson.toJson(pr);
                 }catch(JsonIOException | JsonSyntaxException jex){
                     System.out.println("Masuk error : " + jex);
-                    
                 }        
                 out.println(data);                   
                 break;

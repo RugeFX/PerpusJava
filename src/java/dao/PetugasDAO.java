@@ -5,6 +5,8 @@
  */
 package dao;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,6 +52,48 @@ public class PetugasDAO {
         }
         return petugasList;
     }
+    
+    public String getMd5String(String input){
+         try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] hash = md.digest(input.getBytes());
+            BigInteger no = new BigInteger(1, hash);
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        } catch (Exception ex) {
+            System.out.println("Gagal");
+            return null;
+//            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public Petugas getLogin(String id, String Password){
+        Petugas petugas = new Petugas();
+        String sqlSearch = "SELECT * FROM petugas WHERE idpetugas=?";
+        try{
+            preStmt = koneksi.prepareStatement (sqlSearch);
+            preStmt.setString(1, id);
+            rs = preStmt.executeQuery();
+            if(rs.next()) {
+            petugas.setIdpetugas(rs.getString("idpetugas"));
+            petugas.setPassword(rs.getString("password"));
+            String pwMd5 = getMd5String(Password);
+                if (!pwMd5.equals(petugas.getPassword())) {
+                    return null;
+                }
+        }
+    }
+        catch (SQLException se){
+            System.out.println("Ada Kesalahan : " + se);
+            return null;
+        }
+        return petugas;
+    }
+    
+    
     
     public void insertPetugas(Petugas petugas) throws SQLException {
         String sql = "INSERT INTO petugas (password, namapetugas, "
