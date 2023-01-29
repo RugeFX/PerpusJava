@@ -47,7 +47,7 @@ public class AnggotaDAO {
         }
     }
     
-    public Boolean getLogin(String nik, String Password){
+    public Anggota getLogin(String nik, String Password){
         Anggota ang = new Anggota();
         String sqlSearch = "SELECT * FROM anggota WHERE nik=?";
         try{
@@ -56,18 +56,24 @@ public class AnggotaDAO {
             preStmt.setString(1, nik);
             rs = preStmt.executeQuery();
             if(rs.next()) {
-            ang.setNik(rs.getString("nik"));
-            ang.setPassword(rs.getString("password"));
-            String pwMd5 = getMd5String(Password);
+                ang.setNik(rs.getString("nik"));
+                ang.setPassword(rs.getString("password"));
+                ang.setNamaanggota(rs.getString("namaanggota"));
+                ang.setAlamat(rs.getString("alamat"));
+                ang.setKota(rs.getString("kota"));
+                ang.setNotelpon(rs.getString("notelpon"));
+                ang.setTanggallahir(rs.getString("tanggallahir"));
+                String pwMd5 = getMd5String(Password);
                 if (!pwMd5.equals(ang.getPassword())) {
-                    return false;
+                    return null;
                 }
         }
     }
         catch (SQLException se){
             System.out.println("Ada Kesalahan : " + se);
+            return null;
         }
-        return true;
+        return ang;
     }
     
     public List<Anggota> getAllAnggota() {
@@ -97,7 +103,6 @@ public class AnggotaDAO {
         String sql = "INSERT INTO anggota (password, namaanggota, "
                     + "alamat, kota, notelpon, tanggallahir, "
                     + "nik) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
-        try{
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, ang.getPassword());
             preStmt.setString(2, ang.getNamaanggota());
@@ -107,15 +112,11 @@ public class AnggotaDAO {
             preStmt.setString(6, ang.getTanggallahir());
             preStmt.setString(7, ang.getNik());
             preStmt.executeUpdate();
-        }catch(SQLException ex){
-            System.out.println("Ada Error : " + ex);
-        }
     }
     
     public void updateAnggota(Anggota ang) throws SQLException{
         String sql = "UPDATE anggota SET password=?, namanaggota=?, alamat=?, kota=?,"
                     + "notelpon=?, tanggallahir=? where nik=?";
-        try{
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, ang.getPassword());
             preStmt.setString(2, ang.getNamaanggota());
@@ -125,9 +126,6 @@ public class AnggotaDAO {
             preStmt.setString(6, ang.getTanggallahir());
             preStmt.setString(7, ang.getNik());
             preStmt.executeUpdate();
-        }catch(SQLException ex){
-            System.out.println("Ada Error : " + ex);
-        }
     }
     
     public Anggota getDtAnggota(String nik){
@@ -153,15 +151,11 @@ public class AnggotaDAO {
         return ang;
     }
     
-    public void hapus(String nik) {
+    public void hapus(String nik) throws SQLException {
         String sql = "delete from anggota where nik = ?";  
-        try {
-            preStmt = koneksi.prepareStatement(sql);
-            preStmt.setString(1, nik);
-            preStmt.executeUpdate();
-            
-        } catch (SQLException ex) {
-           System.out.println("Ada kesalahan : "+ex);
-        }
+        
+        preStmt = koneksi.prepareStatement(sql);
+        preStmt.setString(1, nik);
+        preStmt.executeUpdate();
     }
 }

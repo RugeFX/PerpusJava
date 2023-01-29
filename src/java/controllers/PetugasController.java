@@ -92,10 +92,29 @@ public class PetugasController extends HttpServlet {
                         }catch(SQLException ex){
                             System.out.println(ex);
                         }
-                    }else{
+                    }else if(page.equals("update")){
                        try{
                             pd.updatePetugas(jsonPetugas);
                         }catch(SQLException ex){
+                            System.out.println(ex);
+                        }
+                    }else if(page.equals("login")){
+                        try {
+                            String id = request.getParameter("id");
+                            String password = request.getParameter("password");
+                            petugas = pd.getLogin(id, password);
+                            if (petugas != null) {
+                                PostResource pr = new PostResource("OK", petugas);
+                                data = gson.toJson(pr);
+                                out.println(data);
+                                return;
+                            }else{
+                                PostResource pr = new PostResource("NO", null);
+                                data = gson.toJson(pr);
+                                out.println(data);
+                                return;
+                            }
+                        } catch (Exception ex) {
                             System.out.println(ex);
                         }
                     }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test page Login</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      input {
+        padding: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>All Anggota Data</h1>
+      <div id="Anggota"></div>
+      <br />
+      <h1>All Petugas Data</h1>
+      <div id="Petugas"></div>
+      <br />
+      <h1>Test Login Data</h1>
+      <form
+        id="testlogin"
+        style="display: flex; flex-direction: column; gap: 1rem; width: 25vw"
+      >
+        <input
+          type="text"
+          name="id"
+          id="id"
+          placeholder="Id"
+        />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="password"
+        />
+        <input type="submit" value="Login" />
+      </form>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>

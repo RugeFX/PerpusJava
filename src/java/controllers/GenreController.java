@@ -5,35 +5,30 @@
  */
 package controllers;
 
-import dao.BukuDAO;
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+import dao.GenreDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Buku;
-import com.google.gson.*;
-import dao.GenreDAO;
-import dao.KategoriDao;
-import dao.PenerbitDAO;
-import java.sql.SQLException;
-import java.util.stream.Collectors;
-import models.Attributes;
 import models.Genre;
-import models.Kategori;
-import models.Penerbit;
 import models.PostResource;
 
 /**
  *
- * @author lenovo
+ * @author Lenovo
  */
-@WebServlet(name = "BukuController", urlPatterns = {"/BukuController"})
-public class BukuController extends HttpServlet {
+@WebServlet(name = "GenreController", urlPatterns = {"/GenreController"})
+public class GenreController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,7 +39,6 @@ public class BukuController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Set response type and writer
@@ -58,40 +52,25 @@ public class BukuController extends HttpServlet {
         
         // Object initiation
         Gson gson = new Gson();
-        BukuDAO bd = new BukuDAO(); 
-        KategoriDao kd = new KategoriDao();
-        PenerbitDAO pd = new PenerbitDAO();
-        GenreDAO gd = new GenreDAO();
-        
+        GenreDAO gd = new GenreDAO();   
      
         switch(reqMethod){
             case "GET":
                 // Make a new List based on the Buku model
-                List<Buku> bukuList = new ArrayList<>(); 
-                Buku buku = new Buku();
-                
-//                Penerbit penerbit = new Penerbit();
-//                Kategori kategori = new Kategori();
-//                Genre genre = new Genre();
+                List<Genre> genreList = new ArrayList<>(); 
+                Genre genre = new Genre();
                 // Insert the buku data from the DAO
                 if(page == null){
-                    bukuList = bd.getAllBuku();
-                    System.out.println("BUKU : " + bukuList);
-                    String bukuJSON = gson.toJson(bukuList);
-                    System.out.println("BukuJSON : " + bukuJSON);
-                    out.println(bukuJSON);
-                    return;
+                    genreList = gd.getAllGenre();
+                    String genreJSON = gson.toJson(genreList);
+                    System.out.println("GenreJSON : " + genreJSON);
+                    out.println(genreJSON);
                 }
                 if(page.equals("show")){
-                    buku = bd.getBukuById(request.getParameter("kode"));
-                    String bukuJSON = gson.toJson(buku);
-                    System.out.println("BukuJSON SHOW : " + bukuJSON);
-                    out.println(bukuJSON);
-                }
-                if (page.equals("attributes")) {
-                    Attributes attr = new Attributes(gd.getAllGenre(),pd.getAllPenerbit(), kd.getAllKategori());
-                    System.out.println("Attr : " + attr);
-                    out.print(gson.toJson(new PostResource("OK", attr)));
+                    genre = gd.getDtGenre(request.getParameter("idgenre"));
+                    String genreJSON = gson.toJson(genre);
+                    System.out.println("GenreJSON : " + genreJSON);
+                    out.println(genreJSON);
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
                 
@@ -102,47 +81,31 @@ public class BukuController extends HttpServlet {
                 String resBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
                 System.out.println("resBody : " + resBody);
                 
+                // Parse the JSONString into a JSON Object named Petugas
+                String data = null;
                 try{
-                    Buku jsonBuku = gson.fromJson(resBody, Buku.class);
+                    Genre jsonGenre = gson.fromJson(resBody, Genre.class);
                     // Transfers the data via DAO
                     if (page.equals("insert")) {
-                        try{
-                            bd.insertBuku(jsonBuku);
-                            out.println(gson.toJson(new PostResource("OK", jsonBuku)));
+                         try{
+                            gd.insertGenre(jsonGenre);
                         }catch(SQLException ex){
                             System.out.println(ex);
-                            out.println(gson.toJson(new PostResource("Error " + ex, null)));
+                        }
+                    }else{
+                       try{
+                            gd.updateGenre(jsonGenre);
+                        }catch(SQLException ex){
+                            System.out.println(ex);
                         }
                     }
-//                    else if(page.equals("showupdate")){
-//                        try{
-//                            String kode = request.getParameter("kode");
-//                            response.sendRedirect("/PerpusJava/admin/pages/forms/tambahbuku.html?kode=" + kode);
-//                        }catch(IOException ex){
-//                            System.out.println("Error " + ex);
-//                        }
-//                    }
-                    else if(page.equals("update")){
-                        try{
-                            bd.updateBuku(jsonBuku);
-                            out.println(gson.toJson(new PostResource("OK", jsonBuku)));
-                        }catch(SQLException ex){
-                            System.out.println(ex);
-                            out.println(gson.toJson(new PostResource("Error " + ex, null)));
-                        }
-                    }else if(page.equals("delete")){
-                        System.out.println("masuk delet");
-                        try{
-                            bd.hapus(request.getParameter("kode"));
-                            out.println(gson.toJson(new PostResource("OK", null)));
-                        }catch(SQLException ex){
-                            System.out.println(ex);
-                            out.println(gson.toJson(new PostResource("Error " + ex, null)));
-                        }
-                    }
+                    PostResource pr = new PostResource("OK", jsonGenre);
+                    data = gson.toJson(pr);
                 }catch(JsonIOException | JsonSyntaxException jex){
                     System.out.println("Masuk error : " + jex);
-                }                       
+                    
+                }        
+                out.println(data);                   
                 break;
         }
     }

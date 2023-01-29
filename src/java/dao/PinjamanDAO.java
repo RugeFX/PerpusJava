@@ -30,7 +30,7 @@ public class PinjamanDAO {
     
     public List<Pinjaman> getAllPinjaman() {
         ArrayList<Pinjaman> pinjamanList = new ArrayList<>();
-        String query = "SELECT * FROM viewlaporanpinjaman";
+        String query = "SELECT * FROM `viewlaporanpinjaman`";
         try{
             preStmt = koneksi.prepareStatement(query);
             rs = preStmt.executeQuery();
@@ -41,7 +41,7 @@ public class PinjamanDAO {
                 pnjm.setJudulbuku(rs.getString("judulbuku"));
                 pnjm.setTanggalpinjam(rs.getString("tanggalpinjam"));
                 pnjm.setTanggalkembali(rs.getString("tanggalkembali"));
-                if (rs.getString("denda").equals("") || rs.getString("denda") == null ) {
+                if (rs.getString("denda") == null) {
                     pnjm.setDenda("0");
                 }else{
                     pnjm.setDenda(rs.getString("denda"));
@@ -92,6 +92,34 @@ public class PinjamanDAO {
         }
     }
     
+    public List<Pinjaman> getBukuTerlaris(){
+        ArrayList<Pinjaman> pinjamanList = new ArrayList<>();
+        String query = "SELECT *, COUNT(judulbuku) as Total FROM viewlaporanpinjaman "
+                + "GROUP BY judulbuku LIMIT 3";
+        try{
+            preStmt = koneksi.prepareStatement(query);
+            rs = preStmt.executeQuery();
+            while (rs.next()) {
+                Pinjaman pnjm = new Pinjaman();
+                pnjm.setIdanggota(rs.getString("idpinjaman"));
+                pnjm.setNamaaanggota(rs.getString("namaanggota"));
+                pnjm.setJudulbuku(rs.getString("judulbuku"));
+                pnjm.setTanggalpinjam(rs.getString("tanggalpinjam"));
+                pnjm.setTanggalkembali(rs.getString("tanggalkembali"));
+                if (rs.getString("denda").equals("") || rs.getString("denda") == null ) {
+                    pnjm.setDenda("0");
+                }else{
+                    pnjm.setDenda(rs.getString("denda"));
+                }
+                pnjm.setKeterangan(rs.getString("keterangaan"));             
+                pinjamanList.add(pnjm);
+            }
+        }catch(SQLException ex){
+            System.out.println("Error on anggotaDao : " + ex);
+        }
+        return pinjamanList;
+    }
+    
     public Pinjaman getDtPinjaman(String id){
         String search = "SELECT * from viewlaporanpinjaman where idpinjaman = ?";
         Pinjaman pnjm = new Pinjaman();
@@ -129,5 +157,10 @@ public class PinjamanDAO {
         } catch (SQLException ex) {
            System.out.println("Ada kesalahan : "+ex);
         }
+    }
+    
+    public static void main(String[] args) {
+        PinjamanDAO pd = new PinjamanDAO();
+        System.out.println(pd.getAllPinjaman());
     }
 }
