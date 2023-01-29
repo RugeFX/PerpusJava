@@ -28,10 +28,9 @@ public class PinjamanDAO {
             koneksi = connection.ConnectDB.getConnection();
     }
     
-    public List<Pinjaman> getAllPinjaman() {
+    public List<Pinjaman> getAllPinjaman() throws SQLException {
         ArrayList<Pinjaman> pinjamanList = new ArrayList<>();
         String query = "SELECT * FROM viewlaporanpinjaman";
-        try{
             preStmt = koneksi.prepareStatement(query);
             rs = preStmt.executeQuery();
             while (rs.next()) {
@@ -49,9 +48,6 @@ public class PinjamanDAO {
                 pnjm.setKeterangan(rs.getString("keterangaan"));             
                 pinjamanList.add(pnjm);
             }
-        }catch(SQLException ex){
-            System.out.println("Error on anggotaDao : " + ex);
-        }
         return pinjamanList;
     }
     
@@ -59,7 +55,6 @@ public class PinjamanDAO {
         String sql = "INSERT INTO pinjman (idanggota, kodebuku, "
                     + "tanggalpinjam, tanggalkembali, denda, idstatus, "
                     + "idpinjaman) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
-        try{
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, pnjm.getIdanggota());
             preStmt.setString(2, pnjm.getKodebuku());
@@ -69,15 +64,11 @@ public class PinjamanDAO {
             preStmt.setString(6, pnjm.getIdstatus());
             preStmt.setString(7, pnjm.getIdpinjaman());
             preStmt.executeUpdate();
-        }catch(SQLException ex){
-            System.out.println("Ada Error : " + ex);
-        }
     }
     
     public void updatePinjaman(Pinjaman pnjm) throws SQLException{
         String sql = "UPDATE petugas SET idanggota=?, kodebuku=?, tanggalpinjam=?, tanggalkembali=?,"
                     + "denda=?, idstatus=? where idpinjaman=?";
-        try{
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, pnjm.getIdanggota());
             preStmt.setString(2, pnjm.getKodebuku());
@@ -87,16 +78,12 @@ public class PinjamanDAO {
             preStmt.setString(6, pnjm.getIdstatus());
             preStmt.setString(7, pnjm.getIdpinjaman());
             preStmt.executeUpdate();
-        }catch(SQLException ex){
-            System.out.println("Ada Error : " + ex);
-        }
     }
     
-    public List<Pinjaman> getBukuTerlaris(){
+    public List<Pinjaman> getBukuTerlaris() throws SQLException{
         ArrayList<Pinjaman> pinjamanList = new ArrayList<>();
         String query = "SELECT *, COUNT(judulbuku) as Total FROM viewlaporanpinjaman "
                 + "GROUP BY judulbuku LIMIT 3";
-        try{
             preStmt = koneksi.prepareStatement(query);
             rs = preStmt.executeQuery();
             while (rs.next()) {
@@ -114,16 +101,12 @@ public class PinjamanDAO {
                 pnjm.setKeterangan(rs.getString("keterangaan"));             
                 pinjamanList.add(pnjm);
             }
-        }catch(SQLException ex){
-            System.out.println("Error on anggotaDao : " + ex);
-        }
         return pinjamanList;
     }
     
-    public Pinjaman getDtPinjaman(String id){
+    public Pinjaman getDtPinjaman(String id) throws SQLException{
         String search = "SELECT * from viewlaporanpinjaman where idpinjaman = ?";
         Pinjaman pnjm = new Pinjaman();
-        try {
             preStmt = koneksi.prepareStatement(search);
             preStmt.setString(1, id);
             rs = preStmt.executeQuery();
@@ -140,22 +123,13 @@ public class PinjamanDAO {
                 }
                 pnjm.setKeterangan(rs.getString("keterangaan"));   
             }
-            
-        } catch (SQLException ex) {
-            System.out.println("Ada kesalahan : "+ex);
-        }
         return pnjm;
     }
     
-    public void hapus(String id) {
+    public void hapus(String id) throws SQLException {
         String sql = "delete from pinjaman where idpinjaman = ?";  
-        try {
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, id);
             preStmt.executeUpdate();
-            
-        } catch (SQLException ex) {
-           System.out.println("Ada kesalahan : "+ex);
-        }
     }
 }

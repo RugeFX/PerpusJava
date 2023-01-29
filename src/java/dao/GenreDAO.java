@@ -26,10 +26,9 @@ public class GenreDAO {
             koneksi = connection.ConnectDB.getConnection();
     }
     
-    public List<Genre> getAllGenre() {
+    public List<Genre> getAllGenre() throws SQLException {
         ArrayList<Genre> genreList = new ArrayList<>();
         String query = "SELECT * FROM genre";
-        try{
             preStmt = koneksi.prepareStatement(query);
             rs = preStmt.executeQuery();
             while (rs.next()) {
@@ -38,40 +37,28 @@ public class GenreDAO {
                 genre.setNamagenre(rs.getString("namagenre"));          
                 genreList.add(genre);
             }
-        }catch(SQLException ex){
-            System.out.println("Error on anggotaDao : " + ex);
-        }
         return genreList;
     }
     
     public void insertGenre(Genre genre) throws SQLException {
         String sql = "INSERT INTO genre (namagenre, idgenre) VALUES (?, ?)";
-        try{
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, genre.getNamagenre());
             preStmt.setString(2, genre.getIdgenre());
             preStmt.executeUpdate();
-        }catch(SQLException ex){
-            System.out.println("Ada Error : " + ex);
-        }
     }
     
     public void updateGenre(Genre genre) throws SQLException{
         String sql = "UPDATE genre SET namagenre=? where idgenre=?";
-        try{
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, genre.getNamagenre());
             preStmt.setString(2, genre.getIdgenre());
             preStmt.executeUpdate();
-        }catch(SQLException ex){
-            System.out.println("Ada Error : " + ex);
-        }
     }
     
-    public Genre getDtGenre(String id){
+    public Genre getDtGenre(String id)throws SQLException{
         String search = "SELECT * from genre where idgenre = ?";
         Genre genre = new Genre();
-        try {
             preStmt = koneksi.prepareStatement(search);
             preStmt.setString(1, id);
             rs = preStmt.executeQuery();
@@ -79,22 +66,13 @@ public class GenreDAO {
                 genre.setIdgenre(rs.getString("idgenre"));
                 genre.setNamagenre(rs.getString("namagenre")); 
             }
-            
-        } catch (SQLException ex) {
-            System.out.println("Ada kesalahan : "+ex);
-        }
         return genre;
     }
     
-    public void hapus(String id) {
+    public void hapus(String id) throws SQLException {
         String sql = "delete from genre where idgenre = ?";  
-        try {
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, id);
             preStmt.executeUpdate();
-            
-        } catch (SQLException ex) {
-           System.out.println("Ada kesalahan : "+ex);
-        }
     }
 }

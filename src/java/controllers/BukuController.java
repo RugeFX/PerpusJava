@@ -27,7 +27,6 @@ import models.Genre;
 import models.Kategori;
 import models.Penerbit;
 import models.PostResource;
-import sun.net.www.http.HttpClient;
 
 /**
  *
@@ -76,24 +75,42 @@ public class BukuController extends HttpServlet {
 //                Genre genre = new Genre();
                 // Insert the buku data from the DAO
                 if(page == null){
-                    bukuList = bd.getAllBuku();
-                    String bukuJSON = gson.toJson(bukuList);
-                    System.out.println("BukuJSON : " + bukuJSON);
-                    out.println(bukuJSON);
+                    try {
+                        bukuList = bd.getAllBuku();
+                        System.out.println("BUKU : " + bukuList);
+                        String bukuJSON = gson.toJson(bukuList);
+                        System.out.println("BukuJSON : " + bukuJSON);
+                        out.println(bukuJSON);
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    return;
                 }
                 if(page.equals("show")){
-                    buku = bd.getBukuById(request.getParameter("idbuku"));
-                    String bukuJSON = gson.toJson(buku);
-                    System.out.println("BukuJSON : " + bukuJSON);
-                    out.println(bukuJSON);
+                    try {
+                        buku = bd.getBukuById(request.getParameter("kode"));
+                        String bukuJSON = gson.toJson(buku);
+                        System.out.println("BukuJSON SHOW : " + bukuJSON);
+                        out.println(bukuJSON);
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                 }
                 if (page.equals("attributes")) {
-                    Attributes attr = new Attributes(gd.getAllGenre(),pd.getAllPenerbit(), kd.getAllKategori());
-                    System.out.println("Attr : " + attr);
-                    out.print(gson.toJson(new PostResource("OK", attr)));
+                    try {
+                        Attributes attr = new Attributes(gd.getAllGenre(),pd.getAllPenerbit(), kd.getAllKategori());
+                        System.out.println("Attr : " + attr);
+                        out.print(gson.toJson(new PostResource("OK", attr)));
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                 }
-                // Converts the bukuList into a JSON String and then send it to the response
-                
+                // Converts the bukuList into a JSON String and then send it to the response               
                 break;
                 
             case "POST":
@@ -101,31 +118,47 @@ public class BukuController extends HttpServlet {
                 String resBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
                 System.out.println("resBody : " + resBody);
                 
-                // Parse the JSONString into a JSON Object named buku
-                String data = null;
                 try{
                     Buku jsonBuku = gson.fromJson(resBody, Buku.class);
                     // Transfers the data via DAO
                     if (page.equals("insert")) {
                         try{
                             bd.insertBuku(jsonBuku);
+                            out.println(gson.toJson(new PostResource("OK", jsonBuku)));
                         }catch(SQLException ex){
-                        System.out.println(ex);
-                        }
-                    }else{
-                        try{
-                            bd.updateBuku(jsonBuku);
-                        }catch(SQLException ex){
-                        System.out.println(ex);
+                            System.out.println(ex);
+                            out.println(gson.toJson(new PostResource("Error " + ex, null)));
                         }
                     }
-                    PostResource pr = new PostResource("OK", jsonBuku);
-                    data = gson.toJson(pr);
+//                    else if(page.equals("showupdate")){
+//                        try{
+//                            String kode = request.getParameter("kode");
+//                            response.sendRedirect("/PerpusJava/admin/pages/forms/tambahbuku.html?kode=" + kode);
+//                        }catch(IOException ex){
+//                            System.out.println("Error " + ex);
+//                        }
+//                    }
+                    else if(page.equals("update")){
+                        try{
+                            bd.updateBuku(jsonBuku);
+                            out.println(gson.toJson(new PostResource("OK", jsonBuku)));
+                        }catch(SQLException ex){
+                            System.out.println(ex);
+                            out.println(gson.toJson(new PostResource("Error " + ex, null)));
+                        }
+                    }else if(page.equals("delete")){
+                        System.out.println("masuk delet");
+                        try{
+                            bd.hapus(request.getParameter("kode"));
+                            out.println(gson.toJson(new PostResource("OK", null)));
+                        }catch(SQLException ex){
+                            System.out.println(ex);
+                            out.println(gson.toJson(new PostResource("Error " + ex, null)));
+                        }
+                    }
                 }catch(JsonIOException | JsonSyntaxException jex){
                     System.out.println("Masuk error : " + jex);
-                    
-                }        
-                out.println(data);                   
+                }                       
                 break;
         }
     }

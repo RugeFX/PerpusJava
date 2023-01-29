@@ -10,32 +10,36 @@ showAllBukus();
 idBtn.addEventListener("click", () => {
   let id = inputId.value;
   getByID(id).then((buku) => {
-    if (!buku) {
+    if (!buku || !buku.hasOwnProperty("kodebuku")) {
       console.log("buku no eksisto");
+      idEl.innerHTML = `Buku doesn't exist!`;
       return;
     }
+    idEl.innerHTML = `ID : ${buku.kodebuku} Judul : ${buku.judulbuku}`;
   });
 });
 
 formInsert.addEventListener("submit", (e) => {
   e.preventDefault();
   const body = getAllFormData();
-  if (body != null) {
+  if (
+    Object.values(body).every((value) => {
+      if (value === null || value === "") {
+        console.log(value);
+        return false;
+      }
+      return true;
+    })
+  ) {
     insertBuku(body).then((res) => {
-      if (res.status === "OK") {
+      if (res) {
         console.log("Berhasil POST");
       }
     });
   } else {
-    console.log("Tolong");
+    console.log("Tolong isi data dengan benar!");
   }
 });
-
-function showById(id) {
-  getByID(id).then((buku) => {
-    idEl.innerHTML = JSON.stringify(buku);
-  });
-}
 
 function showAllBukus() {
   getAllBukus().then((bukus) => {
@@ -68,16 +72,21 @@ async function getAllBukus() {
 }
 
 async function insertBuku(body) {
-  const res = await fetch("/PerpusJava/BukuController", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  const res = await fetch(
+    "/PerpusJava/BukuController?" +
+      new URLSearchParams({
+        page: "insert",
+      }),
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
   const postBuku = await res.json();
-  console.log(postBuku);
   return postBuku;
 }
 
@@ -90,6 +99,5 @@ async function getByID(id) {
       })
   );
   const bukus = await res.json();
-  console.log(bukus);
   return bukus;
 }

@@ -61,16 +61,28 @@ public class PenerbitController extends HttpServlet {
                 Penerbit penerbit = new Penerbit();
                 // Insert the buku data from the DAO
                 if(page == null){
-                    penerbitList = pd.getAllPenerbit();
-                    String penerbitJSON = gson.toJson(penerbitList);
-                    System.out.println("PenerbitJSON : " + penerbitJSON);
-                    out.println(penerbitJSON);
+                    try {
+                        penerbitList = pd.getAllPenerbit();
+                        String penerbitJSON = gson.toJson(penerbitList);
+                        System.out.println("PenerbitJSON : " + penerbitJSON);
+                        out.println(penerbitJSON);
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                 }
                 if(page.equals("show")){
-                    penerbit = pd.getDtPenerbit(request.getParameter("idpenerbit"));
-                    String penerbitJSON = gson.toJson(penerbit);
-                    System.out.println("PenerbitJSON : " + penerbitJSON);
-                    out.println(penerbitJSON);
+                    try {
+                        penerbit = pd.getDtPenerbit(request.getParameter("idpenerbit"));
+                        String penerbitJSON = gson.toJson(penerbit);
+                        System.out.println("PenerbitJSON : " + penerbitJSON);
+                        out.println(penerbitJSON);
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
                 
@@ -92,11 +104,25 @@ public class PenerbitController extends HttpServlet {
                         }catch(SQLException ex){
                             System.out.println(ex);
                         }
-                    }else{
+                    }
+                    if(page.equals("update")){
                        try{
                             pd.updatePenerbit(jsonPenerbit);
                         }catch(SQLException ex){
                             System.out.println(ex);
+                        }
+                    }
+                     if(page.equals("delete")){
+                        try {
+                            pd.hapus(request.getParameter("idpenerbit"));
+                            PostResource pr = new PostResource("OK", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
+                            return;
+                        } catch (Exception e) {
+                            PostResource pr = new PostResource("NO", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
                         }
                     }
                     PostResource pr = new PostResource("OK", jsonPenerbit);
