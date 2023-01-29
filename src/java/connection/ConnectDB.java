@@ -18,14 +18,14 @@ public class ConnectDB {
     public static Connection getConnection(){
         if(conn == null){
             MysqlDataSource data = new MysqlDataSource();
-            data.setDatabaseName("perpus");
+            data.setDatabaseName("perpus_pbo");
             data.setUser("root");
             data.setPassword("");
             try{
                 conn = (Connection) data.getConnection();
                 System.out.println("Connection succeeded");
             }catch(SQLException ex){
-                System.out.println("Error ConnectDB : " + ex);
+                System.out.println("Error ConnectionDB : " + ex);
             }
         }
         return conn;

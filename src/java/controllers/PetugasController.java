@@ -67,6 +67,7 @@ public class PetugasController extends HttpServlet {
                         System.out.println("PetugasJSON : " + petugasJSON);
                         out.println(petugasJSON);
                     } catch (Exception e) {
+                        System.out.println(e);
                         PostResource pr = new PostResource("NO", null);
                         out.println(gson.toJson(pr));
                     }
