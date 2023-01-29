@@ -28,12 +28,6 @@ formLogin.addEventListener("submit", (e) => {
   }
 });
 
-//function showById(id) {
-//  getByID(id).then((buku) => {
-//    idEl.innerHTML = JSON.stringify(buku);
-//  });
-//}
-
 function showAllAnggotas() {
     getAllAnggotas().then((anggotas) => {
     anggotas.forEach((anggota) => {
