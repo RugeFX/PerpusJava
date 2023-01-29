@@ -61,16 +61,26 @@ public class GenreController extends HttpServlet {
                 Genre genre = new Genre();
                 // Insert the buku data from the DAO
                 if(page == null){
-                    genreList = gd.getAllGenre();
-                    String genreJSON = gson.toJson(genreList);
-                    System.out.println("GenreJSON : " + genreJSON);
-                    out.println(genreJSON);
+                    try {
+                        genreList = gd.getAllGenre();
+                        String genreJSON = gson.toJson(genreList);
+                        System.out.println("GenreJSON : " + genreJSON);
+                        out.println(genreJSON);
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                 }
                 if(page.equals("show")){
-                    genre = gd.getDtGenre(request.getParameter("idgenre"));
-                    String genreJSON = gson.toJson(genre);
-                    System.out.println("GenreJSON : " + genreJSON);
-                    out.println(genreJSON);
+                    try {
+                        genre = gd.getDtGenre(request.getParameter("idgenre"));
+                        String genreJSON = gson.toJson(genre);
+                        System.out.println("GenreJSON : " + genreJSON);
+                        out.println(genreJSON);
+                    } catch (Exception e) {
+                    }
+                   
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
                 
@@ -92,11 +102,25 @@ public class GenreController extends HttpServlet {
                         }catch(SQLException ex){
                             System.out.println(ex);
                         }
-                    }else{
+                    }
+                    if(page.equals("update")){
                        try{
                             gd.updateGenre(jsonGenre);
                         }catch(SQLException ex){
                             System.out.println(ex);
+                        }
+                    }
+                     if(page.equals("delete")){
+                        try {
+                            gd.hapus(request.getParameter("idgenre"));
+                            PostResource pr = new PostResource("OK", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
+                            return;
+                        } catch (Exception e) {
+                            PostResource pr = new PostResource("NO", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
                         }
                     }
                     PostResource pr = new PostResource("OK", jsonGenre);

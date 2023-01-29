@@ -47,10 +47,9 @@ public class AnggotaDAO {
         }
     }
     
-    public Anggota getLogin(String nik, String Password){
+    public Anggota getLogin(String nik, String Password) throws SQLException{
         Anggota ang = new Anggota();
         String sqlSearch = "SELECT * FROM anggota WHERE nik=?";
-        try{
             String pw;
             preStmt = koneksi.prepareStatement (sqlSearch);
             preStmt.setString(1, nik);
@@ -68,18 +67,12 @@ public class AnggotaDAO {
                     return null;
                 }
         }
-    }
-        catch (SQLException se){
-            System.out.println("Ada Kesalahan : " + se);
-            return null;
-        }
         return ang;
     }
     
-    public List<Anggota> getAllAnggota() {
+    public List<Anggota> getAllAnggota() throws SQLException {
         ArrayList<Anggota> anggotaList = new ArrayList<>();
         String query = "SELECT * FROM anggota";
-        try{
             preStmt = koneksi.prepareStatement(query);
             rs = preStmt.executeQuery();
             while (rs.next()) {
@@ -93,9 +86,6 @@ public class AnggotaDAO {
                 ang.setTanggallahir(rs.getString("tanggallahir"));             
                 anggotaList.add(ang);
             }
-        }catch(SQLException ex){
-            System.out.println("Error on anggotaDao : " + ex);
-        }
         return anggotaList;
     }
     
@@ -128,10 +118,9 @@ public class AnggotaDAO {
             preStmt.executeUpdate();
     }
     
-    public Anggota getDtAnggota(String nik){
+    public Anggota getDtAnggota(String nik) throws SQLException {
         String search = "SELECT * from anggota where nik = ?";
         Anggota ang = new Anggota();
-        try {
             preStmt = koneksi.prepareStatement(search);
             preStmt.setString(1, nik);
             rs = preStmt.executeQuery();
@@ -144,18 +133,13 @@ public class AnggotaDAO {
                 ang.setNotelpon(rs.getString("notelpon"));
                 ang.setTanggallahir(rs.getString("tanggallahir"));   
             }
-            
-        } catch (SQLException ex) {
-            System.out.println("Ada kesalahan : "+ex);
-        }
         return ang;
     }
     
     public void hapus(String nik) throws SQLException {
         String sql = "delete from anggota where nik = ?";  
-        
-        preStmt = koneksi.prepareStatement(sql);
-        preStmt.setString(1, nik);
-        preStmt.executeUpdate();
+            preStmt = koneksi.prepareStatement(sql);
+            preStmt.setString(1, nik);
+            preStmt.executeUpdate();
     }
 }

@@ -61,16 +61,28 @@ public class KategoriController extends HttpServlet {
                 Kategori kategori = new Kategori();
                 // Insert the buku data from the DAO
                 if(page == null){
-                    kategoriList = kd.getAllKategori();
-                    String kategoriJSON = gson.toJson(kategoriList);
-                    System.out.println("KategoriJSON : " + kategoriJSON);
-                    out.println(kategoriJSON);
+                    try {
+                        kategoriList = kd.getAllKategori();
+                        String kategoriJSON = gson.toJson(kategoriList);
+                        System.out.println("KategoriJSON : " + kategoriJSON);
+                        out.println(kategoriJSON);
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                 }
                 if(page.equals("show")){
-                    kategori = kd.getDtKategori(request.getParameter("idkategori"));
-                    String kategoriJSON = gson.toJson(kategori);
-                    System.out.println("KategoriJSON : " + kategoriJSON);
-                    out.println(kategoriJSON);
+                    try {
+                        kategori = kd.getDtKategori(request.getParameter("idkategori"));
+                        String kategoriJSON = gson.toJson(kategori);
+                        System.out.println("KategoriJSON : " + kategoriJSON);
+                        out.println(kategoriJSON);
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
                 
@@ -92,11 +104,25 @@ public class KategoriController extends HttpServlet {
                         }catch(SQLException ex){
                             System.out.println(ex);
                         }
-                    }else{
+                    }
+                    if(page.equals("update")){
                        try{
                             kd.updateKategori(jsonKategori);
                         }catch(SQLException ex){
                             System.out.println(ex);
+                        }
+                    }
+                     if(page.equals("delete")){
+                        try {
+                            kd.hapus(request.getParameter("idkategori"));
+                            PostResource pr = new PostResource("OK", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
+                            return;
+                        } catch (Exception e) {
+                            PostResource pr = new PostResource("NO", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
                         }
                     }
                     PostResource pr = new PostResource("OK", jsonKategori);

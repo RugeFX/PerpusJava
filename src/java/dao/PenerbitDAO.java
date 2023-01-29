@@ -28,10 +28,9 @@ public class PenerbitDAO {
             koneksi = connection.ConnectDB.getConnection();
     }
     
-    public List<Penerbit> getAllPenerbit() {
+    public List<Penerbit> getAllPenerbit() throws SQLException {
         ArrayList<Penerbit> penerbitList = new ArrayList<>();
         String query = "SELECT * FROM penerbit";
-        try{
             preStmt = koneksi.prepareStatement(query);
             rs = preStmt.executeQuery();
             while (rs.next()) {
@@ -40,40 +39,28 @@ public class PenerbitDAO {
                 penerbit.setNamapenerbit(rs.getString("namapenerbit"));            
                 penerbitList.add(penerbit);
             }
-        }catch(SQLException ex){
-            System.out.println("Error on anggotaDao : " + ex);
-        }
         return penerbitList;
     }
     
     public void insertPenerbit(Penerbit penerbit) throws SQLException {
         String sql = "INSERT INTO penerbit (namapenerbit, idpenerbit VALUES (?, ?)";
-        try{
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, penerbit.getNamapenerbit());
             preStmt.setString(2, penerbit.getIdpenerbit());
             preStmt.executeUpdate();
-        }catch(SQLException ex){
-            System.out.println("Ada Error : " + ex);
-        }
     }
     
     public void updatePenerbit(Penerbit penerbit) throws SQLException{
         String sql = "UPDATE penerbit SET namapenerbit=? where idpenerbit=?";
-        try{
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, penerbit.getNamapenerbit());
             preStmt.setString(2, penerbit.getIdpenerbit());
             preStmt.executeUpdate();
-        }catch(SQLException ex){
-            System.out.println("Ada Error : " + ex);
-        }
     }
     
-    public Penerbit getDtPenerbit(String id){
+    public Penerbit getDtPenerbit(String id) throws SQLException{
         String search = "SELECT * from penerbit where idpenerbit = ?";
         Penerbit penerbit = new Penerbit();
-        try {
             preStmt = koneksi.prepareStatement(search);
             preStmt.setString(1, id);
             rs = preStmt.executeQuery();
@@ -81,22 +68,13 @@ public class PenerbitDAO {
                penerbit.setIdpenerbit(rs.getString("idpenerbit"));
                penerbit.setNamapenerbit(rs.getString("namapenerbit"));  
             }
-            
-        } catch (SQLException ex) {
-            System.out.println("Ada kesalahan : "+ex);
-        }
         return penerbit;
     }
     
-    public void hapus(String id) {
+    public void hapus(String id) throws SQLException {
         String sql = "delete from penerbit where idpenerbit = ?";  
-        try {
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, id);
             preStmt.executeUpdate();
-            
-        } catch (SQLException ex) {
-           System.out.println("Ada kesalahan : "+ex);
-        }
     }
 }

@@ -61,16 +61,28 @@ public class PinjamanController extends HttpServlet {
                 Pinjaman pnjm = new Pinjaman();
                 // Insert the buku data from the DAO
                 if(page == null){
-                    pinjamanList = pd.getAllPinjaman();
-                    String pinjamanJSON = gson.toJson(pinjamanList);
-                    System.out.println("PinjamanJSON : " + pinjamanJSON);
-                    out.println(pinjamanJSON);
+                    try {
+                        pinjamanList = pd.getAllPinjaman();
+                        String pinjamanJSON = gson.toJson(pinjamanList);
+                        System.out.println("PinjamanJSON : " + pinjamanJSON);
+                        out.println(pinjamanJSON);
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                 }
                 if(page.equals("show")){
-                    pnjm = pd.getDtPinjaman(request.getParameter("idpinjaman"));
-                    String pinjamanJSON = gson.toJson(pnjm);
-                    System.out.println("PinjamanJSON : " + pinjamanJSON);
-                    out.println(pinjamanJSON);
+                    try {
+                        pnjm = pd.getDtPinjaman(request.getParameter("idpinjaman"));
+                        String pinjamanJSON = gson.toJson(pnjm);
+                        System.out.println("PinjamanJSON : " + pinjamanJSON);
+                        out.println(pinjamanJSON);
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
                 
@@ -92,11 +104,25 @@ public class PinjamanController extends HttpServlet {
                         }catch(SQLException ex){
                             System.out.println(ex);
                         }
-                    }else{
+                    }
+                    if(page.equals("update")){
                        try{
                             pd.updatePinjaman(jsonPinjaman);
                         }catch(SQLException ex){
                             System.out.println(ex);
+                        }
+                    }
+                     if(page.equals("delete")){
+                        try {
+                            pd.hapus(request.getParameter("idpinjaman"));
+                            PostResource pr = new PostResource("OK", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
+                            return;
+                        } catch (Exception e) {
+                            PostResource pr = new PostResource("NO", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
                         }
                     }
                     PostResource pr = new PostResource("OK", jsonPinjaman);

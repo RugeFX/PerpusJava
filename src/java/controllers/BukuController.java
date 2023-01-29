@@ -75,26 +75,42 @@ public class BukuController extends HttpServlet {
 //                Genre genre = new Genre();
                 // Insert the buku data from the DAO
                 if(page == null){
-                    bukuList = bd.getAllBuku();
-                    System.out.println("BUKU : " + bukuList);
-                    String bukuJSON = gson.toJson(bukuList);
-                    System.out.println("BukuJSON : " + bukuJSON);
-                    out.println(bukuJSON);
+                    try {
+                        bukuList = bd.getAllBuku();
+                        System.out.println("BUKU : " + bukuList);
+                        String bukuJSON = gson.toJson(bukuList);
+                        System.out.println("BukuJSON : " + bukuJSON);
+                        out.println(bukuJSON);
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
                     return;
                 }
                 if(page.equals("show")){
-                    buku = bd.getBukuById(request.getParameter("kode"));
-                    String bukuJSON = gson.toJson(buku);
-                    System.out.println("BukuJSON SHOW : " + bukuJSON);
-                    out.println(bukuJSON);
+                    try {
+                        buku = bd.getBukuById(request.getParameter("kode"));
+                        String bukuJSON = gson.toJson(buku);
+                        System.out.println("BukuJSON SHOW : " + bukuJSON);
+                        out.println(bukuJSON);
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                 }
                 if (page.equals("attributes")) {
-                    Attributes attr = new Attributes(gd.getAllGenre(),pd.getAllPenerbit(), kd.getAllKategori());
-                    System.out.println("Attr : " + attr);
-                    out.print(gson.toJson(new PostResource("OK", attr)));
+                    try {
+                        Attributes attr = new Attributes(gd.getAllGenre(),pd.getAllPenerbit(), kd.getAllKategori());
+                        System.out.println("Attr : " + attr);
+                        out.print(gson.toJson(new PostResource("OK", attr)));
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                 }
-                // Converts the bukuList into a JSON String and then send it to the response
-                
+                // Converts the bukuList into a JSON String and then send it to the response               
                 break;
                 
             case "POST":

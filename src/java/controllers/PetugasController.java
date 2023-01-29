@@ -61,16 +61,28 @@ public class PetugasController extends HttpServlet {
                 Petugas petugas = new Petugas();
                 // Insert the buku data from the DAO
                 if(page == null){
-                    petugasList = pd.getAllPetugas();
-                    String petugasJSON = gson.toJson(petugasList);
-                    System.out.println("PetugasJSON : " + petugasJSON);
-                    out.println(petugasJSON);
+                    try {
+                        petugasList = pd.getAllPetugas();
+                        String petugasJSON = gson.toJson(petugasList);
+                        System.out.println("PetugasJSON : " + petugasJSON);
+                        out.println(petugasJSON);
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                 }
                 if(page.equals("show")){
-                    petugas = pd.getDtPetugas(request.getParameter("idpetugas"));
-                    String petugasJSON = gson.toJson(petugas);
-                    System.out.println("PetugasJSON : " + petugasJSON);
-                    out.println(petugasJSON);
+                    try {
+                        petugas = pd.getDtPetugas(request.getParameter("idpetugas"));
+                        String petugasJSON = gson.toJson(petugas);
+                        System.out.println("PetugasJSON : " + petugasJSON);
+                        out.println(petugasJSON);
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
                 
@@ -92,30 +104,40 @@ public class PetugasController extends HttpServlet {
                         }catch(SQLException ex){
                             System.out.println(ex);
                         }
-                    }else if(page.equals("update")){
+                    }
+                    if(page.equals("update")){
                        try{
                             pd.updatePetugas(jsonPetugas);
                         }catch(SQLException ex){
                             System.out.println(ex);
                         }
-                    }else if(page.equals("login")){
+                    }
+                    if(page.equals("login")){
                         try {
                             String id = request.getParameter("id");
                             String password = request.getParameter("password");
                             petugas = pd.getLogin(id, password);
-                            if (petugas != null) {
-                                PostResource pr = new PostResource("OK", petugas);
-                                data = gson.toJson(pr);
-                                out.println(data);
-                                return;
-                            }else{
-                                PostResource pr = new PostResource("NO", null);
-                                data = gson.toJson(pr);
-                                out.println(data);
-                                return;
-                            }
+                            PostResource pr = new PostResource("OK", petugas);
+                            data = gson.toJson(pr);
+                            out.println(data);
+                            return;
                         } catch (Exception ex) {
-                            System.out.println(ex);
+                             PostResource pr = new PostResource("NO", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
+                        }
+                    }
+                     if(page.equals("delete")){
+                        try {
+                            pd.hapus(request.getParameter("idpetugas"));
+                            PostResource pr = new PostResource("OK", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
+                            return;
+                        } catch (Exception e) {
+                            PostResource pr = new PostResource("NO", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
                         }
                     }
                     PostResource pr = new PostResource("OK", jsonPetugas);

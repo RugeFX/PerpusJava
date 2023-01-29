@@ -62,16 +62,28 @@ public class AnggotaController extends HttpServlet {
                 Anggota ang = new Anggota();
                 // Insert the buku data from the DAO
                 if(page == null){
-                    anggotaList = ad.getAllAnggota();
-                    String anggotaJSON = gson.toJson(anggotaList);
-                    System.out.println("AnggotaJSON : " + anggotaJSON);
-                    out.println(anggotaJSON);
+                    try {
+                        anggotaList = ad.getAllAnggota();
+                        String anggotaJSON = gson.toJson(anggotaList);
+                        System.out.println("AnggotaJSON : " + anggotaJSON);
+                        out.println(anggotaJSON); 
+                    } catch (Exception ex) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                 }
                 if(page.equals("show")){
-                    ang = ad.getDtAnggota(request.getParameter("nik"));
-                    String anggotaJSON = gson.toJson(ang);
-                    System.out.println("AnggotaJSON : " + anggotaJSON);
-                    out.println(anggotaJSON);
+                    try {
+                        ang = ad.getDtAnggota(request.getParameter("nik"));
+                        String anggotaJSON = gson.toJson(ang);
+                        System.out.println("AnggotaJSON : " + anggotaJSON);
+                        out.println(anggotaJSON);
+                    } catch (Exception e) {
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
                 
@@ -93,31 +105,40 @@ public class AnggotaController extends HttpServlet {
                         }catch(SQLException ex){
                             System.out.println(ex);
                         }
-                    }else if(page.equals("update")){
+                    }
+                    if(page.equals("update")){
                        try{
                             ad.updateAnggota(jsonAnggota);
                         }catch(SQLException ex){
                             System.out.println(ex);
                         }
                     }
-                    else if(page.equals("login")){
+                    if(page.equals("login")){
                         try {
-                            String nik = request.getParameter("nik");
+                            String nik = request.getParameter("id");
                             String password = request.getParameter("password");
                             ang = ad.getLogin(nik, password);
-                            if (ang != null) {
-                                PostResource pr = new PostResource("OK", ang);
-                                data = gson.toJson(pr);
-                                out.println(data);
-                                return;
-                            }else{
-                                PostResource pr = new PostResource("NO", null);
-                                data = gson.toJson(pr);
-                                out.println(data);
-                                return;
-                            }
+                            PostResource pr = new PostResource("OK", ang);
+                            data = gson.toJson(pr);
+                            out.println(data);
+                            return;
                         } catch (Exception ex) {
-                            System.out.println(ex);
+                            PostResource pr = new PostResource("NO", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
+                        }
+                    }
+                    if(page.equals("delete")){
+                        try {
+                            ad.hapus(request.getParameter("nik"));
+                            PostResource pr = new PostResource("OK", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
+                            return;
+                        } catch (Exception e) {
+                            PostResource pr = new PostResource("NO", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
                         }
                     }
                     else if(page.equals("delete")){

@@ -25,9 +25,8 @@ public class BukuDAO {
             koneksi = connection.ConnectDB.getConnection();
     }
     
-    public Buku getBukuById(String id){
+    public Buku getBukuById(String id) throws SQLException{
         Buku buku = new Buku();
-        try{
             Statement stmt = koneksi.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Buku WHERE kodebuku = '" + id + "'");
             while (rs.next()) {
@@ -39,19 +38,15 @@ public class BukuDAO {
                 buku.setIdpenerbit(rs.getString("idpenerbit"));
                 buku.setIdgenre(rs.getString("idgenre"));
                 buku.setStokbuku(rs.getInt("stokbuku"));
-                buku.setUrlgambar(rs.getString("urlgambar"));
                 buku.setUrlebook(rs.getString("urlebook"));
+                buku.setUrlgambar(rs.getString("urlgambar"));
             }
-        }catch(SQLException ex){
-            System.out.println("Error on BukuDAO : " + ex);
-        }
         return buku;
     }
     
-    public List<Buku> getAllBuku() {
+    public List<Buku> getAllBuku() throws SQLException {
         ArrayList<Buku> bukuList = new ArrayList<>();
         String query = "SELECT * FROM buku";
-        try{
             preStmt = koneksi.prepareStatement(query);
             rs = preStmt.executeQuery();
             while (rs.next()) {
@@ -68,9 +63,6 @@ public class BukuDAO {
                 buku.setStokbuku(rs.getInt("stokbuku"));
                 bukuList.add(buku);
             }
-        }catch(SQLException ex){
-            System.out.println("Error on BukuDAO : " + ex);
-        }
         return bukuList;
     }
     
@@ -126,10 +118,9 @@ public class BukuDAO {
         preStmt.executeUpdate();
     }
     
-    public Buku getDtBuku(String kodeBuku){
+    public Buku getDtBuku(String kodeBuku) throws SQLException{
         String search = "SELECT * from buku where kodebuku = ?";
         Buku buku = new Buku();
-        try {
             preStmt = koneksi.prepareStatement(search);
             preStmt.setString(1, kodeBuku);
             rs = preStmt.executeQuery();
@@ -145,10 +136,6 @@ public class BukuDAO {
                 buku.setUrlgambar(rs.getString("urlgambar"));
                 buku.setStokbuku(rs.getInt("stokbuku"));
             }
-            
-        } catch (SQLException ex) {
-            System.out.println("Ada kesalahan : "+ex);
-        }
         return buku;
     }
     
@@ -185,10 +172,5 @@ public class BukuDAO {
 //        return bukuList;
 //    }
     
-    public static void main(String[] args) {
-        BukuDAO bd = new BukuDAO();
-        List<Buku> bukuList = new ArrayList<>(); 
-        bukuList = bd.getAllBuku();
-        System.out.println("List : " + bukuList);
-    }
+
 }
