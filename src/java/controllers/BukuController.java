@@ -61,6 +61,7 @@ public class BukuController extends HttpServlet {
                 // Insert the buku data from the DAO
                 if(page == null){
                     bukuList = bd.getAllBuku();
+                    System.out.println("BUKU : " + bukuList);
                     String bukuJSON = gson.toJson(bukuList);
                     System.out.println("BukuJSON : " + bukuJSON);
                     out.println(bukuJSON);

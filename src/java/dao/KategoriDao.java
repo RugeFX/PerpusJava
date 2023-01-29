@@ -69,7 +69,7 @@ public class KategoriDao {
         }
     }
     
-    public Kategori getDtAnggota(String id){
+    public Kategori getDtKategori(String id){
         String search = "SELECT * from kategori where idkategori = ?";
         Kategori kategori = new Kategori();
         try {
