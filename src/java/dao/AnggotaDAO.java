@@ -47,7 +47,7 @@ public class AnggotaDAO {
         }
     }
     
-    public Anggota getLogin(String nik, String Password) throws SQLException{
+    public Boolean getLogin(String nik, String Password) throws SQLException{
         Anggota ang = new Anggota();
         String sqlSearch = "SELECT * FROM anggota WHERE nik=?";
             String pw;
@@ -57,17 +57,14 @@ public class AnggotaDAO {
             if(rs.next()) {
                 ang.setNik(rs.getString("nik"));
                 ang.setPassword(rs.getString("password"));
-                ang.setNamaanggota(rs.getString("namaanggota"));
-                ang.setAlamat(rs.getString("alamat"));
-                ang.setKota(rs.getString("kota"));
-                ang.setNotelpon(rs.getString("notelpon"));
-                ang.setTanggallahir(rs.getString("tanggallahir"));
                 String pwMd5 = getMd5String(Password);
                 if (!pwMd5.equals(ang.getPassword())) {
-                    return null;
+                    System.out.println("Masuk");
+                    return false;
                 }
+                return true;
         }
-        return ang;
+        return false;
     }
     
     public List<Anggota> getAllAnggota() throws SQLException {

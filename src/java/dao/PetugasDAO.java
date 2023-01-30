@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.io.Console;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.Connection;
@@ -66,21 +67,24 @@ public class PetugasDAO {
         }
     }
     
-    public Petugas getLogin(String id, String Password) throws SQLException{
+    public Boolean getLogin(String id, String Password) throws SQLException{
         Petugas petugas = new Petugas();
         String sqlSearch = "SELECT * FROM petugas WHERE idpetugas=?";
             preStmt = koneksi.prepareStatement (sqlSearch);
             preStmt.setString(1, id);
             rs = preStmt.executeQuery();
-            if(rs.next()) {
-            petugas.setIdpetugas(rs.getString("idpetugas"));
-            petugas.setPassword(rs.getString("password"));
-            String pwMd5 = getMd5String(Password);
-                if (!pwMd5.equals(petugas.getPassword())) {
-                    return null;
-                }
-        }
-        return petugas;
+            if (rs.next()) {
+                System.out.println(rs.getString("idpetugas"));
+                petugas.setIdpetugas(rs.getString("idpetugas"));
+                petugas.setPassword(rs.getString("password"));
+                String pwMd5 = getMd5String(Password);
+                    if (!pwMd5.equals(petugas.getPassword())) {
+                        System.out.println("Daonya Salah Dit");
+                        return false;
+                    }      
+                return true;
+            }
+            return false;
     }
     
     
@@ -137,5 +141,13 @@ public class PetugasDAO {
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, id);
             preStmt.executeUpdate();
+    }
+    
+    public static void main(String[] args) {
+        try {
+            PetugasDAO pd = new PetugasDAO();
+            System.out.println(pd.getAllPetugas());
+        } catch (Exception e) {
+        }
     }
 }

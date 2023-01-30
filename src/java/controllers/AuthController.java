@@ -5,14 +5,21 @@
  */
 package controllers;
 
+import com.google.gson.Gson;
+import dao.AnggotaDAO;
+import dao.PetugasDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import models.Anggota;
+import models.Petugas;
+import models.PostResource;
 
 /**
  *
@@ -32,21 +39,56 @@ public class AuthController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         
-        PrintWriter out = response.getWriter();
+        // Put request http method and page params into variable
+        String reqMethod = request.getMethod();
+        String page = request.getParameter("page");
+        System.out.println("Page : " + page);
+        
+        // Object initiation
+        Gson gson = new Gson();
+        AnggotaDAO ad = new AnggotaDAO();  
+        PetugasDAO pd = new PetugasDAO();
+        Anggota ang = new Anggota();
+        Petugas petugas = new Petugas();
+        String data = null;
+        
         HttpSession session = request.getSession();
         
-        String type = request.getParameter("type");
-        
-        switch(type){
-            case "login":
-                
-                break;
-            case "logout":
-                break;
-            case "register":
-                break;
+        try {
+            String id = request.getParameter("id");
+            String password = request.getParameter("password");
+            Boolean cekAnggota = ad.getLogin(id, password);
+            if (!cekAnggota) {
+                Boolean cekPetugas = false;
+                cekPetugas = pd.getLogin(id, password);
+                System.out.println(cekPetugas);
+                if (!cekPetugas) {
+                    PostResource pr = new PostResource("NO", null);
+                    data = gson.toJson(pr);
+                    out.println(data);
+                    return;
+                }
+                session.setAttribute("level", "0");
+                petugas = pd.getDtPetugas(id);
+                session.setAttribute("id", petugas.getIdpetugas());
+                PostResource pr = new PostResource("OK", "Petugas");
+                data = gson.toJson(pr);
+                out.println(data);
+                return;
+            }
+                session.setAttribute("level", "1");
+                ang = ad.getDtAnggota(id);
+                session.setAttribute("id", ang.getNik());   
+                PostResource pr = new PostResource("OK", "Anggota");
+                data = gson.toJson(pr);
+                out.println(data);
+        } catch (Exception ex) {
+            PostResource pr = new PostResource("NO", null);
+            data = gson.toJson(pr);
+            out.println(data);
         }
     }
 

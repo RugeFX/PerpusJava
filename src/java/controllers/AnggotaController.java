@@ -69,7 +69,7 @@ public class AnggotaController extends HttpServlet {
                         out.println(anggotaJSON); 
                     } catch (Exception ex) {
                         PostResource pr = new PostResource("NO", null);
-                        out.println(gson.toJson(pr));
+                        out.println(gson.toJson(ex));
                     }
                     
                 }
@@ -113,21 +113,6 @@ public class AnggotaController extends HttpServlet {
                             System.out.println(ex);
                         }
                     }
-                    if(page.equals("login")){
-                        try {
-                            String nik = request.getParameter("id");
-                            String password = request.getParameter("password");
-                            ang = ad.getLogin(nik, password);
-                            PostResource pr = new PostResource("OK", ang);
-                            data = gson.toJson(pr);
-                            out.println(data);
-                            return;
-                        } catch (Exception ex) {
-                            PostResource pr = new PostResource("NO", null);
-                            data = gson.toJson(pr);
-                            out.println(data);
-                        }
-                    }
                     if(page.equals("delete")){
                         try {
                             ad.hapus(request.getParameter("nik"));
@@ -139,16 +124,6 @@ public class AnggotaController extends HttpServlet {
                             PostResource pr = new PostResource("NO", null);
                             data = gson.toJson(pr);
                             out.println(data);
-                        }
-                    }
-                    else if(page.equals("delete")){
-                        System.out.println("masuk delet");
-                        try{
-                            ad.hapus(request.getParameter("nik"));
-                            out.println(gson.toJson(new PostResource("OK", null)));
-                        }catch(SQLException ex){
-                            System.out.println(ex);
-                            out.println(gson.toJson(new PostResource("Error " + ex, null)));
                         }
                     }
                     PostResource pr = new PostResource("OK", jsonAnggota);
