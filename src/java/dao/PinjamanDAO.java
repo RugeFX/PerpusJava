@@ -40,7 +40,7 @@ public class PinjamanDAO {
                 pnjm.setJudulbuku(rs.getString("judulbuku"));
                 pnjm.setTanggalpinjam(rs.getString("tanggalpinjam"));
                 pnjm.setTanggalkembali(rs.getString("tanggalkembali"));
-                if (rs.getString("denda").equals("") || rs.getString("denda") == null ) {
+                if (rs.getString("denda") == null) {
                     pnjm.setDenda("0");
                 }else{
                     pnjm.setDenda(rs.getString("denda"));

@@ -146,31 +146,5 @@ public class BukuDAO {
         preStmt.executeUpdate();
     }
     
-//    public List<Buku> getBukuTerlaris(){
-//        ArrayList<Buku> bukuList = new ArrayList<>();
-//        String query = "SELECT * FROM buku";
-//        try{
-//            preStmt = koneksi.prepareStatement(query);
-//            rs = preStmt.executeQuery();
-//            while (rs.next()) {
-//                Buku buku = new Buku();
-//                buku.setKodebuku(rs.getString("kodebuku"));
-//                buku.setJudulbuku(rs.getString("judulbuku"));
-//                buku.setPengarang(rs.getString("pengarang"));
-//                buku.setTahunterbit(rs.getString("tahunterbit"));
-//                buku.setIdkategori(rs.getString("idkategori"));
-//                buku.setIdpenerbit(rs.getString("idpenerbit"));
-//                buku.setIdgenre(rs.getString("idgenre"));
-//                buku.setUrlebook(rs.getString("urlebook"));
-//                buku.setUrlgambar(rs.getString("urlgambar"));
-//                buku.setStokbuku(rs.getInt("stokbuku"));
-//                bukuList.add(buku);
-//            }
-//        }catch(SQLException ex){
-//            System.out.println("Error on BukuDAO : " + ex);
-//        }
-//        return bukuList;
-//    }
-    
 
 }

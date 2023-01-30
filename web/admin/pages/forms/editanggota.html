@@ -17,11 +17,21 @@
     <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css" />
     <!-- endinject -->
     <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="../../vendors/select2/select2.min.css" />
+    <link
+      rel="stylesheet"
+      href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css"
+    />
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="../../css/vertical-layout-light/style.css" />
     <!-- endinject -->
     <link rel="shortcut icon" href="../../images/favicon.png" />
+    <!-- icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@7.1.96/css/materialdesignicons.min.css"
+    />
   </head>
 
   <body>
@@ -31,11 +41,11 @@
         <div
           class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
         >
-          <a class="navbar-brand brand-logo mr-2" href="../../index.html"
-            ><img src="../../images/logoperpus.png" class="mr-2" alt="logo"
+          <a class="navbar-brand brand-logo mr-5" href="../../index.html"
+            ><img src="../../images/logo-perp.png" class="mr-2 ml-3" alt="logo"
           /></a>
           <a class="navbar-brand brand-logo-mini" href="../../index.html"
-            ><img src="../../images/logo-mini.svg" alt="logo"
+            ><img src="../../images/logos.png" alt="logo"
           /></a>
         </div>
         <div
@@ -156,11 +166,11 @@
                 </a>
               </div>
             </li>
-            <!-- <li class="nav-item nav-settings d-none d-lg-flex">
+            <li class="nav-item nav-settings d-none d-lg-flex">
               <a class="nav-link" href="#">
                 <i class="icon-ellipsis"></i>
               </a>
-            </li> -->
+            </li>
           </ul>
           <button
             class="navbar-toggler navbar-toggler-right d-lg-none align-self-center"
@@ -432,117 +442,157 @@
           <ul class="nav">
             <li class="nav-item">
               <a class="nav-link" href="../../index.html">
-                <i class="icon-paper menu-icon"></i>
+                <i class="icon-grid menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="anggota.html">
-                <i class="icon-paper menu-icon"></i>
+            <li class="nav-item active">
+              <a class="nav-link" href="../tables/anggota.html">
+                <i class="mdi mdi-account menu-icon"></i>
                 <span class="menu-title">Anggota</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="buku.html">
-                <i class="icon-paper menu-icon"></i>
+              <a class="nav-link" href="../tables/buku.html">
+                <i class="mdi mdi-book menu-icon"></i>
                 <span class="menu-title">Buku</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="kategori.html">
-                <i class="icon-paper menu-icon"></i>
+              <a class="nav-link" href="../tables/kategori.html">
+                <i class="mdi mdi-folder-table menu-icon"></i>
                 <span class="menu-title">Kategori</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="penerbit.html">
-                <i class="icon-paper menu-icon"></i>
+              <a class="nav-link" href="../tables/penerbit.html">
+                <i
+                  class="mdi mdi-microsoft-bing mdi-rotate-180 mdi-flip-v menu-icon"
+                ></i>
                 <span class="menu-title">Penerbit</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="petugas.html">
-                <i class="icon-paper menu-icon"></i>
+              <a class="nav-link" href="../tables/petugas.html">
+                <i class="mdi mdi-clipboard-account menu-icon"></i>
                 <span class="menu-title">Petugas</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="genre.html">
-                <i class="icon-paper menu-icon"></i>
+              <a class="nav-link" href="../tables/genre.html">
+                <i class="mdi mdi-file-video menu-icon"></i>
                 <span class="menu-title">Genre</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="Pinjaman.html">
-                <i class="icon-grid menu-icon"></i>
+              <a class="nav-link" href="../tables/Pinjaman.html">
+                <i class="mdi mdi-handshake menu-icon"></i>
                 <span class="menu-title">Pinjaman</span>
               </a>
             </li>
           </ul>
         </nav>
-        <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="row">
-              <div class="col-lg-12 grid-margin stretch-card">
+              <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Table Pinjaman</h4>
+                    <h4 class="card-title">Form Edit Anggota</h4>
                     <p class="card-description">
-                      <code
-                        ><button type="button" class="btn btn-primary btn-sm">
-                          <a
-                            href="../../pages/forms/tambahpinjaman.html"
-                            class="text-light"
-                            >Tambah</a
-                          >
-                        </button></code
-                      >
+                      <button type="button" class="btn btn-primary btn-sm">
+                        <a
+                          href="../../pages/tables/anggota.html"
+                          class="text-light"
+                          >Kembali</a
+                        >
+                      </button>
                     </p>
-                    <div class="table-responsive">
-                      <table class="table table-striped">
-                        <thead>
-                          <tr>
-                            <th>ID Pinjaman</th>
-                            <th>Nama Anggota</th>
-                            <th>Judul Buku</th>
-                            <th>Tanggal Pinjam</th>
-                            <th>Tanggal kembali</th>
-                            <th>Denda</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                          </tr>
-                        </thead>
-                        <tbody id="pinjaman">
-                          <tr>
-                            <td class="py-1">PJ001</td>
-                            <td>001</td>
-                            <td>BK002</td>
-                            <td>20/12/2022</td>
-                            <td>27/12/2022</td>
-                            <td>Rp.000,00</td>
-                            <td>Dipinjam</td>
-                            <td>
-                              <code
-                                ><button
-                                  type="button"
-                                  class="btn btn-warning btn-sm"
-                                >
-                                  Edit
-                                </button>
-                                |
-                                <button
-                                  type="button"
-                                  class="btn btn-danger btn-sm"
-                                >
-                                  Hapus
-                                </button></code
-                              >
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                    <form class="forms-sample">
+                      <div class="form-group">
+                        <label for="exampleInputName1">NIK</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="exampleInputName1"
+                          placeholder="NIK"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">Password</label>
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="exampleInputEmail3"
+                          placeholder="Password"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword4">Nama Anggota</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="exampleInputPassword4"
+                          placeholder="Nama Anggota"
+                        />
+                      </div>
+                      <!-- <div class="form-group">
+                      <label for="exampleSelectGender">Gender</label>
+                        <select class="form-control" id="exampleSelectGender">
+                          <option>Male</option>
+                          <option>Female</option>
+                        </select>
+                      </div> -->
+                      <!-- <div class="form-group">
+                      <label>File upload</label>
+                      <input type="file" name="img[]" class="file-upload-default">
+                      <div class="input-group col-xs-12">
+                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                        <span class="input-group-append">
+                          <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                        </span>
+                      </div>
+                    </div> -->
+                      <div class="form-group">
+                        <label for="exampleTextarea1">Alamat</label>
+                        <textarea
+                          class="form-control"
+                          id="exampleTextarea1"
+                          rows="4"
+                        ></textarea>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputCity1">Kota</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="exampleInputCity1"
+                          placeholder="Kota"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputCity1">No Telepon</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="exampleInputCity1"
+                          placeholder="No Telepon"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputCity1">Tanggal Lahir</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="exampleInputCity1"
+                          placeholder="Tanggal Lahir"
+                        />
+                      </div>
+                      <button type="submit" class="btn btn-primary mr-2">
+                        Submit
+                      </button>
+                      <button class="btn btn-light">Cancel</button>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -580,6 +630,8 @@
     <script src="../../vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
+    <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="../../vendors/select2/select2.min.js"></script>
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="../../js/off-canvas.js"></script>
@@ -589,8 +641,10 @@
     <script src="../../js/todolist.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page-->
+    <script src="../../js/file-upload.js"></script>
+    <script src="../../js/typeahead.js"></script>
+    <script src="../../js/select2.js"></script>
     <!-- End custom js for this page-->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="./pinjaman.js"></script>
+    <script src="./anggotaform.js"></script>
   </body>
 </html>

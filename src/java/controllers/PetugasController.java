@@ -69,8 +69,7 @@ public class PetugasController extends HttpServlet {
                     } catch (Exception e) {
                         PostResource pr = new PostResource("NO", null);
                         out.println(gson.toJson(pr));
-                    }
-                    
+                    } 
                 }
                 if(page.equals("show")){
                     try {
@@ -110,21 +109,6 @@ public class PetugasController extends HttpServlet {
                             pd.updatePetugas(jsonPetugas);
                         }catch(SQLException ex){
                             System.out.println(ex);
-                        }
-                    }
-                    if(page.equals("login")){
-                        try {
-                            String id = request.getParameter("id");
-                            String password = request.getParameter("password");
-                            petugas = pd.getLogin(id, password);
-                            PostResource pr = new PostResource("OK", petugas);
-                            data = gson.toJson(pr);
-                            out.println(data);
-                            return;
-                        } catch (Exception ex) {
-                             PostResource pr = new PostResource("NO", null);
-                            data = gson.toJson(pr);
-                            out.println(data);
                         }
                     }
                      if(page.equals("delete")){

@@ -17,20 +17,23 @@ showAllAnggotas();
 
 formLogin.addEventListener("submit", (e) => {
   e.preventDefault();
-  const dataUser = Login(idEl.value, pwEl.value);
-  if(dataUser == null){
+  Login(idEl.value, pwEl.value).then((dataUser)=>{
+    console.log(dataUser)
+    if(dataUser.status === "NO"){
+      Swal.fire({
+        title: "Id Atau Password Salah",
+        text: `Silahkan Login Kembali`,
+        icon: "error",
+      });
+      return;
+    }
     Swal.fire({
-      title: "Id Atau Password Salah",
-      text: `Silahkan Login Kembali`,
-      icon: "error",
+      title: "Login Berhasil",
+      text: `Selamat Anda Telah Berhasil Login`,
+      icon: "success",
     });
-    return;
-  }
-  Swal.fire({
-    title: "Login Berhasil",
-    text: `Selamat Anda Telah Berhasil Login`,
-    icon: "success",
-  });
+
+  })
 
 });
 
@@ -74,9 +77,9 @@ async function getAllPetugas() {
 
 
 async function Login(id, password){
-   const resAnggota =  
+   const res =  
    await fetch(
-     "/PerpusJava/AnggotaController?" + new URLSearchParams({
+     "/PerpusJava/AuthController?" + new URLSearchParams({
        page: pageType,
        id: id,
        password: password,
@@ -88,33 +91,8 @@ async function Login(id, password){
           "Content-Type": "application/json",
        },
    });
-
-    const postAnggota = await resAnggota.json();
-    
-  if (postAnggota.status == "NO"){
-      const resPetugas = 
-        await fetch(
-          "/PerpusJava/PetugasController?" + new URLSearchParams({
-            page: pageType,
-            id: id,
-            password: password,
-          }),
-          {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          });
-        const postPetugas = await resPetugas.json();
-        console.log(postPetugas)
-        if (postPetugas.status == "NO"){
-          console.log(postAnggota);
-            return null;
-        }
-        return postPetugas.data;
-    }
-    return postAnggota.data;
+    const post = await res.json();
+    return post;
 }
 
 

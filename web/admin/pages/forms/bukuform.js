@@ -1,42 +1,52 @@
 const formInsert = document.getElementById("bukuform");
-// const
+
+const selectOptionElements = document.querySelectorAll("#bukuform select");
 
 const pageURL = new URL(window.location.href);
 // console.log(pageURL);
 let pageType = "insert";
 
-getSelectOptions().then((data) => {
-  console.log(data);
-});
-
-if (pageURL.pathname === "/PerpusJava/admin/pages/forms/editbuku.html") {
-  if (!pageURL.searchParams.get("kode")) {
-    Swal.fire({
-      title: "Unauthorized",
-      text: `Akses dilarang`,
-      icon: "error",
-    }).then(() => {
-      window.location.href = "/PerpusJava/admin/pages/tables/buku.html";
+getSelectOptions().then(({ data }) => {
+  selectOptionElements.forEach((el) => {
+    console.log(data);
+    console.log(el.id);
+    data[el.id].forEach((option) => {
+      const optEl = document.createElement("option");
+      optEl.value = option[Object.keys(option)[0]];
+      optEl.text = option[Object.keys(option)[1]];
+      el.appendChild(optEl);
     });
-  }
-
-  const kodeBuku = pageURL.searchParams.get("kode");
-  console.log(kodeBuku);
-  pageType = "update";
-  fetch(
-    "/PerpusJava/BukuController?" +
-      new URLSearchParams({
-        page: "show",
-        kode: kodeBuku,
-      })
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      Object.keys(data).forEach((key) => {
-        formInsert.elements[key].value = data[key];
+  });
+  if (pageURL.pathname === "/PerpusJava/admin/pages/forms/editbuku.html") {
+    if (!pageURL.searchParams.get("kode")) {
+      Swal.fire({
+        title: "Unauthorized",
+        text: `Akses dilarang`,
+        icon: "error",
+      }).then(() => {
+        window.location.href = "/PerpusJava/admin/pages/tables/buku.html";
       });
-    });
-}
+    }
+
+    const kodeBuku = pageURL.searchParams.get("kode");
+    console.log(kodeBuku);
+    pageType = "update";
+    fetch(
+      "/PerpusJava/BukuController?" +
+        new URLSearchParams({
+          page: "show",
+          kode: kodeBuku,
+        })
+    )
+      .then((res) => res.json())
+      .then(async (data) => {
+        console.log(data);
+        Object.keys(data).forEach((key) => {
+          formInsert.elements[key].value = data[key];
+        });
+      });
+  }
+});
 
 formInsert.addEventListener("submit", (e) => {
   e.preventDefault();
