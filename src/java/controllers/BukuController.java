@@ -99,6 +99,20 @@ public class BukuController extends HttpServlet {
                     }
                     
                 }
+                if (page.equals("terlaris")) {
+                    try {
+                        bukuList = bd.getBukuTerlaris();
+                        System.out.println("BUKU : " + bukuList);
+                        String bukuJSON = gson.toJson(bukuList);
+                        System.out.println("BukuJSON : " + bukuJSON);
+                        out.println(bukuJSON);
+                    } catch (Exception e) {
+                        System.out.println("ada error nih");
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    return;
+                }
                 if (page.equals("attributes")) {
                     try {
                         Attributes attr = new Attributes(gd.getAllGenre(),pd.getAllPenerbit(), kd.getAllKategori());

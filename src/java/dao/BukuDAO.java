@@ -44,6 +44,30 @@ public class BukuDAO {
         return buku;
     }
     
+    public List<Buku> getBukuTerlaris() throws SQLException{
+        ArrayList<Buku> bukuList = new ArrayList<>();
+        String query = "SELECT * FROM viewbukuterlaris";
+        System.out.println("Ada tp belom jalan");
+            preStmt = koneksi.prepareStatement(query);
+            rs = preStmt.executeQuery();
+            while (rs.next()) {
+                Buku buku = new Buku();
+                System.out.println("ada nih bukunya");
+                buku.setKodebuku(rs.getString("kodebuku"));
+                buku.setJudulbuku(rs.getString("judulbuku"));
+                buku.setPengarang(rs.getString("pengarang"));
+                buku.setTahunterbit(rs.getString("tahunterbit"));
+                buku.setIdkategori(rs.getString("idkategori"));
+                buku.setIdpenerbit(rs.getString("idpenerbit"));
+                buku.setIdgenre(rs.getString("idgenre"));
+                buku.setUrlebook(rs.getString("urlebook"));
+                buku.setUrlgambar(rs.getString("urlgambar"));
+                buku.setStokbuku(rs.getInt("stokbuku"));
+                bukuList.add(buku);
+            }
+        return bukuList;
+    }
+    
     public List<Buku> getAllBuku() throws SQLException {
         ArrayList<Buku> bukuList = new ArrayList<>();
         String query = "SELECT * FROM buku";
