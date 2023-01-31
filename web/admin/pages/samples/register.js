@@ -22,6 +22,7 @@ formregist.addEventListener("submit", (e) => {
         console.log("Tolong isi data dengan benar!");
         return;
     }
+    console.log(body)
     registerUser(body).then((data) =>{
         if(data.status == "OK"){
             Swal.fire({
@@ -31,6 +32,8 @@ formregist.addEventListener("submit", (e) => {
             }).then(() => {
                 window.location.href = "/PerpusJava/admin/pages/samples/login.html"
             });
+        }else{
+            console.log("Ada apa ini cokkk")
         }
     })
 });
@@ -49,7 +52,7 @@ function getAllFormData(form) {
 
 async function registerUser(body) {
     const res = await fetch(
-        "/PerpusJava/AuthController?" + new URLSearchParams({ page: "register" }),
+        "/PerpusJava/AuthController?" + new URLSearchParams({page: "register",}),
         {
             method: "POST",
             headers: {
@@ -57,8 +60,7 @@ async function registerUser(body) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(body),
-        }
-    );
+        });
     const postBody = await res.json();
     return postBody;
 }
