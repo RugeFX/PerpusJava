@@ -6,9 +6,20 @@
 const formLogin = document.getElementById("formlogin");
 const idEl = document.getElementById("inputid");
 const pwEl = document.getElementById("password");
+const pageURL = new URL(window.location.href);
 let pageType = "login";
 
-
+if (pageURL.pathname === "/PerpusJava/admin/pages/samples/login.html"){
+    sessionCek().then((data) => {
+        if(data.status == "OK"){
+            if (dataUser.data == "Petugas") {
+                window.location.href = "/PerpusJava/admin"
+            } else {
+                window.location.href = "/PerpusJava"
+            }
+        }
+    })
+}
 
 formLogin.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -57,6 +68,21 @@ async function Login(id, password) {
             });
     const post = await res.json();
     return post;
+}
+
+async function sessionCek(){
+    const res =
+        await fetch(
+            "/PerpusJava/AuthController?" + new URLSearchParams({page: "cek"}),
+            {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+            });
+    const cekUser = await res.json();
+    return cekUser;
 }
 
 

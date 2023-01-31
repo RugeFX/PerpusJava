@@ -11,6 +11,7 @@ import dao.PetugasDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -54,42 +55,83 @@ public class AuthController extends HttpServlet {
         Anggota ang = new Anggota();
         Petugas petugas = new Petugas();
         String data = null;
-        
         HttpSession session = request.getSession();
         
-        try {
-            String id = request.getParameter("id");
-            String password = request.getParameter("password");
-            Boolean cekAnggota = ad.getLogin(id, password);
-            if (!cekAnggota) {
-                Boolean cekPetugas = false;
-                cekPetugas = pd.getLogin(id, password);
-                System.out.println(cekPetugas);
-                if (!cekPetugas) {
+        switch(reqMethod){
+            case "GET":
+                if(page.equals("cek")){
+                    if (!session.getAttribute("id").equals(null)) {
+                        if (session.getAttribute("level").equals("0")) {
+                            PostResource pr = new PostResource("OK", "Petugas");
+                            data = gson.toJson(pr);
+                            out.println(data);
+                        }else{
+                            PostResource pr = new PostResource("OK", "Anggota");
+                            data = gson.toJson(pr);
+                            out.println(data);
+                        }
+                    }
                     PostResource pr = new PostResource("NO", null);
                     data = gson.toJson(pr);
                     out.println(data);
-                    return;
                 }
-                session.setAttribute("level", "0");
-                petugas = pd.getDtPetugas(id);
-                session.setAttribute("id", petugas.getIdpetugas());
-                PostResource pr = new PostResource("OK", "Petugas");
-                data = gson.toJson(pr);
-                out.println(data);
-                return;
-            }
-                session.setAttribute("level", "1");
-                ang = ad.getDtAnggota(id);
-                session.setAttribute("id", ang.getNik());   
-                PostResource pr = new PostResource("OK", "Anggota");
-                data = gson.toJson(pr);
-                out.println(data);
-        } catch (Exception ex) {
-            PostResource pr = new PostResource("NO", null);
-            data = gson.toJson(pr);
-            out.println(data);
+                break;
+            case "POST":
+                if (page.equals("login")) {
+                    try {
+                        String id = request.getParameter("id");
+                        String password = request.getParameter("password");
+                        Boolean cekAnggota = ad.getLogin(id, password);
+                        if (!cekAnggota) {
+                            Boolean cekPetugas = false;
+                            cekPetugas = pd.getLogin(id, password);
+                            System.out.println(cekPetugas);
+                            if (!cekPetugas) {
+                                PostResource pr = new PostResource("NO", null);
+                                data = gson.toJson(pr);
+                                out.println(data);
+                                return;
+                            }
+                            session.setAttribute("level", "0");
+                            petugas = pd.getDtPetugas(id);
+                            session.setAttribute("id", petugas.getIdpetugas());
+                            PostResource pr = new PostResource("OK", "Petugas");
+                            data = gson.toJson(pr);
+                            out.println(data);
+                            return;
+                        }
+                            session.setAttribute("level", "1");
+                            ang = ad.getDtAnggota(id);
+                            session.setAttribute("id", ang.getNik());   
+                            PostResource pr = new PostResource("OK", "Anggota");
+                            data = gson.toJson(pr);
+                            out.println(data);
+                    } catch (Exception ex) {
+                        PostResource pr = new PostResource("NO", null);
+                        data = gson.toJson(pr);
+                        out.println(data);
+                    }
+                }
+                if (page.equals("register")) {
+                    String resBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+                    System.out.println("resBody : " + resBody);
+                    Anggota jsonAnggota = gson.fromJson(resBody, Anggota.class);
+                    try{
+                        ad.insertAnggota(jsonAnggota);
+                        PostResource pr = new PostResource("OK", jsonAnggota);
+                        data = gson.toJson(pr);
+                        }catch(SQLException ex){
+                            System.out.println(ex);
+                            PostResource pr = new PostResource("NO", null);
+                            data = gson.toJson(pr);
+                        }
+                    out.println(data);
+                }
+                break;
+            
         }
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
