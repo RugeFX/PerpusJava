@@ -1,28 +1,28 @@
-const formInsert = document.getElementById("anggotaform");
+const formInsert = document.getElementById("mainform");
 
 const pageURL = new URL(window.location.href);
 // console.log(pageURL);
 let pageType = "insert";
 
-if (pageURL.pathname === "/PerpusJava/admin/pages/forms/editanggota.html") {
-  if (!pageURL.searchParams.get("nik")) {
+if (pageURL.pathname === "/PerpusJava/admin/pages/forms/editpenerbit.html") {
+  if (!pageURL.searchParams.get("id")) {
     Swal.fire({
       title: "Unauthorized",
       text: `Akses dilarang`,
       icon: "error",
     }).then(() => {
-      window.location.href = "/PerpusJava/admin/pages/tables/anggota.html";
+      window.location.href = "/PerpusJava/admin/pages/tables/penerbit.html";
     });
   }
 
-  const kode = pageURL.searchParams.get("nik");
+  const kode = pageURL.searchParams.get("id");
   console.log(kode);
   pageType = "update";
   fetch(
-    "/PerpusJava/AnggotaController?" +
+    "/PerpusJava/PenerbitController?" +
       new URLSearchParams({
         page: "show",
-        nik: kode,
+        idpenerbit: kode,
       })
   )
     .then((res) => res.json())
@@ -57,14 +57,14 @@ formInsert.addEventListener("submit", (e) => {
   if (pageType === "insert") {
     insertData(body).then((data) => {
       if (data.status == "OK") {
-        window.location.href = "/PerpusJava/admin/pages/tables/anggota.html";
+        window.location.href = "/PerpusJava/admin/pages/tables/penerbit.html";
       }
     });
   } else if (pageType === "update") {
     updateData(body).then((data) => {
       console.log(data);
       if (data.status == "OK") {
-        window.location.href = "/PerpusJava/admin/pages/tables/anggota.html";
+        window.location.href = "/PerpusJava/admin/pages/tables/penerbit.html";
       }
     });
   }
@@ -83,7 +83,7 @@ function getAllFormData(form) {
 
 async function updateData(body) {
   const res = await fetch(
-    "/PerpusJava/AnggotaController?" + new URLSearchParams({ page: "update" }),
+    "/PerpusJava/PenerbitController?" + new URLSearchParams({ page: "update" }),
     {
       method: "POST",
       headers: {
@@ -99,7 +99,7 @@ async function updateData(body) {
 
 async function insertData(body) {
   const res = await fetch(
-    "/PerpusJava/AnggotaController?" + new URLSearchParams({ page: "insert" }),
+    "/PerpusJava/PenerbitController?" + new URLSearchParams({ page: "insert" }),
     {
       method: "POST",
       headers: {

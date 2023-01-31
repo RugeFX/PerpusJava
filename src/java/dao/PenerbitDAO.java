@@ -43,7 +43,7 @@ public class PenerbitDAO {
     }
     
     public void insertPenerbit(Penerbit penerbit) throws SQLException {
-        String sql = "INSERT INTO penerbit (namapenerbit, idpenerbit VALUES (?, ?)";
+        String sql = "INSERT INTO penerbit (namapenerbit, idpenerbit) VALUES (?, ?)";
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, penerbit.getNamapenerbit());
             preStmt.setString(2, penerbit.getIdpenerbit());

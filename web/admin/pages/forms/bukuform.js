@@ -61,6 +61,11 @@ formInsert.addEventListener("submit", (e) => {
     })
   ) {
     console.log("Tolong isi data dengan benar!");
+    Swal.fire(
+      "Data Invalid",
+      "Tolong masukkan data dengan lengkap!",
+      "warning"
+    );
     return;
   }
   if (pageType === "insert") {

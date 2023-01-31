@@ -24,7 +24,7 @@ document.addEventListener("click", (e) => {
           "/PerpusJava/KategoriController?" +
             new URLSearchParams({
               page: "delete",
-              id: kode,
+              idkategori: kode,
             }),
           { method: "POST" }
         )

@@ -436,6 +436,8 @@
             <!-- chat tab ends -->
           </div>
         </div>
+        <!-- partial -->
+        <!-- partial -->
         <!-- partial:../../partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
@@ -457,7 +459,7 @@
                 <span class="menu-title">Buku</span>
               </a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="../tables/kategori.html">
                 <i class="mdi mdi-folder-table menu-icon"></i>
                 <span class="menu-title">Kategori</span>
@@ -477,7 +479,7 @@
                 <span class="menu-title">Petugas</span>
               </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
               <a class="nav-link" href="../tables/genre.html">
                 <i class="mdi mdi-file-video menu-icon"></i>
                 <span class="menu-title">Genre</span>
@@ -497,11 +499,11 @@
               <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Form Tambah Kategori</h4>
+                    <h4 class="card-title">Form Edit Genre</h4>
                     <p class="card-description">
                       <button type="button" class="btn btn-primary btn-sm">
                         <a
-                          href="../../pages/tables/kategori.html"
+                          href="../../pages/tables/genre.html"
                           class="text-light"
                           >Kembali</a
                         >
@@ -509,30 +511,31 @@
                     </p>
                     <form id="mainform" class="forms-sample">
                       <div class="form-group">
-                        <label for="exampleInputName1">ID Kategori</label>
+                        <label for="exampleInputName1">ID Genre</label>
                         <input
+                          readonly
                           type="text"
-                          name="idkategori"
+                          name="idgenre"
                           class="form-control"
                           id="exampleInputName1"
-                          placeholder="ID Kategori"
+                          placeholder="ID Genre"
                         />
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputEmail3">Nama Kategori</label>
+                        <label for="exampleInputEmail3">Nama Genre</label>
                         <input
                           type="text"
-                          name="namakategori"
+                          name="namagenre"
                           class="form-control"
                           id="exampleInputEmail3"
-                          placeholder="Nama Kategori"
+                          placeholder="Nama Genre"
                         />
                       </div>
                       <button type="submit" class="btn btn-primary mr-2">
                         Submit
                       </button>
                       <a
-                        href="/PerpusJava/admin/pages/tables/kategori.html"
+                        href="/PerpusJava/admin/pages/tables/genre.html"
                         class="btn btn-light"
                         >Cancel</a
                       >
@@ -590,6 +593,6 @@
     <script src="../../js/typeahead.js"></script>
     <script src="../../js/select2.js"></script>
     <!-- End custom js for this page-->
-    <script src="kategoriform.js"></script>
+    <script src="genreform.js"></script>
   </body>
 </html>

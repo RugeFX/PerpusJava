@@ -102,8 +102,8 @@ public class AnggotaDAO {
     }
     
     public void updateAnggota(Anggota ang) throws SQLException{
-        String sql = "UPDATE anggota SET password=?, namanaggota=?, alamat=?, kota=?,"
-                    + "notelpon=?, tanggallahir=? where nik=?";
+        String sql = "UPDATE anggota SET password=?, namaanggota=?, alamat=?, kota=?,"
+                    + "notelpon=?, tanggallahir=? WHERE nik=?";
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, ang.getPassword());
             preStmt.setString(2, ang.getNamaanggota());

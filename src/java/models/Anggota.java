@@ -74,6 +74,10 @@ public class Anggota {
     public void setTanggallahir(String tanggallahir) {
         this.tanggallahir = tanggallahir;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Anggota{" + "nik=" + nik + ", password=" + password + ", namaanggota=" + namaanggota + ", alamat=" + alamat + ", kota=" + kota + ", notelpon=" + notelpon + ", tanggallahir=" + tanggallahir + '}';
+    }
     
 }
