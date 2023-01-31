@@ -4,6 +4,13 @@
  * and open the template in the editor.
  */
 const formregist = document.getElementById("formregister");
+// const idEl = document.getElementById("inputid");
+// const pwEl = document.getElementById("password");
+// const formregist = document.getElementById("formregister");
+// const formregist = document.getElementById("formregister");
+// const formregist = document.getElementById("formregister");
+// const formregist = document.getElementById("formregister");
+// const formregist = document.getElementById("formregister");
 let pageType = "register";
 
 
@@ -22,7 +29,6 @@ formregist.addEventListener("submit", (e) => {
         console.log("Tolong isi data dengan benar!");
         return;
     }
-    console.log(body)
     registerUser(body).then((data) =>{
         if(data.status == "OK"){
             Swal.fire({
@@ -41,8 +47,8 @@ formregist.addEventListener("submit", (e) => {
 function getAllFormData(form) {
     const body = {};
     for (const element of form.elements) {
-        if (element.name) {
-            body[element.name] = element.value;
+        if (element.id) {
+            body[element.id] = element.value;
         }
     }
     console.log(body);

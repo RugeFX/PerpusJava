@@ -116,6 +116,14 @@ public class AuthController extends HttpServlet {
                     String resBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
                     System.out.println("resBody : " + resBody);
                     Anggota jsonAnggota = gson.fromJson(resBody, Anggota.class);
+//                    ang = new Anggota();
+//                    ang.setNik(request.getParameter("id"));
+//                    ang.setPassword(request.getParameter("id"));
+//                    ang.setNamaanggota(request.getParameter("id"));
+//                    ang.setAlamat(request.getParameter("id"));
+//                    ang.setKota(request.getParameter("id"));
+//                    ang.setNotelpon(request.getParameter("id"));
+//                    ang.setTanggallahir(request.getParameter("id"));
                     try{
                         ad.insertAnggota(jsonAnggota);
                         PostResource pr = new PostResource("OK", jsonAnggota);

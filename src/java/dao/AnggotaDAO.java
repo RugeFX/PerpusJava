@@ -88,8 +88,7 @@ public class AnggotaDAO {
     
     public void insertAnggota(Anggota ang) throws SQLException {
         String pwMd5 = getMd5String(ang.getPassword());
-        System.out.println(pwMd5);
-        String sql = "INSERT INTO anggota (nik, password, namaanggota, "
+        String sql = "INSERT INTO anggota (nik, password, namaanggota,"
                     + "alamat, kota, notelpon, tanggallahir)"
                     + " VALUES ( ?, ?, ?, ?, ?, ?, ?)";
             preStmt = koneksi.prepareStatement(sql);
