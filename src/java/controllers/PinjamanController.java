@@ -8,6 +8,7 @@ package controllers;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import dao.BukuDAO;
 import dao.PinjamanDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Pinjaman;
+import models.PinjamanAttributes;
 import models.PostResource;
 
 /**
@@ -85,7 +87,9 @@ public class PinjamanController extends HttpServlet {
                     
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
-                
+                if(page.equals("attributes")){
+                    
+                }
                 break;
                 
             case "POST":

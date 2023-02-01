@@ -495,17 +495,27 @@
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Table Pinjaman</h4>
-                    <p class="card-description">
-                      <code
-                        ><button type="button" class="btn btn-primary btn-sm">
-                          <a
-                            href="../../pages/forms/tambahpinjaman.html"
-                            class="text-light"
-                            >Tambah</a
-                          >
-                        </button></code
-                      >
-                    </p>
+                    <div class="d-inline-flex justify-content-between w-100">
+                      <button type="button" class="btn btn-primary btn-sm">
+                        <a
+                          href="../../pages/forms/tambahpinjaman.html"
+                          class="text-light"
+                          >Tambah</a
+                        >
+                      </button>
+                      <!-- <div class="col-3"></div> -->
+                      <select class="form-control w-25" id="filterpinjaman">
+                        <option value="All">All</option>
+                        <option value="Dipinjam">Dipinjam</option>
+                        <option value="Dikembalikan">Dikembalikan</option>
+                        <option value="Terlambat">Terlambat</option>
+                        <option value="Dikembalikan Rusak">
+                          Dikembalikan Rusak
+                        </option>
+                        <option value="Ditangguhkan">Ditangguhkan</option>
+                      </select>
+                    </div>
+
                     <div class="table-responsive">
                       <table class="table table-striped">
                         <thead>

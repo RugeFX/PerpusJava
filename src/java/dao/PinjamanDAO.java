@@ -35,7 +35,7 @@ public class PinjamanDAO {
             rs = preStmt.executeQuery();
             while (rs.next()) {
                 Pinjaman pnjm = new Pinjaman();
-                pnjm.setIdanggota(rs.getString("idpinjaman"));
+                pnjm.setIdpinjaman(rs.getString("idpinjaman"));
                 pnjm.setNamaaanggota(rs.getString("namaanggota"));
                 pnjm.setJudulbuku(rs.getString("judulbuku"));
                 pnjm.setTanggalpinjam(rs.getString("tanggalpinjam"));
@@ -80,29 +80,6 @@ public class PinjamanDAO {
             preStmt.executeUpdate();
     }
     
-    public List<Pinjaman> getBukuTerlaris() throws SQLException{
-        ArrayList<Pinjaman> pinjamanList = new ArrayList<>();
-        String query = "SELECT *, COUNT(judulbuku) as Total FROM viewlaporanpinjaman "
-                + "GROUP BY judulbuku LIMIT 3";
-            preStmt = koneksi.prepareStatement(query);
-            rs = preStmt.executeQuery();
-            while (rs.next()) {
-                Pinjaman pnjm = new Pinjaman();
-                pnjm.setIdanggota(rs.getString("idpinjaman"));
-                pnjm.setNamaaanggota(rs.getString("namaanggota"));
-                pnjm.setJudulbuku(rs.getString("judulbuku"));
-                pnjm.setTanggalpinjam(rs.getString("tanggalpinjam"));
-                pnjm.setTanggalkembali(rs.getString("tanggalkembali"));
-                if (rs.getString("denda").equals("") || rs.getString("denda") == null ) {
-                    pnjm.setDenda("0");
-                }else{
-                    pnjm.setDenda(rs.getString("denda"));
-                }
-                pnjm.setKeterangan(rs.getString("keterangaan"));             
-                pinjamanList.add(pnjm);
-            }
-        return pinjamanList;
-    }
     
     public Pinjaman getDtPinjaman(String id) throws SQLException{
         String search = "SELECT * from viewlaporanpinjaman where idpinjaman = ?";

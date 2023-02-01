@@ -87,17 +87,18 @@ public class AnggotaDAO {
     }
     
     public void insertAnggota(Anggota ang) throws SQLException {
-        String sql = "INSERT INTO anggota (password, namaanggota, "
-                    + "alamat, kota, notelpon, tanggallahir, "
-                    + "nik) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
+        String pwMd5 = getMd5String(ang.getPassword());
+        String sql = "INSERT INTO anggota (nik, password, namaanggota,"
+                    + "alamat, kota, notelpon, tanggallahir)"
+                    + " VALUES ( ?, ?, ?, ?, ?, ?, ?)";
             preStmt = koneksi.prepareStatement(sql);
-            preStmt.setString(1, ang.getPassword());
-            preStmt.setString(2, ang.getNamaanggota());
-            preStmt.setString(3, ang.getAlamat());
-            preStmt.setString(4, ang.getKota());
-            preStmt.setString(5, ang.getNotelpon());
-            preStmt.setString(6, ang.getTanggallahir());
-            preStmt.setString(7, ang.getNik());
+            preStmt.setString(1, ang.getNik());
+            preStmt.setString(2, pwMd5);
+            preStmt.setString(3, ang.getNamaanggota());
+            preStmt.setString(4, ang.getAlamat());
+            preStmt.setString(5, ang.getKota());
+            preStmt.setString(6, ang.getNotelpon());
+            preStmt.setString(7, ang.getTanggallahir());           
             preStmt.executeUpdate();
     }
     
