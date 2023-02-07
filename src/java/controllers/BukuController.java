@@ -97,7 +97,7 @@ public class BukuController extends HttpServlet {
                         PostResource pr = new PostResource("NO", null);
                         out.println(gson.toJson(pr));
                     }
-                    
+                    return;
                 }
                 if (page.equals("terlaris")) {
                     try {
@@ -122,7 +122,7 @@ public class BukuController extends HttpServlet {
                         PostResource pr = new PostResource("NO", null);
                         out.println(gson.toJson(pr));
                     }
-                    
+                    return;
                 }
                 // Converts the bukuList into a JSON String and then send it to the response               
                 break;
