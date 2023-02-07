@@ -140,4 +140,14 @@ public class AnggotaDAO {
             preStmt.setString(1, nik);
             preStmt.executeUpdate();
     }
+    
+    public static void main(String[] args) {
+        AnggotaDAO angdao = new AnggotaDAO();
+        try {
+            angdao.getAllAnggota();
+        } catch (Exception e) {
+        }
+        
+    }
 }
+
