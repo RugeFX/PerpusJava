@@ -70,7 +70,7 @@ public class GenreController extends HttpServlet {
                         PostResource pr = new PostResource("NO", null);
                         out.println(gson.toJson(pr));
                     }
-                    
+                    return;
                 }
                 if(page.equals("show")){
                     try {
@@ -80,7 +80,7 @@ public class GenreController extends HttpServlet {
                         out.println(genreJSON);
                     } catch (Exception e) {
                     }
-                   
+                   return;
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
                 

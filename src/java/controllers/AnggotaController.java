@@ -70,8 +70,9 @@ public class AnggotaController extends HttpServlet {
                         PostResource pr = new PostResource("NO", null);
                         out.println(gson.toJson(ex));
                     }
-                    
+                    return;
                 }
+                
                 if(page.equals("show")){
                     try {
                         ang = ad.getDtAnggota(request.getParameter("nik"));
@@ -82,7 +83,7 @@ public class AnggotaController extends HttpServlet {
                         PostResource pr = new PostResource("NO", null);
                         out.println(gson.toJson(pr));
                     }
-                    
+                    return;
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
                 

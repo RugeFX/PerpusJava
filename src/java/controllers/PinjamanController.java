@@ -70,7 +70,7 @@ public class PinjamanController extends HttpServlet {
                         PostResource pr = new PostResource("NO", null);
                         out.println(gson.toJson(pr));
                     }
-                    
+                    return;
                 }
                 if(page.equals("show")){
                     try {
@@ -82,7 +82,7 @@ public class PinjamanController extends HttpServlet {
                         PostResource pr = new PostResource("NO", null);
                         out.println(gson.toJson(pr));
                     }
-                    
+                    return;
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
                 
