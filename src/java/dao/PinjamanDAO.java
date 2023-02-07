@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.Pinjaman;
 
 /**
@@ -52,7 +54,7 @@ public class PinjamanDAO {
     }
     
     public void insertPinjaman(Pinjaman pnjm) throws SQLException {
-        String sql = "INSERT INTO pinjman (idanggota, kodebuku, "
+        String sql = "INSERT INTO pinjaman (idanggota, kodebuku, "
                     + "tanggalpinjam, tanggalkembali, denda, idstatus, "
                     + "idpinjaman) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
             preStmt = koneksi.prepareStatement(sql);
@@ -67,7 +69,7 @@ public class PinjamanDAO {
     }
     
     public void updatePinjaman(Pinjaman pnjm) throws SQLException{
-        String sql = "UPDATE petugas SET idanggota=?, kodebuku=?, tanggalpinjam=?, tanggalkembali=?,"
+        String sql = "UPDATE pinjaman SET idanggota=?, kodebuku=?, tanggalpinjam=?, tanggalkembali=?,"
                     + "denda=?, idstatus=? where idpinjaman=?";
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, pnjm.getIdanggota());
@@ -82,23 +84,25 @@ public class PinjamanDAO {
     
     
     public Pinjaman getDtPinjaman(String id) throws SQLException{
-        String search = "SELECT * from viewlaporanpinjaman where idpinjaman = ?";
+        String search = "SELECT * from pinjaman where idpinjaman = ?";
         Pinjaman pnjm = new Pinjaman();
             preStmt = koneksi.prepareStatement(search);
             preStmt.setString(1, id);
             rs = preStmt.executeQuery();
             if (rs.next()) {
-                pnjm.setIdanggota(rs.getString("idpinjaman"));
-                pnjm.setNamaaanggota(rs.getString("namaanggota"));
-                pnjm.setJudulbuku(rs.getString("judulbuku"));
+                pnjm.setIdpinjaman(rs.getString("idpinjaman"));
+                pnjm.setIdanggota(rs.getString("idanggota"));
+//                pnjm.setNamaaanggota(rs.getString("namaanggota"));
+                pnjm.setKodebuku(rs.getString("kodebuku"));
+//                pnjm.setJudulbuku(rs.getString("judulbuku"));
                 pnjm.setTanggalpinjam(rs.getString("tanggalpinjam"));
                 pnjm.setTanggalkembali(rs.getString("tanggalkembali"));
-                if (rs.getString("denda").equals("") || rs.getString("denda") == null ) {
+                if (rs.getString("denda") == null ) {
                     pnjm.setDenda("0");
                 }else{
                     pnjm.setDenda(rs.getString("denda"));
                 }
-                pnjm.setKeterangan(rs.getString("keterangaan"));   
+                pnjm.setIdstatus(rs.getString("idstatus"));
             }
         return pnjm;
     }
@@ -108,5 +112,15 @@ public class PinjamanDAO {
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, id);
             preStmt.executeUpdate();
+    }
+    
+    public static void main(String[] args) {
+        PinjamanDAO pd = new PinjamanDAO();
+        try{
+            System.out.println("Data : " + pd.getDtPinjaman("1"));
+        } catch (SQLException ex) {
+            Logger.getLogger(PinjamanDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }

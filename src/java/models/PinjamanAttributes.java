@@ -5,42 +5,20 @@
  */
 package models;
 
+import java.util.List;
+
 /**
  *
  * @author lenovo
  */
 public class PinjamanAttributes {
-    private Anggota anggota;
-    private Status status;
-    private Buku buku;
+    private List<Anggota> anggota;
+    private List<Status> status;
+    private List<Buku> buku;
 
-    public PinjamanAttributes(Anggota anggota, Status status, Buku buku) {
+    public PinjamanAttributes(List<Anggota> anggota, List<Status> status, List<Buku> buku) {
         this.anggota = anggota;
         this.status = status;
-        this.buku = buku;
-    }
-
-    public Anggota getAnggota() {
-        return anggota;
-    }
-
-    public void setAnggota(Anggota anggota) {
-        this.anggota = anggota;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Buku getBuku() {
-        return buku;
-    }
-
-    public void setBuku(Buku buku) {
         this.buku = buku;
     }
 
@@ -48,6 +26,28 @@ public class PinjamanAttributes {
     public String toString() {
         return "PinjamanAttributes{" + "anggota=" + anggota + ", status=" + status + ", buku=" + buku + '}';
     }
-    
-    
+
+    public List<Anggota> getAnggota() {
+        return anggota;
+    }
+
+    public void setAnggota(List<Anggota> anggota) {
+        this.anggota = anggota;
+    }
+
+    public List<Status> getStatus() {
+        return status;
+    }
+
+    public void setStatus(List<Status> status) {
+        this.status = status;
+    }
+
+    public List<Buku> getBuku() {
+        return buku;
+    }
+
+    public void setBuku(List<Buku> buku) {
+        this.buku = buku;
+    }
 }

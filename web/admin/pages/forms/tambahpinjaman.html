@@ -518,7 +518,11 @@
                               >ID Pinjaman</label
                             >
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" />
+                              <input
+                                type="text"
+                                class="form-control"
+                                name="idpinjaman"
+                              />
                             </div>
                           </div>
                         </div>
@@ -528,10 +532,11 @@
                               >ID Anggota</label
                             >
                             <div class="col-sm-9">
-                              <select class="form-control">
-                                <option>12349</option>
-                                <option>56780</option>
-                              </select>
+                              <select
+                                class="form-control"
+                                name="idanggota"
+                                id="anggota"
+                              ></select>
                             </div>
                           </div>
                         </div>
@@ -543,10 +548,11 @@
                               >Kode Buku</label
                             >
                             <div class="col-sm-9">
-                              <select class="form-control">
-                                <option>12349</option>
-                                <option>56780</option>
-                              </select>
+                              <select
+                                class="form-control"
+                                id="buku"
+                                name="kodebuku"
+                              ></select>
                             </div>
                           </div>
                         </div>
@@ -559,7 +565,8 @@
                             <div class="col-sm-9">
                               <input
                                 class="form-control"
-                                placeholder="dd/mm/yyyy"
+                                type="date"
+                                name="tanggalpinjam"
                               />
                             </div>
                           </div>
@@ -573,8 +580,9 @@
                             >
                             <div class="col-sm-9">
                               <input
+                                type="date"
                                 class="form-control"
-                                placeholder="dd/mm/yyyy"
+                                name="tanggalkembali"
                               />
                             </div>
                           </div>
@@ -586,10 +594,11 @@
                               >Status</label
                             >
                             <div class="col-sm-9">
-                              <select class="form-control">
-                                <option>Dipinjam</option>
-                                <option>Dikembalikan</option>
-                              </select>
+                              <select
+                                class="form-control"
+                                id="status"
+                                name="idstatus"
+                              ></select>
                             </div>
                           </div>
                         </div>
@@ -599,7 +608,11 @@
                           <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Denda</label>
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" />
+                              <input
+                                type="number"
+                                class="form-control"
+                                name="denda"
+                              />
                             </div>
                           </div>
                         </div>

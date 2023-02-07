@@ -12,19 +12,25 @@ getSelectOptions().then(({ data }) => {
     console.log(el.id);
     data[el.id].forEach((option) => {
       const optEl = document.createElement("option");
+      if (el.id === "anggota") {
+        optEl.value = option[Object.keys(option)[0]];
+        optEl.text = option[Object.keys(option)[2]];
+        el.appendChild(optEl);
+        return;
+      }
       optEl.value = option[Object.keys(option)[0]];
       optEl.text = option[Object.keys(option)[1]];
       el.appendChild(optEl);
     });
   });
   if (pageURL.pathname === "/PerpusJava/admin/pages/forms/editpinjaman.html") {
-    if (!pageURL.searchParams.get("kode")) {
+    if (!pageURL.searchParams.get("id")) {
       Swal.fire({
         title: "Unauthorized",
         text: `Akses dilarang`,
         icon: "error",
       }).then(() => {
-        window.location.href = "/PerpusJava/admin/pages/tables/pinjaman.html";
+        window.location.href = "/PerpusJava/admin/pages/tables/Pinjaman.html";
       });
     }
 
@@ -35,7 +41,7 @@ getSelectOptions().then(({ data }) => {
       "/PerpusJava/PinjamanController?" +
         new URLSearchParams({
           page: "show",
-          kode: kode,
+          idpinjaman: kode,
         })
     )
       .then((res) => res.json())
@@ -70,14 +76,15 @@ formInsert.addEventListener("submit", (e) => {
   }
   if (pageType === "insert") {
     insertData(body).then((data) => {
+      console.log(data);
       if (data.status == "OK") {
-        window.location.href = "/PerpusJava/admin/pages/tables/pinjaman.html";
+        window.location.href = "/PerpusJava/admin/pages/tables/Pinjaman.html";
       }
     });
   } else if (pageType === "update") {
     updateData(body).then((data) => {
       if (data.status == "OK") {
-        window.location.href = "/PerpusJava/admin/pages/tables/pinjaman.html";
+        window.location.href = "/PerpusJava/admin/pages/tables/Pinjaman.html";
       }
     });
   }

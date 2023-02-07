@@ -8,8 +8,10 @@ package controllers;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import dao.AnggotaDAO;
 import dao.BukuDAO;
 import dao.PinjamanDAO;
+import dao.StatusDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -79,8 +81,10 @@ public class PinjamanController extends HttpServlet {
                         pnjm = pd.getDtPinjaman(request.getParameter("idpinjaman"));
                         String pinjamanJSON = gson.toJson(pnjm);
                         System.out.println("PinjamanJSON : " + pinjamanJSON);
+//                        PostResource pr = new PostResource("OK", pnjm);
                         out.println(pinjamanJSON);
                     } catch (Exception e) {
+                        System.out.println("Error show pinjaman : " + e);
                         PostResource pr = new PostResource("NO", null);
                         out.println(gson.toJson(pr));
                     }
@@ -88,6 +92,18 @@ public class PinjamanController extends HttpServlet {
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
                 if(page.equals("attributes")){
+                    AnggotaDAO ad = new AnggotaDAO();
+                    BukuDAO bd = new BukuDAO();
+                    StatusDAO sd = new StatusDAO();
+                    try{
+                        PostResource pr = new PostResource("OK", new PinjamanAttributes(ad.getAllAnggota(), sd.getAllStatus(), bd.getAllBuku()));
+                        out.println(gson.toJson(pr));
+                    }catch(SQLException ex){
+                        System.out.println("Error pinjaman attr : " + ex);
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
                     
                 }
                 break;
