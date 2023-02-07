@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
   <!-- endinject -->
   <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="../../vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
@@ -293,110 +295,232 @@
         </div>
       </div>
       <!-- partial -->
-     <!-- partial -->
-     <nav class="sidebar sidebar-offcanvas" id="sidebar">
-      <ul class="nav">
-        <li class="nav-item">
-          <a class="nav-link" href="../../index.html">
-            <i class="icon-grid menu-icon"></i>
-            <span class="menu-title">Dashboard</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="anggota.html">
-            <i class="mdi mdi-account menu-icon"></i>
-            <span class="menu-title">Anggota</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="buku.html">
-            <i class="mdi mdi-book menu-icon"></i>
-            <span class="menu-title">Buku</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="kategori.html">
-            <i class="mdi mdi-folder-table menu-icon"></i>
-            <span class="menu-title">Kategori</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="penerbit.html">
-            <i class="mdi mdi-microsoft-bing mdi-rotate-180 mdi-flip-v menu-icon"></i>
-            <span class="menu-title">Penerbit</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="petugas.html">
-            <i class="mdi mdi-clipboard-account menu-icon"></i>
-            <span class="menu-title">Petugas</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="genre.html">
-            <i class="mdi mdi-file-video menu-icon"></i>
-            <span class="menu-title">Genre</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="Pinjaman.html">
-            <i class="mdi mdi-handshake menu-icon"></i>
-            <span class="menu-title">Pinjaman</span>
-          </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="status.html">
-              <i class="mdi mdi-alpha-s-box menu-icon"></i>
-              <span class="menu-title">Status</span>
+      <!-- partial:../../partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="../../index.html">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
             </a>
           </li>
-      </ul>
-    </nav>
-    <!-- partial -->
-      <div class="main-panel">
+          <!-- <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">UI Elements</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">Buttons</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/dropdowns.html">Dropdowns</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/typography.html">Typography</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+              <i class="icon-columns menu-icon"></i>
+              <span class="menu-title">Form elements</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="form-elements">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="../../pages/forms/basic_elements.html">Basic Elements</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../pages/forms/tambahanggota.html">Tambah Anggota</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../pages/forms/tambahbuku.html">Tambah Buku</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../pages/forms/tambahgenre.html">Tambah Genre</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../pages/forms/tambahkategori.html">Tambah Kategori</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../pages/forms/tambahpenerbit.html">Tambah Penerbit</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../pages/forms/tambahpetugas.html">Tambah Petugas</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../pages/forms/tambahpinjaman.html">Tambah Pinjaman</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+              <i class="icon-bar-graph menu-icon"></i>
+              <span class="menu-title">Charts</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="charts">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">ChartJs</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+              <i class="icon-grid-2 menu-icon"></i>
+              <span class="menu-title">Tables</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="tables">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../../pages/tables/basic-table.html">Basic table</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+              <i class="icon-contract menu-icon"></i>
+              <span class="menu-title">Icons</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="icons">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../../pages/icons/mdi.html">Mdi icons</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <i class="icon-head menu-icon"></i>
+              <span class="menu-title">User Pages</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login.html"> Login </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/register.html"> Register </a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
+              <i class="icon-ban menu-icon"></i>
+              <span class="menu-title">Error pages</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="error">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/error-404.html"> 404 </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/error-500.html"> 500 </a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../pages/documentation/documentation.html">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Documentation</span>
+            </a>
+          </li>
+        </ul>
+      </nav> -->
+      <!-- partial -->
+      <!-- <div class="main-panel">        
         <div class="content-wrapper">
           <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
+            <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Table Penerbit</h4>
-                  <p class="card-description">
-                    <code><button type="button" class="btn btn-primary btn-sm"> <a href="../../pages/forms/tambahpenerbit.html" class="text-light">Tambah</a></button></code>
-                  </p>
-                  <div class="table-responsive">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th>
-                            ID Penerbit
-                          </th>
-                          <th>
-                            Nama Penerbit
-                          </th>
-                          <th>
-                            Aksi
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody id="penerbit">
-                        <tr>
-                          <td class="py-1">
-                            PN02
-                          </td>
-                          <td>
-                            Bukunesia
-                          </td>
-                          <td>
-                            <code><button type="button" class="btn btn-warning btn-sm">Edit</button> | <button type="button" class="btn btn-danger btn-sm">Hapus</button></code>
-                          </td>
+                  <h4 class="card-title">Form Tambah Pinjaman</h4>
+                  <form class="form-sample">
+                    <p class="card-description">
+                      Personal info
+                    </p>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">ID Pinjaman</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Last Name</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">ID Anggota</label>
+                          <div class="col-sm-9">
+                            <select class="form-control">
+                              <option>12349</option>
+                              <option>56780</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
 
-                        </tr>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Kode Buku</label>
+                          <div class="col-sm-9">
+                            <select class="form-control">
+                              <option>BK001</option>
+                              <option>BK002</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Tanggal Pinjam</label>
+                          <div class="col-sm-9">
+                            <input class="form-control" placeholder="dd/mm/yyyy"/>
+                          </div>
+                        </div>
+                      </div>
 
-                        </tr>
-                        
-                      </tbody>
-                    </table>
-                  </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Tanggal Pinjam</label>
+                          <div class="col-sm-9">
+                            <input class="form-control" placeholder="dd/mm/yyyy"/>
+                          </div>
+                        </div>
+                      </div> -->
+                      <!-- <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Membership</label>
+                          <div class="col-sm-4">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="" checked>
+                                Free
+                              </label>
+                            </div>
+                          </div>
+                          <div class="col-sm-5">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios2" value="option2">
+                                Professional
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Denda</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Status</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -418,10 +542,11 @@
   </div>
   <!-- container-scroller -->
   <!-- plugins:js -->
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../../vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->
+  <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <script src="../../vendors/select2/select2.min.js"></script>
   <!-- End plugin js for this page -->
   <!-- inject:js -->
   <script src="../../js/off-canvas.js"></script>
@@ -431,8 +556,10 @@
   <script src="../../js/todolist.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
+  <script src="../../js/file-upload.js"></script>
+  <script src="../../js/typeahead.js"></script>
+  <script src="../../js/select2.js"></script>
   <!-- End custom js for this page-->
-  <script src="./penerbit.js"></script>
 </body>
 
 </html>

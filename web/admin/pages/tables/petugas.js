@@ -24,7 +24,7 @@ document.addEventListener("click", (e) => {
           "/PerpusJava/PetugasController?" +
             new URLSearchParams({
               page: "delete",
-              id: kode,
+              idpetugas: kode,
             }),
           { method: "POST" }
         )

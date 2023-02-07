@@ -27,6 +27,11 @@
     <link rel="stylesheet" href="../../css/vertical-layout-light/style.css" />
     <!-- endinject -->
     <link rel="shortcut icon" href="../../images/favicon.png" />
+    <!-- icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@7.1.96/css/materialdesignicons.min.css"
+    />
   </head>
 
   <body>
@@ -36,11 +41,11 @@
         <div
           class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
         >
-          <a class="navbar-brand brand-logo mr-2" href="../../index.html"
-            ><img src="../../images/logoperpus.png" class="mr-2" alt="logo"
+          <a class="navbar-brand brand-logo mr-5" href="../../index.html"
+            ><img src="../../images/logo-perp.png" class="mr-2 ml-3" alt="logo"
           /></a>
           <a class="navbar-brand brand-logo-mini" href="../../index.html"
-            ><img src="../../images/logo-mini.svg" alt="logo"
+            ><img src="../../images/logos.png" alt="logo"
           /></a>
         </div>
         <div
@@ -437,49 +442,51 @@
           <ul class="nav">
             <li class="nav-item">
               <a class="nav-link" href="../../index.html">
-                <i class="icon-paper menu-icon"></i>
+                <i class="icon-grid menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../../pages/tables/anggota.html">
-                <i class="icon-paper menu-icon"></i>
+              <a class="nav-link" href="../tables/../tables/anggota.html">
+                <i class="mdi mdi-account menu-icon"></i>
                 <span class="menu-title">Anggota</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../../pages/tables/buku.html">
-                <i class="icon-grid menu-icon"></i>
+            <li class="nav-item active">
+              <a class="nav-link" href="../tables/buku.html">
+                <i class="mdi mdi-book menu-icon"></i>
                 <span class="menu-title">Buku</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../../pages/tables/kategori.html">
-                <i class="icon-paper menu-icon"></i>
+              <a class="nav-link" href="../tables/kategori.html">
+                <i class="mdi mdi-folder-table menu-icon"></i>
                 <span class="menu-title">Kategori</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../../pages/tables/penerbit.html">
-                <i class="icon-paper menu-icon"></i>
+              <a class="nav-link" href="../tables/penerbit.html">
+                <i
+                  class="mdi mdi-microsoft-bing mdi-rotate-180 mdi-flip-v menu-icon"
+                ></i>
                 <span class="menu-title">Penerbit</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../../pages/tables/petugas.html">
-                <i class="icon-paper menu-icon"></i>
+              <a class="nav-link" href="../tables/petugas.html">
+                <i class="mdi mdi-clipboard-account menu-icon"></i>
                 <span class="menu-title">Petugas</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../../pages/tables/genre.html">
-                <i class="icon-paper menu-icon"></i>
+              <a class="nav-link" href="../tables/genre.html">
+                <i class="mdi mdi-file-video menu-icon"></i>
                 <span class="menu-title">Genre</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../../pages/tables/Pinjaman.html">
-                <i class="icon-paper menu-icon"></i>
+              <a class="nav-link" href="../tables/Pinjaman.html">
+                <i class="mdi mdi-handshake menu-icon"></i>
                 <span class="menu-title">Pinjaman</span>
               </a>
             </li>
@@ -505,6 +512,7 @@
                       <div class="form-group">
                         <label for="exampleInputName1">Kode Buku</label>
                         <input
+                          readonly
                           type="text"
                           name="kodebuku"
                           class="form-control"

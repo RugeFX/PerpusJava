@@ -25,7 +25,7 @@ public class ConnectDB {
                 conn = (Connection) data.getConnection();
                 System.out.println("Connection succeeded");
             }catch(SQLException ex){
-                System.out.println("Error ConnectDB : " + ex);
+                System.out.println("Error ConnectionDB : " + ex);
             }
         }
         return conn;

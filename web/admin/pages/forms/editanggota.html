@@ -508,11 +508,13 @@
                         >
                       </button>
                     </p>
-                    <form class="forms-sample">
+                    <form id="anggotaform" class="forms-sample">
                       <div class="form-group">
                         <label for="exampleInputName1">NIK</label>
                         <input
+                          readonly
                           type="text"
+                          name="nik"
                           class="form-control"
                           id="exampleInputName1"
                           placeholder="NIK"
@@ -522,6 +524,7 @@
                         <label for="exampleInputEmail3">Password</label>
                         <input
                           type="password"
+                          name="password"
                           class="form-control"
                           id="exampleInputEmail3"
                           placeholder="Password"
@@ -531,6 +534,7 @@
                         <label for="exampleInputPassword4">Nama Anggota</label>
                         <input
                           type="text"
+                          name="namaanggota"
                           class="form-control"
                           id="exampleInputPassword4"
                           placeholder="Nama Anggota"
@@ -556,6 +560,7 @@
                       <div class="form-group">
                         <label for="exampleTextarea1">Alamat</label>
                         <textarea
+                          name="alamat"
                           class="form-control"
                           id="exampleTextarea1"
                           rows="4"
@@ -565,6 +570,7 @@
                         <label for="exampleInputCity1">Kota</label>
                         <input
                           type="text"
+                          name="kota"
                           class="form-control"
                           id="exampleInputCity1"
                           placeholder="Kota"
@@ -574,6 +580,7 @@
                         <label for="exampleInputCity1">No Telepon</label>
                         <input
                           type="text"
+                          name="notelpon"
                           class="form-control"
                           id="exampleInputCity1"
                           placeholder="No Telepon"
@@ -582,7 +589,8 @@
                       <div class="form-group">
                         <label for="exampleInputCity1">Tanggal Lahir</label>
                         <input
-                          type="text"
+                          type="date"
+                          name="tanggallahir"
                           class="form-control"
                           id="exampleInputCity1"
                           placeholder="Tanggal Lahir"
@@ -591,7 +599,11 @@
                       <button type="submit" class="btn btn-primary mr-2">
                         Submit
                       </button>
-                      <button class="btn btn-light">Cancel</button>
+                      <a
+                        href="/PerpusJava/admin/pages/tables/anggota.html"
+                        class="btn btn-light"
+                        >Cancel</a
+                      >
                     </form>
                   </div>
                 </div>
@@ -625,6 +637,7 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="../../vendors/js/vendor.bundle.base.js"></script>
@@ -645,6 +658,6 @@
     <script src="../../js/typeahead.js"></script>
     <script src="../../js/select2.js"></script>
     <!-- End custom js for this page-->
-    <script src="./anggotaform.js"></script>
+    <script src="anggotaform.js"></script>
   </body>
 </html>

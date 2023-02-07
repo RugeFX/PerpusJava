@@ -17,6 +17,11 @@
     <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css" />
     <!-- endinject -->
     <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="../../vendors/select2/select2.min.css" />
+    <link
+      rel="stylesheet"
+      href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css"
+    />
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="../../css/vertical-layout-light/style.css" />
@@ -431,8 +436,7 @@
             <!-- chat tab ends -->
           </div>
         </div>
-        <!-- partial -->
-        <!-- partial -->
+        <!-- partial:../../partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
@@ -442,25 +446,25 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="anggota.html">
+              <a class="nav-link" href="../tables/anggota.html">
                 <i class="mdi mdi-account menu-icon"></i>
                 <span class="menu-title">Anggota</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="buku.html">
+              <a class="nav-link" href="../tables/buku.html">
                 <i class="mdi mdi-book menu-icon"></i>
                 <span class="menu-title">Buku</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="kategori.html">
+              <a class="nav-link" href="../tables/kategori.html">
                 <i class="mdi mdi-folder-table menu-icon"></i>
                 <span class="menu-title">Kategori</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="penerbit.html">
+            <li class="nav-item active">
+              <a class="nav-link" href="../tables/penerbit.html">
                 <i
                   class="mdi mdi-microsoft-bing mdi-rotate-180 mdi-flip-v menu-icon"
                 ></i>
@@ -468,94 +472,72 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="petugas.html">
+              <a class="nav-link" href="../tables/petugas.html">
                 <i class="mdi mdi-clipboard-account menu-icon"></i>
                 <span class="menu-title">Petugas</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="genre.html">
+              <a class="nav-link" href="../tables/genre.html">
                 <i class="mdi mdi-file-video menu-icon"></i>
                 <span class="menu-title">Genre</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="Pinjaman.html">
+              <a class="nav-link" href="../tables/Pinjaman.html">
                 <i class="mdi mdi-handshake menu-icon"></i>
                 <span class="menu-title">Pinjaman</span>
               </a>
             </li>
-            <li class="nav-item">
-            <a class="nav-link" href="status.html">
-              <i class="mdi mdi-alpha-s-box menu-icon"></i>
-              <span class="menu-title">Status</span>
-            </a>
-          </li>
           </ul>
         </nav>
-        <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="row">
-              <div class="col-lg-12 grid-margin stretch-card">
+              <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Table Petugas</h4>
+                    <h4 class="card-title">Form Edit Penerbit</h4>
                     <p class="card-description">
-                      <code
-                        ><button type="button" class="btn btn-primary btn-sm">
-                          <a
-                            href="../../pages/forms/tambahpetugas.html"
-                            class="text-light"
-                            >Tambah</a
-                          >
-                        </button></code
-                      >
+                      <button type="button" class="btn btn-primary btn-sm">
+                        <a
+                          href="../../pages/tables/penerbit.html"
+                          class="text-light"
+                          >Kembali</a
+                        >
+                      </button>
                     </p>
-                    <div class="table-responsive">
-                      <table class="table table-striped">
-                        <thead>
-                          <tr>
-                            <th>ID Petugas</th>
-                            <th>Password</th>
-                            <th>Nama Petugas</th>
-                            <th>Alamat</th>
-                            <th>Kota</th>
-                            <th>No Telepon</th>
-                            <th>Tanggal Lahir</th>
-                            <th>Aksi</th>
-                          </tr>
-                        </thead>
-                        <tbody id="petugas">
-                          <tr>
-                            <td class="py-1">098765431234</td>
-                            <td>Dimas0987</td>
-                            <td>Dimas</td>
-                            <td>Jalan Persahabatan</td>
-                            <td>Jakarta Timur</td>
-                            <td>987634321132</td>
-                            <td>May 15, 2002</td>
-                            <td>
-                              <code
-                                ><button
-                                  type="button"
-                                  class="btn btn-warning btn-sm"
-                                >
-                                  Edit
-                                </button>
-                                |
-                                <button
-                                  type="button"
-                                  class="btn btn-danger btn-sm"
-                                >
-                                  Hapus
-                                </button></code
-                              >
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                    <form id="mainform" class="forms-sample">
+                      <div class="form-group">
+                        <label for="exampleInputName1">ID Penerbit</label>
+                        <input
+                          readonly
+                          type="text"
+                          name="idpenerbit"
+                          class="form-control"
+                          id="exampleInputName1"
+                          placeholder="ID Penerbit"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">Nama Penerbit</label>
+                        <input
+                          type="text"
+                          name="namapenerbit"
+                          class="form-control"
+                          id="exampleInputEmail3"
+                          placeholder="Nama Penerbit"
+                        />
+                      </div>
+                      <button type="submit" class="btn btn-primary mr-2">
+                        Submit
+                      </button>
+                      <a
+                        href="/PerpusJava/admin/pages/tables/penerbit.html"
+                        class="btn btn-light"
+                        >Cancel</a
+                      >
+                    </form>
                   </div>
                 </div>
               </div>
@@ -588,11 +570,14 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="../../vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
+    <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="../../vendors/select2/select2.min.js"></script>
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="../../js/off-canvas.js"></script>
@@ -602,8 +587,10 @@
     <script src="../../js/todolist.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page-->
+    <script src="../../js/file-upload.js"></script>
+    <script src="../../js/typeahead.js"></script>
+    <script src="../../js/select2.js"></script>
     <!-- End custom js for this page-->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="./petugas.js"></script>
+    <script src="penerbitform.js"></script>
   </body>
 </html>

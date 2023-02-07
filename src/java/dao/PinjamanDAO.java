@@ -35,7 +35,7 @@ public class PinjamanDAO {
             rs = preStmt.executeQuery();
             while (rs.next()) {
                 Pinjaman pnjm = new Pinjaman();
-                pnjm.setIdanggota(rs.getString("idpinjaman"));
+                pnjm.setIdpinjaman(rs.getString("idpinjaman"));
                 pnjm.setNamaaanggota(rs.getString("namaanggota"));
                 pnjm.setJudulbuku(rs.getString("judulbuku"));
                 pnjm.setTanggalpinjam(rs.getString("tanggalpinjam"));
@@ -110,3 +110,4 @@ public class PinjamanDAO {
             preStmt.executeUpdate();
     }
 }
+    

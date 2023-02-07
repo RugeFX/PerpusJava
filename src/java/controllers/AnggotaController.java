@@ -108,6 +108,7 @@ public class AnggotaController extends HttpServlet {
                     }
                     if(page.equals("update")){
                        try{
+                           System.out.println("JSONAnggota : " + jsonAnggota.toString());
                             ad.updateAnggota(jsonAnggota);
                         }catch(SQLException ex){
                             System.out.println(ex);

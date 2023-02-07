@@ -24,7 +24,7 @@ document.addEventListener("click", (e) => {
           "/PerpusJava/PenerbitController?" +
             new URLSearchParams({
               page: "delete",
-              id: kode,
+              idpenerbit: kode,
             }),
           { method: "POST" }
         )

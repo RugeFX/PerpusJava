@@ -9,14 +9,14 @@ package models;
  * @author lenovo
  */
 public class Status {
-    private int idstatus;
+    private String idstatus;
     private String namastatus;
 
-    public int getIdstatus() {
+    public String getIdstatus() {
         return idstatus;
     }
 
-    public void setIdstatus(int idstatus) {
+    public void setIdstatus(String idstatus) {
         this.idstatus = idstatus;
     }
 
