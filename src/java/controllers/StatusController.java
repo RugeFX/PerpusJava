@@ -8,7 +8,7 @@ package controllers;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import dao.AnggotaDAO;
+import dao.StatusDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -20,15 +20,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Anggota;
+import models.Status;
 import models.PostResource;
 
 /**
  *
- * @author Lenovo
+ * @author Rintami Salsabila
  */
-@WebServlet(name = "AnggotaController", urlPatterns = {"/AnggotaController"})
-public class AnggotaController extends HttpServlet {
+@WebServlet(name = "StatusController", urlPatterns = {"/StatusController"})
+public class StatusController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,7 +41,7 @@ public class AnggotaController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Set response type and writer
+       // Set response type and writer
         PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         
@@ -52,37 +52,35 @@ public class AnggotaController extends HttpServlet {
         
         // Object initiation
         Gson gson = new Gson();
-        AnggotaDAO ad = new AnggotaDAO();   
+        StatusDao gd = new StatusDao();   
      
         switch(reqMethod){
             case "GET":
                 // Make a new List based on the Buku model
-                List<Anggota> anggotaList = new ArrayList<>(); 
-                Anggota ang = new Anggota();
+                List<Status>  statusList = new ArrayList<>(); 
+                Status status = new Status();
                 // Insert the buku data from the DAO
                 if(page == null){
                     try {
-                        anggotaList = ad.getAllAnggota();
-                        String anggotaJSON = gson.toJson(anggotaList);
-                        System.out.println("AnggotaJSON : " + anggotaJSON);
-                        out.println(anggotaJSON); 
-                    } catch (Exception ex) {
-                        PostResource pr = new PostResource("NO", null);
-                        out.println(gson.toJson(ex));
-                    }
-                    
-                }
-                if(page.equals("show")){
-                    try {
-                        ang = ad.getDtAnggota(request.getParameter("nik"));
-                        String anggotaJSON = gson.toJson(ang);
-                        System.out.println("AnggotaJSON : " + anggotaJSON);
-                        out.println(anggotaJSON);
+                        statusList = gd.getAllStatus();
+                        String statusJSON = gson.toJson(statusList);
+                        System.out.println("StatusJSON : " + statusJSON);
+                        out.println(statusJSON);
                     } catch (Exception e) {
                         PostResource pr = new PostResource("NO", null);
                         out.println(gson.toJson(pr));
                     }
                     
+                }
+                if(page.equals("show")){
+                    try {
+                        status = gd.getDtStatus(request.getParameter("idstatus"));
+                        String statusJSON = gson.toJson(status);
+                        System.out.println("StatusJSON : " + statusJSON);
+                        out.println(statusJSON);
+                    } catch (Exception e) {
+                    }
+                   
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
                 
@@ -92,30 +90,29 @@ public class AnggotaController extends HttpServlet {
                 // Reads all of the form body from the request
                 String resBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
                 System.out.println("resBody : " + resBody);
-
-                // Parse the JSONString into a JSON Object named Anggota
+                
+                // Parse the JSONString into a JSON Object named Petugas
                 String data = null;
                 try{
-                    Anggota jsonAnggota = gson.fromJson(resBody, Anggota.class);
+                    Status jsonStatus = gson.fromJson(resBody, Status.class);
                     // Transfers the data via DAO
                     if (page.equals("insert")) {
                          try{
-                            ad.insertAnggota(jsonAnggota);
+                            gd.insertStatus(jsonStatus);
                         }catch(SQLException ex){
                             System.out.println(ex);
                         }
                     }
                     if(page.equals("update")){
                        try{
-                           System.out.println("JSONAnggota : " + jsonAnggota.toString());
-                            ad.updateAnggota(jsonAnggota);
+                            gd.updateStatus(jsonStatus);
                         }catch(SQLException ex){
                             System.out.println(ex);
                         }
                     }
-                    if(page.equals("delete")){
+                     if(page.equals("delete")){
                         try {
-                            ad.hapus(request.getParameter("nik"));
+                            gd.hapus(request.getParameter("idstatus"));
                             PostResource pr = new PostResource("OK", null);
                             data = gson.toJson(pr);
                             out.println(data);
@@ -126,11 +123,11 @@ public class AnggotaController extends HttpServlet {
                             out.println(data);
                         }
                     }
-                    PostResource pr = new PostResource("OK", jsonAnggota);
+                    PostResource pr = new PostResource("OK", jsonStatus);
                     data = gson.toJson(pr);
-                    
                 }catch(JsonIOException | JsonSyntaxException jex){
                     System.out.println("Masuk error : " + jex);
+                    
                 }        
                 out.println(data);                   
                 break;

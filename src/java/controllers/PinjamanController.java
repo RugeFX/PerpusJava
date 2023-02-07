@@ -11,7 +11,7 @@ import com.google.gson.JsonSyntaxException;
 import dao.AnggotaDAO;
 import dao.BukuDAO;
 import dao.PinjamanDAO;
-import dao.StatusDAO;
+import dao.StatusDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -94,7 +94,7 @@ public class PinjamanController extends HttpServlet {
                 if(page.equals("attributes")){
                     AnggotaDAO ad = new AnggotaDAO();
                     BukuDAO bd = new BukuDAO();
-                    StatusDAO sd = new StatusDAO();
+                    StatusDao sd = new StatusDao();
                     try{
                         PostResource pr = new PostResource("OK", new PinjamanAttributes(ad.getAllAnggota(), sd.getAllStatus(), bd.getAllBuku()));
                         out.println(gson.toJson(pr));
