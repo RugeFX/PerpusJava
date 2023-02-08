@@ -8,7 +8,10 @@ package controllers;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import dao.AnggotaDAO;
+import dao.BukuDAO;
 import dao.PinjamanDAO;
+import dao.StatusDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -21,6 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Pinjaman;
+import models.PinjamanAttributes;
 import models.PostResource;
 
 /**
@@ -77,15 +81,31 @@ public class PinjamanController extends HttpServlet {
                         pnjm = pd.getDtPinjaman(request.getParameter("idpinjaman"));
                         String pinjamanJSON = gson.toJson(pnjm);
                         System.out.println("PinjamanJSON : " + pinjamanJSON);
+//                        PostResource pr = new PostResource("OK", pnjm);
                         out.println(pinjamanJSON);
                     } catch (Exception e) {
+                        System.out.println("Error show pinjaman : " + e);
                         PostResource pr = new PostResource("NO", null);
                         out.println(gson.toJson(pr));
                     }
                     return;
                 }
                 // Converts the bukuList into a JSON String and then send it to the response
-                
+                if(page.equals("attributes")){
+                    AnggotaDAO ad = new AnggotaDAO();
+                    BukuDAO bd = new BukuDAO();
+                    StatusDao sd = new StatusDao();
+                    try{
+                        PostResource pr = new PostResource("OK", new PinjamanAttributes(ad.getAllAnggota(), sd.getAllStatus(), bd.getAllBuku()));
+                        out.println(gson.toJson(pr));
+                    }catch(SQLException ex){
+                        System.out.println("Error pinjaman attr : " + ex);
+                        PostResource pr = new PostResource("NO", null);
+                        out.println(gson.toJson(pr));
+                    }
+                    
+                    
+                }
                 break;
                 
             case "POST":

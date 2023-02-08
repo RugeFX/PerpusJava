@@ -60,17 +60,22 @@ public class AuthController extends HttpServlet {
         switch(reqMethod){
             case "GET":
                 if(page.equals("cek")){
-                    if (!session.getAttribute("id").equals(null)) {
+                    System.out.println("Session : " + session.getAttribute("id"));
+                    if (session.getAttribute("id") != null) {
+                        System.out.println("Auth dalem");
                         if (session.getAttribute("level").equals("0")) {
+                            System.out.println("Auth petugas");
                             PostResource pr = new PostResource("OK", "Petugas");
                             data = gson.toJson(pr);
                             out.println(data);
                         }else{
+                            System.out.println("Auth anggota");
                             PostResource pr = new PostResource("OK", "Anggota");
                             data = gson.toJson(pr);
                             out.println(data);
                         }
                     }
+                    System.out.println("Auth luar");
                     PostResource pr = new PostResource("NO", null);
                     data = gson.toJson(pr);
                     out.println(data);

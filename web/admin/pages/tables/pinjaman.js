@@ -1,6 +1,56 @@
 const tabelEl = document.getElementById("pinjaman");
+const filterEl = document.getElementById("filterpinjaman");
 
 showAllDatas();
+
+filterEl.addEventListener("change", (e) => {
+  const value = e.target.value;
+  if (value === "All") {
+    tabelEl.innerHTML = "";
+    showAllDatas();
+    return;
+  }
+  getAllDatas().then((datas) => {
+    const filtered = datas.filter((data) => data.keterangan === value);
+    console.log(filtered);
+    if (filtered.length === 0) {
+      tabelEl.innerHTML = `<tr><td style="text-align:center;" colspan=8>No data for filter ${value}</td></tr>`;
+      return;
+    }
+    tabelEl.innerHTML = "";
+    filtered.forEach((data) => {
+      const childEl = document.createElement("tr");
+
+      Object.keys(data).forEach((key) => {
+        const childTd = document.createElement("td");
+        // console.log(val);
+        childTd.innerText = data[key];
+        childEl.appendChild(childTd);
+      });
+      //   console.log("========================");
+
+      // TD for action buttons
+      const actionEl = document.createElement("td");
+
+      // Define edit button element
+      const editBtn = makeEditBtn(data.idpinjaman);
+
+      // Define delete button element
+      const removeBtn = makeDeleteBtn(data.idpinjaman);
+
+      // Code element for inner container of action element
+      const codeEl = document.createElement("code");
+      codeEl.append(editBtn);
+      codeEl.insertAdjacentHTML("beforeend", " | ");
+      codeEl.append(removeBtn);
+
+      actionEl.append(codeEl);
+      childEl.append(actionEl);
+
+      tabelEl.append(childEl);
+    });
+  });
+});
 
 document.addEventListener("click", (e) => {
   const kode = e.target.dataset.kode;
