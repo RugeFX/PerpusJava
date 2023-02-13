@@ -1,11 +1,9 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  * @author Rintami Salsabila
  */
-
-
 
 const tabelEl = document.getElementById("status");
 
@@ -20,7 +18,7 @@ document.addEventListener("click", (e) => {
   if (e.target.id == "deleteBtn") {
     Swal.fire({
       title: "Apakah anda yakin?",
-      text: `Anda akan menghapus data genre dengan id ${kode}`,
+      text: `Anda akan menghapus data status dengan id ${kode}`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -33,7 +31,7 @@ document.addEventListener("click", (e) => {
           "/PerpusJava/StatusController?" +
             new URLSearchParams({
               page: "delete",
-              idgenre: kode,
+              idstatus: kode,
             }),
           { method: "POST" }
         )

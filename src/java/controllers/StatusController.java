@@ -118,6 +118,7 @@ public class StatusController extends HttpServlet {
                             out.println(data);
                             return;
                         } catch (Exception e) {
+                            System.out.println("Error STatus delete : " + e);
                             PostResource pr = new PostResource("NO", null);
                             data = gson.toJson(pr);
                             out.println(data);

@@ -80,6 +80,10 @@ public class AuthController extends HttpServlet {
                     data = gson.toJson(pr);
                     out.println(data);
                 }
+                if(page.equals("logout")){
+                    session.invalidate();
+                    response.sendRedirect("/PerpusJava/admin/pages/samples/login.html");
+                }
                 break;
             case "POST":
                 if (page.equals("login")) {
