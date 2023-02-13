@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.Anggota;
+import models.Auth;
 import models.Petugas;
 import models.PostResource;
 
@@ -60,20 +61,25 @@ public class AuthController extends HttpServlet {
         switch(reqMethod){
             case "GET":
                 if(page.equals("cek")){
+                    Auth auth = new Auth();
                     System.out.println("Session : " + session.getAttribute("id"));
                     if (session.getAttribute("id") != null) {
                         System.out.println("Auth dalem");
-                        if (session.getAttribute("level").equals("0")) {
-                            System.out.println("Auth petugas");
-                            PostResource pr = new PostResource("OK", "Petugas");
-                            data = gson.toJson(pr);
-                            out.println(data);
-                        }else{
-                            System.out.println("Auth anggota");
-                            PostResource pr = new PostResource("OK", "Anggota");
-                            data = gson.toJson(pr);
-                            out.println(data);
-                        }
+                        auth.setId(session.getAttribute("id").toString());
+                        auth.setLevel(session.getAttribute("level").toString());
+                        String dataAuth = gson.toJson(auth);
+                        PostResource pr = new PostResource("OK", "Petugas");
+                        data = gson.toJson(pr);
+                        out.println(data);
+//                        if (session.getAttribute("level").equals("0")) {
+//                            System.out.println("Auth petugas");
+//                            
+//                        }else{
+//                            System.out.println("Auth anggota");
+//                            PostResource pr = new PostResource("OK", "Anggota");
+//                            data = gson.toJson(pr);
+//                            out.println(data);
+//                        }
                     }
                     System.out.println("Auth luar");
                     PostResource pr = new PostResource("NO", null);

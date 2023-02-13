@@ -14,9 +14,9 @@ function showAllBukus() {
             imgBookEl.src = buku.urlgambar
             const kontenEl = document.createElement("div");
             kontenEl.classList.add("konten")
-            const judulEl = document.createElement("h3")
+            const judulEl = document.createElement("h5")
             judulEl.innerHTML = "<u>" + buku.judulbuku + "</u>"
-            const pengarangEl = document.createElement("h5")
+            const pengarangEl = document.createElement("p")
             pengarangEl.innerHTML = buku.pengarang
             const hrEl = document.createElement("hr")
             hrEl.size = "5px"

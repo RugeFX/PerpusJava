@@ -21,6 +21,21 @@ if (pageURL.pathname === "/PerpusJava/admin/pages/samples/login.html"){
     })
 }
 
+async function sessionCek() {
+    const res =
+        await fetch(
+            "/PerpusJava/AuthController?" + new URLSearchParams({ page: "cek" }),
+            {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+            });
+    const cekUser = await res.json();
+    return cekUser;
+}
+
 formLogin.addEventListener("submit", (e) => {
     e.preventDefault();
     Login(idEl.value, pwEl.value).then((dataUser) => {
@@ -70,19 +85,6 @@ async function Login(id, password) {
     return post;
 }
 
-async function sessionCek(){
-    const res =
-        await fetch(
-            "/PerpusJava/AuthController?" + new URLSearchParams({page: "cek"}),
-            {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                },
-            });
-    const cekUser = await res.json();
-    return cekUser;
-}
+
 
 

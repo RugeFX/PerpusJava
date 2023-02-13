@@ -12,12 +12,6 @@ getSelectOptions().then(({ data }) => {
     console.log(el.id);
     data[el.id].forEach((option) => {
       const optEl = document.createElement("option");
-      if (el.id === "anggota") {
-        optEl.value = option[Object.keys(option)[0]];
-        optEl.text = option[Object.keys(option)[2]];
-        el.appendChild(optEl);
-        return;
-      }
       optEl.value = option[Object.keys(option)[0]];
       optEl.text = option[Object.keys(option)[1]];
       el.appendChild(optEl);

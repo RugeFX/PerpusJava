@@ -105,32 +105,32 @@
 <center>
     <div class="card border-success w-50">
       <div class="card-body">
-        <form>
-          <div class="form-group">
+        <form id="mainform">
+          <!-- <div class="form-group">
             <p class="card-text"><b>ID Pinjaman</b></p>
-            <input type="text" name="idpinjaman" class="form-control" placeholder="Masukkan ID Pinjaman">
-          </div>
+            <input type="text" readonly class="form-control" name="idpinjaman" placeholder="Masukkan ID Pinjaman" />
+          </div> -->
           <div class="form-group">
             <p class="card-text"><b>ID Anggota</b></p>
-            <input type="text" name="idanggota" class="form-control" placeholder="Masukkan ID Anggota">
+            <input type="text" class="form-control" name="idanggota" id="anggota" placeholder="Masukkan ID Anggota">
           </div>
           <div class="form-group">
-            <p class="card-text"><b>Kode Buku</b></p>
-            <div class="input-group mb-3">
-            <input type="text" name="kodebuku" class="form-control" placeholder="Masukkan Kode Buku" aria-label="Recipient's username" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">Button</button>
+            <p class="card-text"><b>Nama Buku</b></p>
+            <div class="col-sm-9">
+              <select class="form-control" id="buku" name="kodebuku"></select>
             </div>
-          </div>
           </div>
           <div class="form-group">
             <p class="card-text"><b>Tanggal Pinjam</b></p>
-            <input type="date" name="tanggalpinjam" class="form-control" placeholder="Masukkan ID Pinjaman">
+            <input type="date" name="tanggalpinjam" class="form-control" placeholder="Masukkan Tanggal Pinjam">
           </div>
+          <input type="hidden" class="form-control" id="status" name="idstatus" value="5"></input>
+          <br>
+          <div class="form-group"><input type="submit" class="btn btn-primary" value="Pinjam"></input></div>
         </form>
         <div><br></div>
         
-        <a href="#" class="btn btn-primary">Button</a>
+       
       </div>
     </div>
  </center> 
@@ -251,11 +251,14 @@
       </div>
     </div>
 
+    <script src="./admin/auth.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/tiny-slider.js"></script>
     <script src="js/aos.js"></script>
     <script src="js/navbar.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
+    <script src="pinjaman.js"></script>
+    
   </body>
 </html>
