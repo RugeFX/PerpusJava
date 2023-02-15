@@ -68,9 +68,9 @@ public class AuthController extends HttpServlet {
                         auth.setId(session.getAttribute("id").toString());
                         auth.setLevel(session.getAttribute("level").toString());
                         String dataAuth = gson.toJson(auth);
-                        PostResource pr = new PostResource("OK", "Petugas");
-                        data = gson.toJson(pr);
-                        out.println(data);
+//                        PostResource pr = new PostResource("OK", "Petugas");
+//                        data = gson.toJson(pr);
+//                        out.println(data);
 //                        if (session.getAttribute("level").equals("0")) {
 //                            System.out.println("Auth petugas");
 //                            
@@ -80,11 +80,39 @@ public class AuthController extends HttpServlet {
 //                            data = gson.toJson(pr);
 //                            out.println(data);
 //                        }
+                        if (session.getAttribute("level").equals("0")) {
+                            try{
+                                petugas = pd.getDtPetugas(session.getAttribute("id").toString());
+                                PostResource pr = new PostResource("OK", "Petugas");
+                                data = gson.toJson(pr);
+                                out.println(data);
+                            }catch(SQLException e){
+                                System.out.println("Error cek : " + e);
+                                PostResource pr = new PostResource("NO", e);
+                                data = gson.toJson(pr);
+                                out.println(data);
+                                return;
+                            }
+                            
+                            System.out.println("Auth petugas");
+                            PostResource pr = new PostResource("OK", "Petugas");
+                            data = gson.toJson(pr);
+                            out.println(data);
+                        }else{
+                            System.out.println("Auth anggota");
+                            PostResource pr = new PostResource("OK", "Anggota");
+                            data = gson.toJson(pr);
+                            out.println(data);
+                        }
                     }
                     System.out.println("Auth luar");
                     PostResource pr = new PostResource("NO", null);
                     data = gson.toJson(pr);
                     out.println(data);
+                }
+                if(page.equals("logout")){
+                    session.invalidate();
+                    response.sendRedirect("/PerpusJava/admin/pages/samples/login.html");
                 }
                 break;
             case "POST":

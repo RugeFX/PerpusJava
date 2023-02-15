@@ -1,5 +1,4 @@
 
-cek();
 // const res = fetch(
 //      "/PerpusJava/AuthController?" + new URLSearchParams({page: "cek"}),
 //      {
@@ -21,18 +20,32 @@ cek();
 //     }
 //   });
 
+
+
 function cek(){
   sessionCek().then((data) => {
     console.log(data.status)
     if (data.status == "NO") {
       console.log("ditolak")
-      window.location.href = "/PerpusJava/admin/pages/samples/login.html";
-    }
-    else {
-      console.log("ada data: ".data.data)
-    }
+      fetch(
+        "/PerpusJava/AuthController?" +
+          new URLSearchParams({
+            page: "cek",
+          })
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === "NO") {
+            window.location.href = "/PerpusJava/admin/pages/samples/login.html";
+          }
+          else {
+            console.log("ada data: ".data.data)
+          }
+        })
+     }
   })
 }
+
 
 async function sessionCek() {
   const res =
@@ -48,3 +61,6 @@ async function sessionCek() {
   const cekUser = await res.json();
   return cekUser;
 }
+
+cek();
+ 
