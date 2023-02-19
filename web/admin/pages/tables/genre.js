@@ -1,6 +1,6 @@
 const tabelEl = document.getElementById("genre");
 
-showAllDatas();
+// showAllDatas();
 
 document.addEventListener("click", (e) => {
   const kode = e.target.dataset.kode;
@@ -110,14 +110,120 @@ async function getAllDatas() {
   return datas;
 }
 
-// async function getByID(id) {
-//   const res = await fetch(
-//     "/PerpusJava/AnggotaController?" +
-//       new URLSearchParams({
-//         page: "show",
-//         idbuku: id,
-//       })
-//   );
-//   const bukus = await res.json();
-//   return bukus;
-// }
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
+const pageNumEl = document.getElementById("pageNum");
+
+let currentPage = 1;
+let recordsPerPage = 5;
+
+getAllDatas().then((datas) => {
+  function numPages() {
+    return Math.ceil(datas.length / recordsPerPage);
+  }
+  console.log(numPages());
+
+  function prevPage() {
+    if (currentPage > 1) {
+      currentPage--;
+      changePage(currentPage);
+    }
+  }
+
+  function nextPage() {
+    if (currentPage < numPages()) {
+      currentPage++;
+      changePage(currentPage);
+    }
+  }
+
+  function changePage(page) {
+    if (page < 1) page = 1;
+    if (page > numPages()) page = numPages();
+
+    tabelEl.innerHTML = "";
+
+    for (
+      let i = (page - 1) * recordsPerPage;
+      i < page * recordsPerPage && i < datas.length;
+      i++
+    ) {
+      const childEl = document.createElement("tr");
+      const buku = datas[i];
+
+      Object.keys(buku).forEach((key) => {
+        const childTd = document.createElement("td");
+        // console.log(val);
+        childTd.innerText = buku[key];
+        childEl.appendChild(childTd);
+      });
+      //   console.log("========================");
+
+      // TD for action buttons
+      const actionEl = document.createElement("td");
+
+      // Define edit button element
+      const editBtn = makeEditBtn(buku.kodebuku);
+
+      // Define delete button element
+      const removeBtn = makeDeleteBtn(buku.kodebuku);
+
+      // Code element for inner container of action element
+      const codeEl = document.createElement("code");
+      codeEl.append(editBtn);
+      codeEl.insertAdjacentHTML("beforeend", " | ");
+      codeEl.append(removeBtn);
+
+      actionEl.append(codeEl);
+      childEl.append(actionEl);
+
+      tabelEl.append(childEl);
+    }
+    pageNumEl.innerHTML = page;
+
+    if (page === 1) {
+      prevBtn.classList.remove("btn-primary");
+      prevBtn.classList.add("btn-secondary");
+      prevBtn.setAttribute("disabled", true);
+
+      nextBtn.classList.add("btn-primary");
+      nextBtn.classList.remove("btn-secondary");
+      nextBtn.removeAttribute("disabled");
+      // prevBtn.style.visibility = "hidden";
+      // nextBtn.style.visibility = "visible";
+    } else if (page === numPages()) {
+      nextBtn.classList.remove("btn-primary");
+      nextBtn.classList.add("btn-secondary");
+      nextBtn.setAttribute("disabled", true);
+
+      prevBtn.classList.add("btn-primary");
+      prevBtn.classList.remove("btn-secondary");
+      prevBtn.removeAttribute("disabled");
+
+      // prevBtn.style.visibility = "visible";
+      // nextBtn.style.visibility = "hidden";
+    } else {
+      nextBtn.classList.add("btn-primary");
+      nextBtn.classList.remove("btn-secondary");
+      nextBtn.removeAttribute("disabled");
+
+      prevBtn.classList.add("btn-primary");
+      prevBtn.classList.remove("btn-secondary");
+      prevBtn.removeAttribute("disabled");
+    }
+
+    if (numPages() == 1) {
+      nextBtn.classList.remove("btn-primary");
+      nextBtn.classList.add("btn-secondary");
+      nextBtn.setAttribute("disabled", true);
+
+      prevBtn.classList.remove("btn-primary");
+      prevBtn.classList.add("btn-secondary");
+      prevBtn.setAttribute("disabled", true);
+    }
+  }
+
+  nextBtn.addEventListener("click", nextPage);
+  prevBtn.addEventListener("click", prevPage);
+  changePage(1);
+});

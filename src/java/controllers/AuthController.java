@@ -64,6 +64,19 @@ public class AuthController extends HttpServlet {
                     if (session.getAttribute("id") != null) {
                         System.out.println("Auth dalem");
                         if (session.getAttribute("level").equals("0")) {
+                            try{
+                                petugas = pd.getDtPetugas(session.getAttribute("id").toString());
+                                PostResource pr = new PostResource("OK", "Petugas");
+                                data = gson.toJson(pr);
+                                out.println(data);
+                            }catch(SQLException e){
+                                System.out.println("Error cek : " + e);
+                                PostResource pr = new PostResource("NO", e);
+                                data = gson.toJson(pr);
+                                out.println(data);
+                                return;
+                            }
+                            
                             System.out.println("Auth petugas");
                             PostResource pr = new PostResource("OK", "Petugas");
                             data = gson.toJson(pr);
@@ -79,6 +92,10 @@ public class AuthController extends HttpServlet {
                     PostResource pr = new PostResource("NO", null);
                     data = gson.toJson(pr);
                     out.println(data);
+                }
+                if(page.equals("logout")){
+                    session.invalidate();
+                    response.sendRedirect("/PerpusJava/admin/pages/samples/login.html");
                 }
                 break;
             case "POST":
