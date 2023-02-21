@@ -18,6 +18,7 @@ public class Pinjaman {
     private String judulbuku;
     private String tanggalpinjam;
     private String tanggalkembali;
+    private String tanggalpengembalian;
     private String denda;
     private String idstatus;
     private String keterangan;
@@ -84,6 +85,14 @@ public class Pinjaman {
 
     public void setTanggalkembali(String tanggalkembali) {
         this.tanggalkembali = tanggalkembali;
+    }
+    
+     public String getTanggalpengembalian() {
+        return tanggalpengembalian;
+    }
+
+    public void setTanggalpengembalian(String tanggalpengembalian) {
+        this.tanggalpengembalian = tanggalpengembalian;
     }
 
     public String getDenda() {

@@ -99,8 +99,15 @@ public class StatusController extends HttpServlet {
                     if (page.equals("insert")) {
                          try{
                             gd.insertStatus(jsonStatus);
+                            PostResource pr = new PostResource("OK", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
                         }catch(SQLException ex){
                             System.out.println(ex);
+                            PostResource pr = new PostResource("NO", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
+                            return;
                         }
                     }
                     if(page.equals("update")){

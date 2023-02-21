@@ -10,8 +10,8 @@ const pageURL = new URL(window.location.href);
 let pageType = "login";
 
 if (pageURL.pathname === "/PerpusJava/admin/pages/samples/login.html"){
-    sessionCek().then((data) => {
-        if(data.status == "OK"){
+    sessionCek().then((dataUser) => {
+        if (dataUser.status == "OK"){
             if (dataUser.data == "Petugas") {
                 window.location.href = "/PerpusJava/admin"
             } else {

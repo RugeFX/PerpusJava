@@ -138,10 +138,12 @@ public class BukuController extends HttpServlet {
                     if (page.equals("insert")) {
                         try{
                             bd.insertBuku(jsonBuku);
-                            out.println(gson.toJson(new PostResource("OK", jsonBuku)));
+                            PostResource pr = new PostResource("OK", null);
+                            out.println(gson.toJson(pr));
                         }catch(SQLException ex){
                             System.out.println(ex);
-                            out.println(gson.toJson(new PostResource("Error " + ex, null)));
+                            PostResource pr = new PostResource("NO", null);
+                            out.println(gson.toJson(pr));
                         }
                     }
 //                    else if(page.equals("showupdate")){

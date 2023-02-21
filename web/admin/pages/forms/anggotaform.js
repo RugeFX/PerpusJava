@@ -37,27 +37,59 @@ if (pageURL.pathname === "/PerpusJava/admin/pages/forms/editanggota.html") {
 formInsert.addEventListener("submit", (e) => {
   e.preventDefault();
   const body = getAllFormData(formInsert);
-  if (
-    !Object.values(body).every((value) => {
-      if (value === null || value === "") {
-        console.log(value);
-        return false;
-      }
-      return true;
-    })
-  ) {
-    console.log("Tolong isi data dengan benar!");
-    Swal.fire(
-      "Data Invalid",
-      "Tolong masukkan data dengan lengkap!",
-      "warning"
-    );
-    return;
+  for (const key in body) {
+    const value = body[key]
+    if (value === null || value === "") {
+      console.log(key)
+      console.log(value);
+      Swal.fire(
+        "Data Invalid",
+        "Tolong masukkan data dengan lengkap!",
+        "warning"
+      );
+      return;
+    }
+    // if (key === 'nik') {
+    //   console.log(key)
+    //   console.log(value);
+    //   if (cekNikAnggota(value) !== null) {
+    //     Swal.fire(
+    //       "NIK Sudah Ada",
+    //       "Tolong masukkan NIK yang baru!",
+    //       "warning"
+    //     );
+    //   }
+    //   return;
+    // }
   }
+  // if (
+  //   !Object.values(body).every((value) => {
+  //     if (value === null || value === "") {
+  //       console.log(value);
+  //       return false;
+  //     }
+  //     return true;
+  //   })
+  // ) {
+  //   console.log("Tolong isi data dengan benar!");
+  //   Swal.fire(
+  //     "Data Invalid",
+  //     "Tolong masukkan data dengan lengkap!",
+  //     "warning"
+  //   );
+  //   return;
+  // }
   if (pageType === "insert") {
     insertData(body).then((data) => {
+      console
       if (data.status == "OK") {
         window.location.href = "/PerpusJava/admin/pages/tables/anggota.html";
+      }else{
+        Swal.fire(
+          "NIK Sudah Ada",
+          "Tolong masukkan NIK yang baru!",
+          "warning"
+        );
       }
     });
   } else if (pageType === "update") {
@@ -80,6 +112,26 @@ function getAllFormData(form) {
   console.log(body);
   return body;
 }
+
+// async function cekNikAnggota(nik) {
+//   const res =
+//     await fetch(
+//       "/PerpusJava/AnggotaController?" +
+//       new URLSearchParams({
+//         page: "show",
+//         nik: nik,
+//       }),
+//       {
+//         method: "GET",
+//         headers: {
+//           Accept: "application/json",
+//           "Content-Type": "application/json",
+//         },
+//       });
+//   const anggota = await res.json()
+//   console.log(anggota)
+//   return anggota;
+// }
 
 async function updateData(body) {
   const res = await fetch(

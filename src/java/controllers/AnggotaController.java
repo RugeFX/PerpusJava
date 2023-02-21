@@ -102,8 +102,16 @@ public class AnggotaController extends HttpServlet {
                     if (page.equals("insert")) {
                          try{
                             ad.insertAnggota(jsonAnggota);
+                            PostResource pr = new PostResource("OK", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
+                            return;
                         }catch(SQLException ex){
                             System.out.println(ex);
+                            PostResource pr = new PostResource("NO", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
+                            return;
                         }
                     }
                     if(page.equals("update")){

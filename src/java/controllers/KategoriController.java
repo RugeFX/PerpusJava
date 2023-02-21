@@ -101,8 +101,14 @@ public class KategoriController extends HttpServlet {
                     if (page.equals("insert")) {
                          try{
                             kd.insertKategori(jsonKategori);
+                            PostResource pr = new PostResource("OK", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
                         }catch(SQLException ex){
                             System.out.println(ex);
+                            PostResource pr = new PostResource("NO", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
                         }
                     }
                     if(page.equals("update")){

@@ -42,6 +42,7 @@ public class PinjamanDAO {
                 pnjm.setJudulbuku(rs.getString("judulbuku"));
                 pnjm.setTanggalpinjam(rs.getString("tanggalpinjam"));
                 pnjm.setTanggalkembali(rs.getString("tanggalkembali"));
+                pnjm.setTanggalpengembalian(rs.getString("tanggalpengembalian"));
                 if (rs.getString("denda") == null) {
                     pnjm.setDenda("0");
                 }else{
@@ -55,22 +56,31 @@ public class PinjamanDAO {
     
     public void insertPinjaman(Pinjaman pnjm) throws SQLException {
         String sql = "INSERT INTO pinjaman (idanggota, kodebuku, "
-                    + "tanggalpinjam, tanggalkembali, denda, idstatus, "
-                    + "idpinjaman) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
+                    + "tanggalpinjam, tanggalkembali, tanggalpengembalian, denda, idstatus, "
+                    + "idpinjaman) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, pnjm.getIdanggota());
             preStmt.setString(2, pnjm.getKodebuku());
             preStmt.setString(3, pnjm.getTanggalpinjam());
             preStmt.setString(4, pnjm.getTanggalkembali());
-            preStmt.setString(5, pnjm.getDenda());
-            preStmt.setString(6, pnjm.getIdstatus());
-            preStmt.setString(7, pnjm.getIdpinjaman());
+            if(pnjm.getTanggalpengembalian().isEmpty() || pnjm.getTanggalpengembalian() == null){
+                preStmt.setString(5, null);
+            }else{
+                preStmt.setString(5, pnjm.getTanggalpengembalian());
+            }
+            if(pnjm.getDenda().isEmpty() || pnjm.getDenda() == null){
+                preStmt.setString(6, null);
+            }else{
+               preStmt.setString(6, pnjm.getDenda()); 
+            }
+            preStmt.setString(7, pnjm.getIdstatus());
+            preStmt.setString(8, pnjm.getIdpinjaman());
             preStmt.executeUpdate();
     }
     
     public void updatePinjaman(Pinjaman pnjm) throws SQLException{
         String sql = "UPDATE pinjaman SET idanggota=?, kodebuku=?, tanggalpinjam=?, tanggalkembali=?,"
-                    + "denda=?, idstatus=? where idpinjaman=?";
+                    + "tanggalpengembalian=?, denda=?, idstatus=? where idpinjaman=?";
             preStmt = koneksi.prepareStatement(sql);
             preStmt.setString(1, pnjm.getIdanggota());
             preStmt.setString(2, pnjm.getKodebuku());
@@ -97,6 +107,7 @@ public class PinjamanDAO {
 //                pnjm.setJudulbuku(rs.getString("judulbuku"));
                 pnjm.setTanggalpinjam(rs.getString("tanggalpinjam"));
                 pnjm.setTanggalkembali(rs.getString("tanggalkembali"));
+                pnjm.setTanggalpengembalian(rs.getString("tanggalpengembalian"));
                 if (rs.getString("denda") == null ) {
                     pnjm.setDenda("0");
                 }else{

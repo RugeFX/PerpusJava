@@ -2,7 +2,7 @@ const formInsert = document.getElementById("mainform");
 
 const selectOptionElements = document.querySelectorAll("#mainform select");
 
-const pageURL = new URL(window.location.href);
+// const pageURL = new URL(window.location.href);
 // console.log(pageURL);
 let pageType = "insert";
 

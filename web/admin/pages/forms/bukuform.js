@@ -51,27 +51,64 @@ getSelectOptions().then(({ data }) => {
 formInsert.addEventListener("submit", (e) => {
   e.preventDefault();
   const body = getAllFormData(formInsert);
-  if (
-    !Object.values(body).every((value) => {
-      if (value === null || value === "") {
+  for(const key in body){
+    const value = body[key]
+    if (key !== 'urlebook' && key !== 'urlgambar'){
+      if (value === null || value === ""){
+        console.log(key)
         console.log(value);
-        return false;
+        Swal.fire(
+          "Data Invalid",
+          "Tolong masukkan data dengan lengkap!",
+          "warning"
+        );
+        return;
       }
-      return true;
-    })
-  ) {
-    console.log("Tolong isi data dengan benar!");
-    Swal.fire(
-      "Data Invalid",
-      "Tolong masukkan data dengan lengkap!",
-      "warning"
-    );
-    return;
+    }
+    // if (key === 'kodebuku'){
+    //   console.log(value)
+    //   if(cekKodebuku(value) !== null){
+    //     console.log("Uda ada datanya")
+    //     Swal.fire(
+    //       "Kode Sudah digunakan",
+    //       "Tolong masukkan kode yang baru!",
+    //       "warning"
+    //     );
+    //   }
+    //   return;
+    // }
   }
+  // if (
+  //   !Object.values(body).every((value) => {
+  //     for (const key in body) {
+  //       if ((key !== 'urlebook' && key !== 'urlgambar') && value === null || value === "") {
+  //           console.log(key)
+  //           console.log(value);
+  //           return false;
+  //         }
+  //     }
+  //     return true;
+  //   })
+  // ) {
+  //   console.log("Tolong isi data dengan benar!");
+  //   Swal.fire(
+  //     "Data Invalid",
+  //     "Tolong masukkan data dengan lengkap!",
+  //     "warning"
+  //   );
+  //   return;
+  // }
   if (pageType === "insert") {
     insertBuku(body).then((data) => {
       if (data.status == "OK") {
         window.location.href = "/PerpusJava/admin/pages/tables/buku.html";
+      }
+      else{
+        Swal.fire(
+          "Kode Sudah digunakan",
+          "Tolong masukkan kode yang baru!",
+          "warning"
+        );
       }
     });
   } else if (pageType === "update") {
@@ -82,6 +119,26 @@ formInsert.addEventListener("submit", (e) => {
     });
   }
 });
+
+// async function cekKodebuku(kodebuku){
+//   const res = 
+//   await fetch(
+//     "/PerpusJava/BukuController?" +
+//     new URLSearchParams({
+//       page: "show",
+//       kode: kodebuku,
+//     }),
+//     {
+//       method: "GET",
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//       },
+//     });
+//   const book = await res.json()
+//   console.log(book)
+//   return book;
+// }
 
 function getAllFormData(form) {
   const body = {};

@@ -37,27 +37,59 @@ if (pageURL.pathname === "/PerpusJava/admin/pages/forms/editstatus.html") {
 formInsert.addEventListener("submit", (e) => {
   e.preventDefault();
   const body = getAllFormData(formInsert);
-  if (
-    !Object.values(body).every((value) => {
-      if (value === null || value === "") {
-        console.log(value);
-        return false;
-      }
-      return true;
-    })
-  ) {
-    console.log("Tolong isi data dengan benar!");
-    Swal.fire(
-      "Data Invalid",
-      "Tolong masukkan data dengan lengkap!",
-      "warning"
-    );
-    return;
+  for (const key in body) {
+    const value = body[key]
+    if (value === null || value === "") {
+      console.log(key)
+      console.log(value);
+      Swal.fire(
+        "Data Invalid",
+        "Tolong masukkan data dengan lengkap!",
+        "warning"
+      );
+      return;
+    }
+    // if (key === 'idstatus') {
+    //   console.log(key)
+    //   console.log(value);
+    //   if (cekIdPetugas(value) !== null) {
+    //     Swal.fire(
+    //       "ID Sudah digunakan",
+    //       "Tolong masukkan ID yang baru!",
+    //       "warning"
+    //     );
+    //   }
+    //   return;
+    // }
   }
+  // if (
+  //   !Object.values(body).every((value) => {
+  //     if (value === null || value === "") {
+  //       console.log(value);
+  //       return false;
+  //     }
+  //     return true;
+  //   })
+  // ) {
+  //   console.log("Tolong isi data dengan benar!");
+  //   Swal.fire(
+  //     "Data Invalid",
+  //     "Tolong masukkan data dengan lengkap!",
+  //     "warning"
+  //   );
+  //   return;
+  // }
   if (pageType === "insert") {
     insertData(body).then((data) => {
       if (data.status == "OK") {
         window.location.href = "/PerpusJava/admin/pages/tables/status.html";
+      }
+      else{
+        Swal.fire(
+          "ID Sudah digunakan",
+          "Tolong masukkan ID yang baru!",
+          "warning"
+        );
       }
     });
   } else if (pageType === "update") {
@@ -69,6 +101,26 @@ formInsert.addEventListener("submit", (e) => {
     });
   }
 });
+
+// async function cekIdStatus(id) {
+//   const res =
+//     await fetch(
+//       "/PerpusJava/StatusController?" +
+//       new URLSearchParams({
+//         page: "show",
+//         idstatus: id,
+//       }),
+//       {
+//         method: "GET",
+//         headers: {
+//           Accept: "application/json",
+//           "Content-Type": "application/json",
+//         },
+//       });
+//   const status = await res.json()
+//   console.log(status)
+//   return status;
+// }
 
 function getAllFormData(form) {
   const body = {};

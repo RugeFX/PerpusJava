@@ -37,27 +37,59 @@ if (pageURL.pathname === "/PerpusJava/admin/pages/forms/editpenerbit.html") {
 formInsert.addEventListener("submit", (e) => {
   e.preventDefault();
   const body = getAllFormData(formInsert);
-  if (
-    !Object.values(body).every((value) => {
-      if (value === null || value === "") {
-        console.log(value);
-        return false;
-      }
-      return true;
-    })
-  ) {
-    console.log("Tolong isi data dengan benar!");
-    Swal.fire(
-      "Data Invalid",
-      "Tolong masukkan data dengan lengkap!",
-      "warning"
-    );
-    return;
+  for (const key in body) {
+    const value = body[key]
+    if (value === null || value === "") {
+      console.log(key)
+      console.log(value);
+      Swal.fire(
+        "Data Invalid",
+        "Tolong masukkan data dengan lengkap!",
+        "warning"
+      );
+      return;
+    }
+    // if (key === 'idpenerbit') {
+    //   console.log(key)
+    //   console.log(value);
+    //   if (cekIdPenerbit(value) !== null) {
+    //     Swal.fire(
+    //       "ID Sudah digunakan",
+    //       "Tolong masukkan ID yang baru!",
+    //       "warning"
+    //     );
+    //   }
+    //   return;
+    // }
   }
+  // if (
+  //   !Object.values(body).every((value) => {
+  //     if (value === null || value === "") {
+  //       console.log(value);
+  //       return false;
+  //     }
+  //     return true;
+  //   })
+  // ) {
+  //   console.log("Tolong isi data dengan benar!");
+  //   Swal.fire(
+  //     "Data Invalid",
+  //     "Tolong masukkan data dengan lengkap!",
+  //     "warning"
+  //   );
+  //   return;
+  // }
   if (pageType === "insert") {
     insertData(body).then((data) => {
       if (data.status == "OK") {
         window.location.href = "/PerpusJava/admin/pages/tables/penerbit.html";
+      }
+      else{
+        Swal.fire(
+          "ID Sudah digunakan",
+          "Tolong masukkan ID yang baru!",
+          "warning"
+        );
       }
     });
   } else if (pageType === "update") {
@@ -69,6 +101,26 @@ formInsert.addEventListener("submit", (e) => {
     });
   }
 });
+
+// async function cekIdPenerbit(id) {
+//   const res =
+//     await fetch(
+//       "/PerpusJava/PenerbitController?" +
+//       new URLSearchParams({
+//         page: "show",
+//         idpenerbit: id,
+//       }),
+//       {
+//         method: "GET",
+//         headers: {
+//           Accept: "application/json",
+//           "Content-Type": "application/json",
+//         },
+//       });
+//   const penerbit = await res.json()
+//   console.log(penerbit)
+//   return penerbit;
+// }
 
 function getAllFormData(form) {
   const body = {};
