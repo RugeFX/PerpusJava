@@ -68,9 +68,33 @@ public class BukuDAO {
         return bukuList;
     }
     
+//    public List<Buku> getAllBuku() throws SQLException {
+//        ArrayList<Buku> bukuList = new ArrayList<>();
+//        String query = "SELECT b.*, k.namakategori AS namakategori, p.namapenerbit AS namapenerbit, g.namagenre AS namagenre FROM buku b, kategori k, penerbit p, genre g WHERE b.idkategori = k.idkategori AND b.idpenerbit = p.idpenerbit AND b.idgenre = g.idgenre;";
+//            preStmt = koneksi.prepareStatement(query);
+//            rs = preStmt.executeQuery();
+//            while (rs.next()) {
+//                Buku buku = new Buku();
+//                buku.setKodebuku(rs.getString("kodebuku"));
+//                buku.setJudulbuku(rs.getString("judulbuku"));
+//                buku.setPengarang(rs.getString("pengarang"));
+//                buku.setTahunterbit(rs.getString("tahunterbit"));
+//                buku.setIdkategori(rs.getString("namakategori"));
+//                buku.setIdpenerbit(rs.getString("namapenerbit"));
+//                buku.setIdgenre(rs.getString("namagenre"));
+//                buku.setUrlebook(rs.getString("urlebook"));
+//                buku.setUrlgambar(rs.getString("urlgambar"));
+//                buku.setStokbuku(rs.getInt("stokbuku"));
+//                bukuList.add(buku);
+//            }
+//        return bukuList;
+//    }
+    
     public List<Buku> getAllBuku() throws SQLException {
         ArrayList<Buku> bukuList = new ArrayList<>();
-        String query = "SELECT * FROM buku";
+        String query = "SELECT b.*, k.namakategori AS namakategori, p.namapenerbit AS namapenerbit, "
+                + "g.namagenre AS namagenre FROM buku b, kategori k, penerbit p, genre g "
+                + "WHERE b.idkategori = k.idkategori AND b.idpenerbit = p.idpenerbit AND b.idgenre = g.idgenre";
             preStmt = koneksi.prepareStatement(query);
             rs = preStmt.executeQuery();
             while (rs.next()) {
@@ -82,6 +106,9 @@ public class BukuDAO {
                 buku.setIdkategori(rs.getString("idkategori"));
                 buku.setIdpenerbit(rs.getString("idpenerbit"));
                 buku.setIdgenre(rs.getString("idgenre"));
+                buku.setNamakategori(rs.getString("namakategori"));
+                buku.setNamapenerbit(rs.getString("namapenerbit"));
+                buku.setNamagenre(rs.getString("namagenre"));
                 buku.setUrlebook(rs.getString("urlebook"));
                 buku.setUrlgambar(rs.getString("urlgambar"));
                 buku.setStokbuku(rs.getInt("stokbuku"));

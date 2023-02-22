@@ -59,6 +59,15 @@ function showAllBukus() {
         } else if (key == "urlebook") {
           return;
         }
+        else if (key == "idkategori") {
+          return;
+        }
+        else if (key == "idpenerbit") {
+          return;
+        }
+        else if (key == "idgenre") {
+          return;
+        }
         const childTd = document.createElement("td");
         // console.log(val);
         childTd.innerText = buku[key];

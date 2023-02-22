@@ -18,6 +18,33 @@ public class Buku {
     private String idgenre;
     private String urlebook;
     private String urlgambar;
+    private String namakategori;
+    private String namapenerbit;
+    private String namagenre;
+
+    public String getNamakategori() {
+        return namakategori;
+    }
+
+    public void setNamakategori(String namakategori) {
+        this.namakategori = namakategori;
+    }
+
+    public String getNamapenerbit() {
+        return namapenerbit;
+    }
+
+    public void setNamapenerbit(String namapenerbit) {
+        this.namapenerbit = namapenerbit;
+    }
+
+    public String getNamagenre() {
+        return namagenre;
+    }
+
+    public void setNamagenre(String namagenre) {
+        this.namagenre = namagenre;
+    }
 
     public String getIdgenre() {
         return idgenre;
