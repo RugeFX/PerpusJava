@@ -132,6 +132,20 @@ public class PinjamanController extends HttpServlet {
                             out.println(data);
                         }
                     }
+                    if (page.equals("insertanggota")) {
+                         try{
+                            pd.insertPinjamanAnggota(jsonPinjaman);
+                            PostResource pr = new PostResource("OK", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
+                            return;
+                        }catch(SQLException ex){
+                            System.out.println(ex);
+                             PostResource pr = new PostResource("NO", null);
+                            data = gson.toJson(pr);
+                            out.println(data);
+                        }
+                    }
                     if(page.equals("update")){
                        try{
                             pd.updatePinjaman(jsonPinjaman);

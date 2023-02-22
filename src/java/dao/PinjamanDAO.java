@@ -63,6 +63,7 @@ public class PinjamanDAO {
             preStmt.setString(2, pnjm.getKodebuku());
             preStmt.setString(3, pnjm.getTanggalpinjam());
             preStmt.setString(4, pnjm.getTanggalkembali());
+            System.out.println(pnjm.getTanggalpengembalian());
             if(pnjm.getTanggalpengembalian().isEmpty() || pnjm.getTanggalpengembalian() == null){
                 preStmt.setString(5, null);
             }else{
@@ -75,6 +76,26 @@ public class PinjamanDAO {
             }
             preStmt.setString(7, pnjm.getIdstatus());
             preStmt.setString(8, pnjm.getIdpinjaman());
+            preStmt.executeUpdate();
+    }
+    
+    public void insertPinjamanAnggota(Pinjaman pnjm) throws SQLException {
+        String sql = "INSERT INTO pinjaman (idanggota, kodebuku, "
+                    + "tanggalpinjam, tanggalkembali, tanggalpengembalian, idstatus, "
+                    + "idpinjaman) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
+            preStmt = koneksi.prepareStatement(sql);
+            preStmt.setString(1, pnjm.getIdanggota());
+            preStmt.setString(2, pnjm.getKodebuku());
+            preStmt.setString(3, pnjm.getTanggalpinjam());
+            preStmt.setString(4, pnjm.getTanggalkembali());
+            System.out.println(pnjm.getTanggalpengembalian());
+            if(pnjm.getTanggalpengembalian().isEmpty() || pnjm.getTanggalpengembalian() == null){
+                preStmt.setString(5, null);
+            }else{
+                preStmt.setString(5, pnjm.getTanggalpengembalian());
+            }
+            preStmt.setString(6, pnjm.getIdstatus());
+            preStmt.setString(7, pnjm.getIdpinjaman());
             preStmt.executeUpdate();
     }
     

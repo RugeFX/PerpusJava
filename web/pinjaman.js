@@ -10,7 +10,7 @@ tglpinjam.addEventListener('change', () => {
     let dateObj = tglpinjam.valueAsDate;
     console.log(dateObj);
     dateObj.setDate(dateObj.getDate() + 7);
-    tglkembali.value = dateObj;
+    tglkembali.valueAsDate = dateObj;
     console.log(tglkembali.value);
 })
 
