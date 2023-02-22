@@ -49,11 +49,11 @@ const pageURL = new URL(window.location.href);
         })
       }
     }
-    if (dt.data.level == 1) {
-      if (pageURL.pathname === "/PerpusJava/admin/pinjam.html") {
+    else if (dt.data.level == 1) {
+      if (pageURL.pathname === "/PerpusJava/pinjam.html") {
         getDataAnggota(dt.data.id).then((dtAnggota) => {
           const idanggota = document.getElementById("anggota");
-          idanggota.value = dtAnggota.namanggota;
+          idanggota.value = dtAnggota.nik;
         })
       }
     } 

@@ -1,9 +1,19 @@
 const formInsert = document.getElementById("mainform");
-
+const tglkembali = document.getElementById("tanggalkembali");
+const tglpinjam = document.getElementById("tanggalpinjam");
 const selectOptionElements = document.querySelectorAll("#mainform select");
 
 // const pageURL = new URL(window.location.href);
 // console.log(pageURL);
+
+tglpinjam.addEventListener('change', () => {
+    let dateObj = tglpinjam.valueAsDate;
+    console.log(dateObj);
+    dateObj.setDate(dateObj.getDate() + 7);
+    tglkembali.value = dateObj;
+    console.log(tglkembali.value);
+})
+
 let pageType = "insert";
 
 getSelectOptions().then(({ data }) => {
