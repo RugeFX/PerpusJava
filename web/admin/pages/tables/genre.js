@@ -163,10 +163,10 @@ getAllDatas().then((datas) => {
       const actionEl = document.createElement("td");
 
       // Define edit button element
-      const editBtn = makeEditBtn(buku.kodebuku);
+      const editBtn = makeEditBtn(buku.idgenre);
 
       // Define delete button element
-      const removeBtn = makeDeleteBtn(buku.kodebuku);
+      const removeBtn = makeDeleteBtn(buku.idgenre);
 
       // Code element for inner container of action element
       const codeEl = document.createElement("code");
