@@ -24,6 +24,16 @@ function showAllBukus() {
       hrEl.color = "black";
       artikelEl.append(imgBookEl, kontenEl);
       kontenEl.append(judulEl, pengarangEl, hrEl);
+      if (buku.urlebook) {
+        const link = document.createElement("a");
+        link.innerText = "Download EBook";
+        link.style.color = "white";
+        link.style.padding = ".5rem 1rem";
+        link.style.borderRadius = "10px";
+        link.style.backgroundColor = "#005555";
+        link.href = buku.urlebook;
+        artikelEl.append(link);
+      }
       containerBook.append(artikelEl);
     });
   });
