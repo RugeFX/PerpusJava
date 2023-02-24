@@ -8,12 +8,13 @@ const pageURL = new URL(window.location.href);
 // console.log(pageURL);
 let pageType = "insert";
 
-tglpinjam.addEventListener('change', () =>{
-  let dateObj = tglpinjam.valueAsDate;
-  dateObj.setDate(dateObj.getDate() + 7);
-  tglkembali.valueAsDate = dateObj;
-})
-
+if (pageURL.pathname === "/PerpusJava/admin/pages/forms/tambahpinjaman.html"){
+  tglpinjam.addEventListener('change', () => {
+    let dateObj = tglpinjam.valueAsDate;
+    dateObj.setDate(dateObj.getDate() + 7);
+    tglkembali.valueAsDate = dateObj;
+  })
+}
 
 getSelectOptions().then(({ data }) => {
   selectOptionElements.forEach((el) => {
